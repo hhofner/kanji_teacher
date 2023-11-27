@@ -7,31 +7,25 @@ export default function Study() {
   const lazy = useMemo(() => 
       new LazyBrush({
         enabled: true,
-        radius: 20,
+        radius: 10,
       }), [])
 
-  let width = 384
-  let height = 384
+  let width = 300
+  let height = 300
 
   const canvasInterfaceRef = useRef<HTMLCanvasElement | null>(null)
   const canvasTempRef = useRef<HTMLCanvasElement | null>(null)
   const canvasDrawingRef = useRef<HTMLCanvasElement | null>(null)
   const canvasGridRef = useRef<HTMLCanvasElement | null>(null)
 
-  // let isPressing = false
   const isPressing = useRef(false)
-  // let isDrawing = false
   const isDrawing = useRef(false)
-  let points: { x: number, y: number }[] = []
+  let points = useRef<{ x: number, y: number }[]>([])
   let dpi = 2
   const DRAW_MAX_DPI = 2
 
-  // let x = 0;
-  // const [x, setX] = useState(0)
   const x = useRef(0)
-  // const [y, setY] = useState(0)
   const y = useRef(0)
-  // let y = 0;
 
   function handleMouseDown() {
     isPressing.current = true
@@ -40,7 +34,7 @@ export default function Study() {
   function handlePointerUp() {
     isDrawing.current = false
     isPressing.current = false
-    points.length = 0
+    points.current.length = 0
     const drawDpi = Math.min(dpi, DRAW_MAX_DPI)
     const w = canvasTempRef.current!.width / drawDpi
     const h = canvasTempRef.current!.height / drawDpi
@@ -54,10 +48,7 @@ export default function Study() {
 
   function internalHandlePointerMove(newX: number, newY: number) {
     const rect = canvasDrawingRef.current!.getBoundingClientRect()
-    // console.log(newX - rect.left)
-    // x = newX - rect.left
     x.current = newX - rect.left
-    // y = newY - rect.top
     y.current = newY - rect.top
   }
 
@@ -67,7 +58,7 @@ export default function Study() {
 
   function handleTouchStart(e: TouchEvent) {
     internalHandlePointerMove(e.changedTouches[0].clientX, e.changedTouches[0].clientY)
-    lazy.update({ x: x.current, y }, { both: true })
+    lazy.update({ x: x.current, y: y.current }, { both: true })
   }
 
   function handleTouchMove(e: TouchEvent) {
@@ -152,28 +143,28 @@ export default function Study() {
       (isPressing.current && !isDrawing.current)
     ) {
       isDrawing.current = true
-      points.push(lazy.getBrushCoordinates())
+      points.current.push(lazy.getBrushCoordinates())
     }
 
     if (isDrawing.current) {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
       // brush radius * 2
       ctx.lineWidth = 10 * 2
-      points.push(lazy.getBrushCoordinates())
+      points.current = [...points.current, lazy.getBrushCoordinates()]
 
-      let p1 = points[0]
-      let p2 = points[1]
+      let p1 = points.current[0]
+      let p2 = points.current[1]
 
       ctx.moveTo(p2.x, p2.y)
       ctx.beginPath()
 
-      for (let i = 1, len = points.length; i < len; i++) {
+      for (let i = 1, len = points.current.length; i < len; i++) {
         // we pick the point between pi+1 & pi+2 as the
         // end point and p1 as our control point
         const midPoint = midPointBtw(p1, p2)
         ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y)
-        p1 = points[i]
-        p2 = points[i + 1]
+        p1 = points.current[i]
+        p2 = points.current[i + 1]
       }
       // Draw last line as a straight line while
       // we wait for the next point to be able to calculate
@@ -198,14 +189,14 @@ export default function Study() {
     // Get the size of the canvas in CSS pixels.
     // Give the canvas pixel dimensions of their CSS
     // size * the device pixel ratio.
-    canvasDrawingRef.current!.width = 384 * dpr;
-    canvasDrawingRef.current!.height = 384 * dpr;
-    canvasInterfaceRef.current!.width = 384 * dpr;
-    canvasInterfaceRef.current!.height = 384 * dpr;
-    canvasTempRef.current!.width = 384 * dpr;
-    canvasTempRef.current!.height = 384 * dpr;
-    canvasGridRef.current!.width = 384 * dpr;
-    canvasGridRef.current!.height = 384 * dpr;
+    canvasDrawingRef.current!.width = width * dpr;
+    canvasDrawingRef.current!.height = width * dpr;
+    canvasInterfaceRef.current!.width = width * dpr;
+    canvasInterfaceRef.current!.height = width * dpr;
+    canvasTempRef.current!.width = width * dpr;
+    canvasTempRef.current!.height = width * dpr;
+    canvasGridRef.current!.width = width * dpr;
+    canvasGridRef.current!.height = width * dpr;
 
     var ctx = canvasDrawingRef.current!.getContext('2d');
     var ctxInterface = canvasInterfaceRef.current!.getContext('2d');
@@ -276,16 +267,16 @@ export default function Study() {
           <div>stroke count: <span id="strokeCount">{strokeCount}</span></div>
           <div>drawn count: <span id="drawnCount">4</span></div>
         </div>
-        <div className="w-[384px] h-[384px] relative">
+        <div className="w-[300px] h-[300px] relative">
           <canvas
-            ref={canvasInterfaceRef} width="384" height="384"
-            className="border-2 border-gray-500 absolute left-0 top-0 z-40 w-[384px] h-[384px]"
+            ref={canvasInterfaceRef} width="300" height="300"
+            className="border-2 border-gray-500 absolute left-0 top-0 z-40 w-[300px] h-[300px]"
           />
-          <canvas ref={canvasTempRef} width="384" height="384"
-            className="border-2 border-gray-500 absolute left-0 top-0 z-30 w-[384px] h-[384px]"
+          <canvas ref={canvasTempRef} width="300" height="300"
+            className="border-2 border-gray-500 absolute left-0 top-0 z-30 w-[300px] h-[300px]"
           ></canvas>
-          <canvas ref={canvasDrawingRef} width="384" height="384" className="border-2 border-gray-500 absolute left-0 top-0 z-20 w-[384px] h-[384px]"></canvas>
-          <canvas ref={canvasGridRef} width="384" height="384" className="border-2 border-gray-500 absolute left-0 top-0 z-10 w-[384px] h-[384px]"></canvas>
+          <canvas ref={canvasDrawingRef} width="300" height="300" className="border-2 border-gray-500 absolute left-0 top-0 z-20 w-[300px] h-[300px]"></canvas>
+          <canvas ref={canvasGridRef} width="300" height="300" className="border-2 border-gray-500 absolute left-0 top-0 z-10 w-[300px] h-[300px]"></canvas>
         </div>
       </div>
     </div>

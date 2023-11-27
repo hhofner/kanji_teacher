@@ -25,7 +25,7 @@ export default function Index() {
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <div className="flex justify-between items-center">
+        <div className="">
           <div className="flex flex-col">
             <h2 className="text-xl font-semibold">This Week's Kanji</h2>
             <span className="text-sm">{startDay} - {endDay}</span>
