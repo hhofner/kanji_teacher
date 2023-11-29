@@ -21,8 +21,7 @@ export default function Study() {
   const isPressing = useRef(false)
   const isDrawing = useRef(false)
   let points = useRef<{ x: number, y: number }[]>([])
-  let dpi = 2
-  const DRAW_MAX_DPI = 2
+  let dpi = useRef(2)
 
   const x = useRef(0)
   const y = useRef(0)
@@ -35,9 +34,8 @@ export default function Study() {
     isDrawing.current = false
     isPressing.current = false
     points.current.length = 0
-    const drawDpi = Math.min(dpi, DRAW_MAX_DPI)
-    const w = canvasTempRef.current!.width / drawDpi
-    const h = canvasTempRef.current!.height / drawDpi
+    const w = canvasTempRef.current!.width / dpi.current
+    const h = canvasTempRef.current!.height / dpi.current
 
     // Get temp onto Drawing canvas
     drawGuideLines()
@@ -59,6 +57,7 @@ export default function Study() {
   function handleTouchStart(e: TouchEvent) {
     internalHandlePointerMove(e.changedTouches[0].clientX, e.changedTouches[0].clientY)
     lazy.update({ x: x.current, y: y.current }, { both: true })
+    isPressing.current = true
   }
 
   function handleTouchMove(e: TouchEvent) {
@@ -103,18 +102,18 @@ export default function Study() {
     if (!ctx) return
     // Horizontal Line
     ctx.beginPath()
-    ctx.moveTo(ctx.canvas.width / (dpi * 2), 0)
+    ctx.moveTo(ctx.canvas.width / (dpi.current * 2), 0)
     ctx.strokeStyle = "#F0F8FF"
     ctx.lineWidth = 4
-    ctx.lineTo(ctx.canvas.width / (dpi * 2), ctx.canvas.height / dpi)
+    ctx.lineTo(ctx.canvas.width / (dpi.current * 2), ctx.canvas.height / dpi.current)
     ctx.stroke()
 
     // Vertical
     ctx.beginPath()
-    ctx.moveTo(0, ctx.canvas.height / (dpi * 2))
+    ctx.moveTo(0, ctx.canvas.height / (dpi.current * 2))
     ctx.strokeStyle = "#F0F8FF"
     ctx.lineWidth = 4
-    ctx.lineTo(ctx.canvas.width / dpi, ctx.canvas.height / (dpi * 2))
+    ctx.lineTo(ctx.canvas.width / dpi.current, ctx.canvas.height / (dpi.current * 2))
     ctx.stroke()
   }
 
@@ -143,7 +142,7 @@ export default function Study() {
       (isPressing.current && !isDrawing.current)
     ) {
       isDrawing.current = true
-      points.current.push(lazy.getBrushCoordinates())
+      points.current = [...points.current, lazy.getBrushCoordinates()]
     }
 
     if (isDrawing.current) {
@@ -175,17 +174,18 @@ export default function Study() {
   }
 
 
-  let raf = null
+  let raf: null | number = null
   function loop() {
     drawInterface()
     drawGuideLines()
     updateLazyBrush()
     lazy.update({ x: x.current, y: y.current })
-    raf = requestAnimationFrame(loop)
+    raf = window.requestAnimationFrame(loop)
   }
 
   function setDpi() {
     var dpr = window.devicePixelRatio || 2;
+    dpi.current = dpr;
     // Get the size of the canvas in CSS pixels.
     // Give the canvas pixel dimensions of their CSS
     // size * the device pixel ratio.
@@ -240,7 +240,7 @@ export default function Study() {
     loop()
 
     return () => {
-      cancelAnimationFrame(raf)
+      if (raf) window.cancelAnimationFrame(raf)
     }
   }, [])
 
@@ -267,16 +267,18 @@ export default function Study() {
           <div>stroke count: <span id="strokeCount">{strokeCount}</span></div>
           <div>drawn count: <span id="drawnCount">4</span></div>
         </div>
-        <div className="w-[300px] h-[300px] relative">
-          <canvas
-            ref={canvasInterfaceRef} width="300" height="300"
-            className="border-2 border-gray-500 absolute left-0 top-0 z-40 w-[300px] h-[300px]"
-          />
-          <canvas ref={canvasTempRef} width="300" height="300"
-            className="border-2 border-gray-500 absolute left-0 top-0 z-30 w-[300px] h-[300px]"
-          ></canvas>
-          <canvas ref={canvasDrawingRef} width="300" height="300" className="border-2 border-gray-500 absolute left-0 top-0 z-20 w-[300px] h-[300px]"></canvas>
-          <canvas ref={canvasGridRef} width="300" height="300" className="border-2 border-gray-500 absolute left-0 top-0 z-10 w-[300px] h-[300px]"></canvas>
+        <div>
+          <div className="w-[300px] h-[300px] relative">
+            <canvas
+              ref={canvasInterfaceRef} width="300" height="300"
+              className="border-2 border-gray-500 absolute left-0 top-0 z-40 w-[300px] h-[300px]"
+            />
+            <canvas ref={canvasTempRef} width="300" height="300"
+              className="border-2 border-gray-500 absolute left-0 top-0 z-30 w-[300px] h-[300px]"
+            ></canvas>
+            <canvas ref={canvasDrawingRef} width="300" height="300" className="border-2 border-gray-500 absolute left-0 top-0 z-20 w-[300px] h-[300px]"></canvas>
+            <canvas ref={canvasGridRef} width="300" height="300" className="border-2 border-gray-500 absolute left-0 top-0 z-10 w-[300px] h-[300px]"></canvas>
+          </div>
         </div>
       </div>
     </div>

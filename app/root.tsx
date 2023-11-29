@@ -23,8 +23,8 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen antialiased">
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+      <body className="min-h-webkit antialiased overflow-hidden">
+        <div className="bg-white p-8 rounded-lg max-w-md w-full">
           <Link to="/"><h1 className="text-2xl font-bold mb-8">Kanji Teacher</h1></Link>
           <Outlet />
         </div>
