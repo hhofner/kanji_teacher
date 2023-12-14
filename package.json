@@ -25,7 +25,8 @@
     "lazy-brush": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "remix-utils": "^7.1.0"
+    "remix-utils": "^7.1.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.3.0",

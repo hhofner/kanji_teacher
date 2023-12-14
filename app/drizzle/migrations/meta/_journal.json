@@ -15,6 +15,13 @@
       "when": 1702537342381,
       "tag": "0001_tan_madame_masque",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1702546423705,
+      "tag": "0002_shocking_microchip",
+      "breakpoints": true
     }
   ]
 }
