@@ -17,7 +17,8 @@ export async function action({ request }: ActionFunctionArgs) {
         kunyomi: kanjiInfo.kun_readings.join(","),
         onyomi: kanjiInfo.on_readings.join(","),
         meanings: kanjiInfo.meanings.join(","),
-        jlpt: kanjiInfo.jlpt
+        jlpt: kanjiInfo.jlpt,
+        strokeCount: kanjiInfo.stroke_count
       })
       return json({ ok: true })
     } else {

@@ -8,4 +8,5 @@ export const kanji = sqliteTable("kanji", {
   onyomi: text("onyomi"),
   meanings: text("meanings"),
   jlpt: text("jlpt"),
+  strokeCount: integer("strokeCount", { mode: "number"})
 });

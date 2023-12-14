@@ -1,0 +1,1 @@
+ALTER TABLE kanji ADD `strokeCount` integer;
