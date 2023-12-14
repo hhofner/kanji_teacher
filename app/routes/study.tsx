@@ -3,12 +3,14 @@ import { LazyBrush } from "lazy-brush"
 
 export default function Study() {
   const [strokeCount, setStrokeCount] = useState(0)
+  const [drawnCount, setDrawnCount] = useState(0)
+  const [hidden, setHidden] = useState(false)
 
   const lazy = useMemo(() => 
-      new LazyBrush({
-        enabled: true,
-        radius: 10,
-      }), [])
+    new LazyBrush({
+      enabled: true,
+      radius: 10,
+    }), [])
 
   let width = 300
   let height = 300
@@ -221,12 +223,14 @@ export default function Study() {
   }
 
   function removeCanvasHandlers() {
-    canvasInterfaceRef.current!.removeEventListener('mousedown', handleMouseDown)
-    canvasInterfaceRef.current!.removeEventListener('mousemove', handleMouseMove)
-    canvasInterfaceRef.current!.removeEventListener('mouseup', handlePointerUp)
-    canvasInterfaceRef.current!.removeEventListener('touchstart', handleTouchStart)
-    canvasInterfaceRef.current!.removeEventListener('touchmove', handleTouchMove)
-    canvasInterfaceRef.current!.removeEventListener('touchend', handleTouchEnd)
+    if (canvasInterfaceRef.current) {
+      canvasInterfaceRef.current!.removeEventListener('mousedown', handleMouseDown)
+      canvasInterfaceRef.current!.removeEventListener('mousemove', handleMouseMove)
+      canvasInterfaceRef.current!.removeEventListener('mouseup', handlePointerUp)
+      canvasInterfaceRef.current!.removeEventListener('touchstart', handleTouchStart)
+      canvasInterfaceRef.current!.removeEventListener('touchmove', handleTouchMove)
+      canvasInterfaceRef.current!.removeEventListener('touchend', handleTouchEnd)
+    }
   }
 
   useEffect(() => {
@@ -244,6 +248,14 @@ export default function Study() {
     }
   }, [])
 
+  function clearCanvasReset() {
+    const w = canvasDrawingRef.current!.width / dpi.current
+    const h = canvasDrawingRef.current!.height / dpi.current
+
+    canvasDrawingRef.current!.getContext('2d')!.clearRect(0, 0, w, h)
+    setStrokeCount(0)
+  }
+
   return (
     <div>
       <div className="flex flex-col">
@@ -251,16 +263,22 @@ export default function Study() {
           <button id="prev" className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-l">
             ←
           </button>
-          <div id="character" className="mx-4 py-2 px-4 border rounded text-2xl bg-white text-black">
-            感
+          <div id="character" className="relative mx-4 py-2 px-4 border rounded text-6xl text-bold bg-white text-black">
+            <span className={`${hidden ? "invisible" : ""}`}>感</span>
+            <span className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${hidden ? "" : "invisible"}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16"><path fill="currentColor" d="M8 11c-1.65 0-3-1.35-3-3s1.35-3 3-3s3 1.35 3 3s-1.35 3-3 3m0-5c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2" /><path fill="currentColor" d="M8 13c-3.19 0-5.99-1.94-6.97-4.84a.442.442 0 0 1 0-.32C2.01 4.95 4.82 3 8 3s5.99 1.94 6.97 4.84c.04.1.04.22 0 .32C13.99 11.05 11.18 13 8 13M2.03 8c.89 2.4 3.27 4 5.97 4s5.07-1.6 5.97-4C13.08 5.6 10.7 4 8 4S2.93 5.6 2.03 8" /><path fill="currentColor" d="M14 14.5a.47.47 0 0 1-.35-.15l-12-12c-.2-.2-.2-.51 0-.71c.2-.2.51-.2.71 0l11.99 12.01c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15Z" /></svg>
+            </span>
           </div>
           <button id="next" className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-r">
             →
           </button>
         </div>
-        <div className="mb-2">
-          <button id="toggle" className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded">
+        <div className="mb-2 flex gap-4">
+          <button onClick={() => setHidden(!hidden)} id="toggle" className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded">
             hide
+          </button>
+          <button onClick={() => clearCanvasReset()}  className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded">
+            reset
           </button>
         </div>
         <div className="flex justify-between w-full max-w-lg mb-4">
