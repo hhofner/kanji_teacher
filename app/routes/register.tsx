@@ -1,5 +1,5 @@
 import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
-import { Form } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
 import { z } from "zod"
 import { scrypt, randomBytes} from "~/utils/registration.server"
 import { db } from "~/drizzle/config.server"
@@ -26,22 +26,23 @@ export async function action({ request }: ActionFunctionArgs) {
 		return json({ error: "Invalid invite code" })
 	}
 
-	const { success, error } = registrationSchema.safeParse({ email, password, code })
+	const parsedSchema = registrationSchema.safeParse({ email, password, code })
 
-	if (!success) {
-		return json({ error }, 401)
+	if (!parsedSchema.success) {
+		return json({ zodError: parsedSchema.error }, 401)
 	} else {
 
 		// TODO: do something when email exists
 
 		const salt = randomBytes(128).toString('base64')
-		scrypt(password, salt, 64, (err, derviedKey) => {
+		scrypt(password, salt, 64, async (err, derivedKey) => {
 			if (err) {
-				return json({ err }, 500)
+				return json({ error: err }, 500)
 			} else {
-				db.insert(user).values({
+				console.log("inserting")
+				await db.insert(user).values({
 					email,
-					password,
+					password: derivedKey.toString(),
 					salt
 				})
 			}
@@ -60,15 +61,34 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 // TODO:
-export async function loader() {}
+export async function loader() {
+	return null
+}
 
 export default function RegisterPage() {
+  // let actionData = useActionData<typeof action>();
+  let actionData = useActionData<typeof action>();
+
+  const zodError = (actionData as {zodError?: z.ZodError<{email: string, password: string, code: string}>})?.zodError
+  console.log("zodE", zodError)
+  const error = (actionData as {error?: string})?.error
 	return (
 		<div>
+			<h2>Register</h2>
 			<Form method="post">
 				<input type="email" name="email" required placeholder="Email" />
 				<input type="password" name="password" required placeholder="Password" />
 				<input type="text" name="code" required placeholder="Invite Code" />
+				<button type="submit">Submit</button>
+
+        {error && (
+          <p className="mt-4 font-medium text-red-500">{error}</p>
+        )}
+        {zodError && (
+        	zodError.issues.map(e => (
+        		<p className="mt-4 font-medium text-red-500">{e.message}</p>
+        	))
+        )}
 			</Form>
 		</div>
 		)
