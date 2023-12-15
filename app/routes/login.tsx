@@ -3,37 +3,56 @@ import {
   type ActionFunctionArgs,
   redirect,
   json,
-} from "@remix-run/node";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { commitSession, getSession } from "~/session";
+} from "@remix-run/node"
+import { Form, useActionData, useLoaderData } from "@remix-run/react"
+import { db } from "~/drizzle/config.server"
+import { user } from "~/drizzle/schema.server"
+import { eq } from "drizzle-orm"
+import { commitSession, getSession } from "~/session"
+import { scrypt } from "~/utils/registration.server"
 
 export async function action({ request }: ActionFunctionArgs) {
   let formData = await request.formData();
-  let { email, password } = Object.fromEntries(formData);
+  let { email, password } = Object.fromEntries(formData) as { email?: string, password?: string }
 
-  // TODO:
-  if (email === "hans@hhofner.com" && password === process.env.PASSWORD) {
-    let session = await getSession();
-    session.set("isAdmin", true);
-
-    return redirect("/", {
-      headers: {
-        "Set-Cookie": await commitSession(session),
-      },
-    });
-  } else {
-    let error;
-
-    if (!email) {
-      error = "Email is required.";
-    } else if (!password) {
-      error = "Password is required.";
-    } else {
-      error = "Invalid login.";
-    }
-
-    return json({ error }, 401);
+  let error
+  if (!email) {
+    error = "Email is required"
+    return json({ error }, 401)
   }
+  if (!password) {
+    error = "Password is required"
+    return json({ error }, 401)
+  }
+
+  const possibleUser = await db.select().from(user).where(eq(user.email, email))
+  if (!possibleUser[0]) {
+    error = "Some credentials are wrong"
+    return json({ error }, 401)
+  }
+
+  const loggingInUser = possibleUser[0]
+
+  scrypt(loggingInUser.password, loggingInUser.salt, 64, (err, derivedKey) => {
+    if (err) {
+      return json({ error: "Something went wrong" }, 500)
+    } else {
+      if (derivedKey.toString() !== password) {
+        error = "Some credentials are wrong"
+        return json({ error }, 401)
+      }
+    }
+  })
+
+
+  let session = await getSession();
+  session.set("isLoggedIn", true);
+
+  return redirect("/", {
+    headers: {
+      "Set-Cookie": await commitSession(session),
+    },
+  });
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -48,7 +67,7 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto mt-8 max-w-xs lg:max-w-sm">
-      {data.isAdmin ? (
+      {data.isLoggedIn ? (
         <p>You're signed in!</p>
       ) : (
         <Form method="post">

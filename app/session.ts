@@ -11,7 +11,6 @@ export const { getSession, commitSession, destroySession } =
 		cookie: {
 			name: "oh-my-kanji-session",
 			secrets: [SESSION_SECRET],
-
 			sameSite: "lax",
 			path: "/",
 			maxAge: 60 * 60 * 24 * 30,

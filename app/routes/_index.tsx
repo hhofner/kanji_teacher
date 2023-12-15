@@ -25,7 +25,7 @@ export default function Index() {
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <div className="">
+        <div className="flex justify-between items-center">
           <div className="flex flex-col">
             <h2 className="text-xl font-semibold">This Week's Kanji</h2>
             <span className="text-sm">{startDay} - {endDay}</span>
@@ -37,7 +37,8 @@ export default function Index() {
         <div className="flex justify-around">
           {kanjis.length <= 0 ? <p>No kanjis selected. Add some!</p> :
             kanjis.map((kanji) =>
-              <Link key={kanji.id} to={`/kanji/${kanji.id}`}><div  className="text-4xl p-1 bg-zinc-100 rounded">{kanji.character}</div></Link>)
+              <Link key={kanji.id} to={`/kanji/${kanji.id}`}><div  className="text-4xl p-1 bg-zinc-100 rounded">{kanji.character}</div></Link>
+            )
           }
         </div>
       </div>
@@ -55,7 +56,11 @@ export default function Index() {
         <p className="mb-2">12</p>
         <h3 className="text-lg font-semibold mb-2">Passages Read Yesterday</h3>
         <p className="mb-2">4</p>
-        <Link to="/study"><button className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200">Study</button></Link>
+        <div className="flex gap-4 w-full justify-center">
+          <Link to="/study"><button className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200">Write Kanji</button></Link>
+          <Link to="/quiz"><button disabled className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200">Take Quizzes</button></Link>
+          <Link to="/read"><button disabled className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200">Read Passages</button></Link>
+        </div>
       </div>
     </div>
   );
