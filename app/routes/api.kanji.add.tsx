@@ -4,13 +4,13 @@ import { db } from "~/drizzle/config.server";
 import { kanji } from "~/drizzle/schema.server";
 
 export async function action({ request }: ActionFunctionArgs) {
-  const formData = await request.formData()
-  const kanjiQuery = formData.get("kanji")
+  const formData = await request.formData();
+  const kanjiQuery = formData.get("kanji");
   if (kanjiQuery) {
-    const results = await fetch(`https://kanjiapi.dev/v1/kanji/${kanjiQuery}`)
-    const kanjiInfo = await results.json()
+    const results = await fetch(`https://kanjiapi.dev/v1/kanji/${kanjiQuery}`);
+    const kanjiInfo = await results.json();
     if (kanjiInfo && results.status === 200) {
-      const startDay = format(startOfWeek(new Date()), "MM/dd")
+      const startDay = format(startOfWeek(new Date()), "MM/dd");
       await db.insert(kanji).values({
         date: startDay,
         character: kanjiInfo.kanji,
@@ -18,15 +18,18 @@ export async function action({ request }: ActionFunctionArgs) {
         onyomi: kanjiInfo.on_readings.join(","),
         meanings: kanjiInfo.meanings.join(","),
         jlpt: kanjiInfo.jlpt,
-        strokeCount: kanjiInfo.stroke_count
-      })
-      return json({ ok: true })
+        strokeCount: kanjiInfo.stroke_count,
+      });
+      return json({ ok: true });
     } else {
-      return json({ error: results.statusText }, 404)
+      return json({ error: results.statusText }, 404);
     }
   } else {
-    return json({
-      error: "Bad request"
-    }, 400)
+    return json(
+      {
+        error: "Bad request",
+      },
+      400,
+    );
   }
 }

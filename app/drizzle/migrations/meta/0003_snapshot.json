@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "8db6263c-e8fe-4608-9f16-5991f49f6664",
-  "prevId": "f6288846-c23b-41a9-b433-a736003abd17",
+  "id": "d04e7a00-1855-466f-8417-cb8d738dfc6e",
+  "prevId": "8db6263c-e8fe-4608-9f16-5991f49f6664",
   "tables": {
     "kanji": {
       "name": "kanji",
@@ -103,6 +103,53 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "writingHistory": {
+      "name": "writingHistory",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "datetime": {
+          "name": "datetime",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "character": {
+          "name": "character",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "writingHistory_id_user_id_fk": {
+          "name": "writingHistory_id_user_id_fk",
+          "tableFrom": "writingHistory",
+          "tableTo": "user",
+          "columnsFrom": ["id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }

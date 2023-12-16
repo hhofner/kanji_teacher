@@ -3,47 +3,52 @@ import {
   type ActionFunctionArgs,
   redirect,
   json,
-} from "@remix-run/node"
-import { Form, useActionData, useLoaderData } from "@remix-run/react"
-import { db } from "~/drizzle/config.server"
-import { user } from "~/drizzle/schema.server"
-import { eq } from "drizzle-orm"
-import { commitSession, getSession } from "~/session"
-import { scrypt } from "~/utils/registration.server"
+} from "@remix-run/node";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import { db } from "~/drizzle/config.server";
+import { user } from "~/drizzle/schema.server";
+import { eq } from "drizzle-orm";
+import { commitSession, getSession } from "~/session";
+import { scrypt } from "~/utils/registration.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   let formData = await request.formData();
-  let { email, password } = Object.fromEntries(formData) as { email?: string, password?: string }
+  let { email, password } = Object.fromEntries(formData) as {
+    email?: string;
+    password?: string;
+  };
 
-  let error
+  let error;
   if (!email) {
-    error = "Email is required"
-    return json({ error }, 401)
+    error = "Email is required";
+    return json({ error }, 401);
   }
   if (!password) {
-    error = "Password is required"
-    return json({ error }, 401)
+    error = "Password is required";
+    return json({ error }, 401);
   }
 
-  const possibleUser = await db.select().from(user).where(eq(user.email, email))
+  const possibleUser = await db
+    .select()
+    .from(user)
+    .where(eq(user.email, email));
   if (!possibleUser[0]) {
-    error = "Some credentials are wrong"
-    return json({ error }, 401)
+    error = "Some credentials are wrong";
+    return json({ error }, 401);
   }
 
-  const loggingInUser = possibleUser[0]
+  const loggingInUser = possibleUser[0];
 
   scrypt(loggingInUser.password, loggingInUser.salt, 64, (err, derivedKey) => {
     if (err) {
-      return json({ error: "Something went wrong" }, 500)
+      return json({ error: "Something went wrong" }, 500);
     } else {
       if (derivedKey.toString() !== password) {
-        error = "Some credentials are wrong"
-        return json({ error }, 401)
+        error = "Some credentials are wrong";
+        return json({ error }, 401);
       }
     }
-  })
-
+  });
 
   let session = await getSession();
   session.set("isLoggedIn", true);
