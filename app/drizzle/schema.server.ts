@@ -2,7 +2,6 @@ import {
   sqliteTable,
   text,
   integer,
-  sqliteTable,
 } from "drizzle-orm/sqlite-core";
 
 export const kanji = sqliteTable("kanji", {

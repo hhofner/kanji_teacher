@@ -17,7 +17,7 @@ export default function Study() {
   const [currentKanji, setCurrentKanji] = useState(0);
   const [hidden, setHidden] = useState(false);
   const [drawnCount, setDrawnCount] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
 
   const { kanjis } = useLoaderData<typeof loader>();
   const noKanjisExist = kanjis.length === 0;
@@ -289,9 +289,13 @@ export default function Study() {
 
   function setCanvasSize() {
     // get size of containerRef
-    const containerWidth = containerRef.current!.offsetWidth;
-    width.current = containerWidth;
-    console.log("containerWidth", containerWidth);
+    const containerHeight = canvasContainerRef.current!.clientHeight;
+    const containerWidth = canvasContainerRef.current!.clientWidth;
+
+    let maxSize = 300
+
+    height.current = Math.max(containerHeight, maxSize);
+    width.current = Math.max(containerWidth, maxSize);
   }
 
   useEffect(() => {
@@ -339,7 +343,7 @@ export default function Study() {
 
   return (
     <div>
-      <div className="flex flex-col" ref={containerRef}>
+      <div className="flex flex-col">
         {noKanjisExist ? (
           <div>No kanjis selected, add some</div>
         ) : (
@@ -422,23 +426,23 @@ export default function Study() {
             drawn count: <span id="drawnCount">{drawnCount}</span>
           </div>
         </div>
-        <div>
-          <div className="w-full aspect-square relative">
+        <div className="p-4">
+          <div className="aspect-square relative" ref={canvasContainerRef}>
             <canvas
               ref={canvasInterfaceRef}
-              className="border-2 border-gray-500 absolute left-0 top-0 z-40 w-full aspect-square"
+              className="border-2 border-gray-500 absolute left-0 top-0 z-40 h-full w-full aspect-square"
             />
             <canvas
               ref={canvasTempRef}
-              className="border-2 border-gray-500 absolute left-0 top-0 z-30 w-full"
+              className="border-2 border-gray-500 absolute left-0 top-0 z-30 h-full w-full aspect-square"
             ></canvas>
             <canvas
               ref={canvasDrawingRef}
-              className="border-2 border-gray-500 absolute left-0 top-0 z-20 w-full"
+              className="border-2 border-gray-500 absolute left-0 top-0 z-20 h-full w-full aspect-square"
             ></canvas>
             <canvas
               ref={canvasGridRef}
-              className="border-2 border-gray-500 absolute left-0 top-0 z-10 w-full"
+              className="border-2 border-gray-500 absolute left-0 top-0 z-10 h-full w-full aspect-square"
             ></canvas>
           </div>
         </div>
