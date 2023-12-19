@@ -31,6 +31,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const parsedSchema = registrationSchema.safeParse({ email, password, code });
 
+  let newId
   if (!parsedSchema.success) {
     return json({ zodError: parsedSchema.error }, 401);
   } else {
@@ -42,15 +43,17 @@ export async function action({ request }: ActionFunctionArgs) {
         return json({ error: err }, 500);
       } else {
         console.log("inserting");
-        await db.insert(user).values({
+        const newUser = await db.insert(user).values({
           email,
           password: derivedKey.toString(),
           salt,
-        });
+        }).returning()
+        newId = newUser[0].id
       }
     });
     let session = await getSession();
     session.set("isLoggedIn", true);
+    session.set("userId", newId);
 
     return redirect("/", {
       headers: {

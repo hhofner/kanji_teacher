@@ -52,6 +52,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
   let session = await getSession();
   session.set("isLoggedIn", true);
+  session.set("userId", loggingInUser.id);
 
   return redirect("/", {
     headers: {
@@ -68,6 +69,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function LoginPage() {
   let data = useLoaderData<typeof loader>();
+  console.log("data: ", data.userId)
   let actionData = useActionData<typeof action>();
 
   return (
@@ -78,14 +80,14 @@ export default function LoginPage() {
         <Form method="post">
           <div className="space-y-2">
             <input
-              className="w-full rounded-md border-gray-700 bg-gray-800 text-white focus:border-sky-600 focus:ring-sky-600"
+              className="w-full rounded-md border-black focus:border-sky-600 focus:ring-sky-600"
               type="email"
               name="email"
               required
               placeholder="Email"
             />
             <input
-              className="w-full rounded-md border-gray-700 bg-gray-800 text-white focus:border-sky-600 focus:ring-sky-600"
+              className="w-full rounded-md border-gray-100 focus:border-sky-600 focus:ring-sky-600"
               type="password"
               name="password"
               required
@@ -94,7 +96,7 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-8">
-            <button className="w-full rounded-md bg-sky-600 px-3 py-2 font-medium text-white hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 focus:ring-offset-gray-900">
+            <button className="w-full rounded-md bg-blue-600 px-3 py-2 font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 focus:ring-offset-gray-900">
               Log in
             </button>
           </div>

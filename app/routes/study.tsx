@@ -1,12 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LazyBrush } from "lazy-brush";
 import { format, startOfWeek } from "date-fns";
-import { useLoaderData } from "@remix-run/react";
+import { isRouteErrorResponse, useLoaderData, useRouteError } from "@remix-run/react";
 import { eq } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
 import { kanji } from "~/drizzle/schema.server";
+import { requireUserId } from "~/session";
+import { LoaderFunctionArgs } from "@remix-run/node";
 
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
+  const userId = await requireUserId(request)
+  console.log("logged in userId: ", userId)
   const startDay = format(startOfWeek(new Date()), "MM/dd");
   const kanjis = await db.select().from(kanji).where(eq(kanji.date, startDay));
   return { kanjis };
@@ -17,6 +21,7 @@ export default function Study() {
   const [currentKanji, setCurrentKanji] = useState(0);
   const [hidden, setHidden] = useState(false);
   const [drawnCount, setDrawnCount] = useState(0);
+  const [isAutoReset, setIsAutoReset] = useState(false);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
 
   const { kanjis } = useLoaderData<typeof loader>();
@@ -64,7 +69,18 @@ export default function Study() {
       .current!.getContext("2d")!
       .drawImage(canvasTempRef.current!, 0, 0, w, h);
     canvasTempRef.current!.getContext("2d")!.clearRect(0, 0, w, h);
-    setStrokeCount((strokeCount) => strokeCount + 1);
+
+    if (kanjis[currentKanji]) {
+      if (kanjis[currentKanji].strokeCount === strokeCount + 1) {
+        setStrokeCount(0)
+        clearCanvasReset()
+        setDrawnCount((drawnCount) => drawnCount + 1)
+      } else {
+        setStrokeCount((strokeCount) => strokeCount + 1);
+      }
+    } else {
+      setStrokeCount((strokeCount) => strokeCount + 1);
+    }
   }
 
   function internalHandlePointerMove(newX: number, newY: number) {
@@ -211,7 +227,7 @@ export default function Study() {
 
   let raf: null | number = null;
   function loop() {
-    drawInterface();
+    // drawInterface();
     drawGuideLines();
     updateLazyBrush();
     lazy.update({ x: x.current, y: y.current });
@@ -345,7 +361,7 @@ export default function Study() {
     <div>
       <div className="flex flex-col">
         {noKanjisExist ? (
-          <div>No kanjis selected, add some</div>
+          <div className="w-full text-center">No kanjis selected, add some</div>
         ) : (
           <div className="flex items-center justify-center mb-4">
             <button
@@ -397,12 +413,12 @@ export default function Study() {
             </button>
           </div>
         )}
-        <div className="w-full text-center text-zinc-500 mb-6">
+        {!noKanjisExist && <div className="w-full text-center text-zinc-500 mb-6">
           {kanjis[currentKanji].meanings
             ?.split(",")
             .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
-        </div>
-        <div>{kanjis[currentKanji].strokeCount || "error"} strokes</div>
+        </div>}
+        {!noKanjisExist && <div>{kanjis[currentKanji].strokeCount || "error"} strokes</div>}
         <div className="mb-2 flex gap-4">
           <button
             onClick={() => setHidden(!hidden)}
@@ -417,8 +433,14 @@ export default function Study() {
           >
             reset
           </button>
+          <button
+            onClick={() => setIsAutoReset(!isAutoReset)}
+            className={`hover:bg-gray-600 text-white font-bold py-1 px-2 rounded ${isAutoReset ? "bg-gray-700 " : "bg-gray-300 "}`}
+          >
+            auto reset {isAutoReset ? "✔" : ""}
+          </button>
         </div>
-        <div className="flex justify-between w-full max-w-lg mb-4">
+        <div className="flex justify-between w-full mb-4">
           <div>
             stroke count: <span id="strokeCount">{strokeCount}</span>
           </div>
@@ -449,4 +471,22 @@ export default function Study() {
       </div>
     </div>
   );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (error instanceof Error) {
+    return <div>An unexpected error occurred: {error.message}</div>;
+  }
+
+  if (!isRouteErrorResponse(error)) {
+    return <h1>Unknown Error</h1>;
+  }
+
+  if (error.status === 404) {
+    return <div>Note not found</div>;
+  }
+
+  return <div>An unexpected error occurred: {error.statusText}</div>;
 }

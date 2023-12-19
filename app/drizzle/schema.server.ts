@@ -13,7 +13,7 @@ export const kanji = sqliteTable("kanji", {
   meanings: text("meanings"),
   jlpt: text("jlpt"),
   strokeCount: integer("strokeCount", { mode: "number" }),
-  // userId: integer("userId").references(() => user.id)
+  userId: integer("userId").references(() => user.id)
 });
 
 export const user = sqliteTable("user", {
