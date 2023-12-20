@@ -5,11 +5,8 @@ import {
   json,
 } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { db } from "~/drizzle/config.server";
-import { user } from "~/drizzle/schema.server";
-import { eq } from "drizzle-orm";
 import { commitSession, getSession } from "~/session";
-import { scrypt } from "~/utils/registration.server";
+import { verifyLogin } from "~/models/user.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   let formData = await request.formData();
@@ -28,31 +25,16 @@ export async function action({ request }: ActionFunctionArgs) {
     return json({ error }, 401);
   }
 
-  const possibleUser = await db
-    .select()
-    .from(user)
-    .where(eq(user.email, email));
-  if (!possibleUser[0]) {
-    error = "Some credentials are wrong";
+  const userWithoutPassword = await verifyLogin(email, password)
+
+  if (!userWithoutPassword) {
+    error = "Credentials are wrong"
     return json({ error }, 401);
   }
 
-  const loggingInUser = possibleUser[0];
-
-  scrypt(loggingInUser.password, loggingInUser.salt, 64, (err, derivedKey) => {
-    if (err) {
-      return json({ error: "Something went wrong" }, 500);
-    } else {
-      if (derivedKey.toString() !== password) {
-        error = "Some credentials are wrong";
-        return json({ error }, 401);
-      }
-    }
-  });
-
   let session = await getSession();
   session.set("isLoggedIn", true);
-  session.set("userId", loggingInUser.id);
+  session.set("userId", userWithoutPassword.id);
 
   return redirect("/", {
     headers: {
