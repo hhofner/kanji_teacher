@@ -5,10 +5,11 @@ import { scrypt, randomBytes } from "~/utils/registration.server";
 import { db } from "~/drizzle/config.server";
 import { user } from "~/drizzle/schema.server";
 import { commitSession, getSession } from "~/session";
+import { createUser } from "~/models/user.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   let formData = await request.formData();
-  let { email, password, code } = Object.fromEntries(formData);
+  let { email, password, code } = Object.fromEntries(formData) as {email?: string, password?: string, code?: string};
 
   let requirementError;
   if (!email || !password || !code) {
@@ -31,29 +32,15 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const parsedSchema = registrationSchema.safeParse({ email, password, code });
 
-  let newId
   if (!parsedSchema.success) {
     return json({ zodError: parsedSchema.error }, 401);
   } else {
     // TODO: do something when email exists
 
-    const salt = randomBytes(128).toString("base64");
-    scrypt(password, salt, 64, async (err, derivedKey) => {
-      if (err) {
-        return json({ error: err }, 500);
-      } else {
-        console.log("inserting");
-        const newUser = await db.insert(user).values({
-          email,
-          password: derivedKey.toString(),
-          salt,
-        }).returning()
-        newId = newUser[0].id
-      }
-    });
+    const userWithoutPassword = await createUser(email, password)
     let session = await getSession();
     session.set("isLoggedIn", true);
-    session.set("userId", newId);
+    session.set("userId", userWithoutPassword.id);
 
     return redirect("/", {
       headers: {

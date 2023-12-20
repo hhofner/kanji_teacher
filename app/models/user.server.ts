@@ -31,7 +31,9 @@ export async function createUser(email: User["email"], password: string) {
     password: hashedPassword,
   }).returning()
 
-  return newUser[0]
+  const { password: _password, ...userWithoutPassword } = newUser[0];
+
+  return userWithoutPassword
 }
 
 // export async function deleteUserByEmail(email: User["email"]) {
