@@ -8,6 +8,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useLocation,
 } from "@remix-run/react";
 import stylesheet from "~/tailwind.css";
 import Username from "./components/Username";
@@ -25,6 +26,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function App() {
   let data = useLoaderData<typeof loader>();
+  let location = useLocation();
   return (
     <html lang="en">
       <head>
@@ -33,7 +35,11 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="min-h-webkit antialiased overflow-hidden">
+      <body
+        className={`min-h-webkit antialiased ${
+          location.pathname === "/about" ? "" : "overflow-hidden"
+        }`}
+      >
         <div className="bg-white p-8 rounded-lg md:max-w-3xl mx-auto w-full">
           <div className="flex justify-between">
             <Link to="/">
@@ -41,7 +47,10 @@ export default function App() {
                 Oh My <span className="text-gray-400 italic">Kanji</span>
               </h1>
             </Link>
-            <Username isLoggedIn={data.isLoggedIn} />
+            <div className="flex gap-4">
+              <Link to="/about">About</Link>
+              <Username isLoggedIn={data.isLoggedIn} />
+            </div>
           </div>
           <Outlet />
         </div>
