@@ -1,16 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LazyBrush } from "lazy-brush";
 import { format, startOfWeek } from "date-fns";
-import { isRouteErrorResponse, useLoaderData, useRouteError } from "@remix-run/react";
+import {
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 import { eq } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
 import { kanji } from "~/drizzle/schema.server";
 import { requireUserId } from "~/session";
-import { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const userId = await requireUserId(request)
-  console.log("logged in userId: ", userId)
+  await requireUserId(request);
   const startDay = format(startOfWeek(new Date()), "MM/dd");
   const kanjis = await db.select().from(kanji).where(eq(kanji.date, startDay));
   return { kanjis };
@@ -71,10 +74,10 @@ export default function Study() {
     canvasTempRef.current!.getContext("2d")!.clearRect(0, 0, w, h);
 
     if (kanjis[currentKanji]) {
-      if (kanjis[currentKanji].strokeCount === strokeCount + 1) {
-        setStrokeCount(0)
-        clearCanvasReset()
-        setDrawnCount((drawnCount) => drawnCount + 1)
+      if (kanjis[currentKanji].strokeCount === strokeCount + 1 && isAutoReset) {
+        setStrokeCount(0);
+        clearCanvasReset();
+        setDrawnCount((drawnCount) => drawnCount + 1);
       } else {
         setStrokeCount((strokeCount) => strokeCount + 1);
       }
@@ -308,7 +311,7 @@ export default function Study() {
     const containerHeight = canvasContainerRef.current!.clientHeight;
     const containerWidth = canvasContainerRef.current!.clientWidth;
 
-    let maxSize = 300
+    let maxSize = 300;
 
     height.current = Math.max(containerHeight, maxSize);
     width.current = Math.max(containerWidth, maxSize);
@@ -335,6 +338,16 @@ export default function Study() {
 
     canvasDrawingRef.current!.getContext("2d")!.clearRect(0, 0, w, h);
     setStrokeCount(0);
+  }
+
+  function resetCanvas() {
+    const kanjiStrokeCount = kanjis[currentKanji].strokeCount;
+    if (kanjiStrokeCount) {
+      if (strokeCount >= kanjiStrokeCount) {
+        setDrawnCount((drawnCount) => drawnCount + 1);
+      }
+    }
+    clearCanvasReset();
   }
 
   function nextKanji() {
@@ -413,12 +426,16 @@ export default function Study() {
             </button>
           </div>
         )}
-        {!noKanjisExist && <div className="w-full text-center text-zinc-500 mb-6">
-          {kanjis[currentKanji].meanings
-            ?.split(",")
-            .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
-        </div>}
-        {!noKanjisExist && <div>{kanjis[currentKanji].strokeCount || "error"} strokes</div>}
+        {!noKanjisExist && (
+          <div className="w-full text-center text-zinc-500 mb-6">
+            {kanjis[currentKanji].meanings
+              ?.split(",")
+              .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
+          </div>
+        )}
+        {!noKanjisExist && (
+          <div>{kanjis[currentKanji].strokeCount || "error"} strokes</div>
+        )}
         <div className="mb-2 flex gap-4">
           <button
             onClick={() => setHidden(!hidden)}
@@ -428,14 +445,16 @@ export default function Study() {
             hide
           </button>
           <button
-            onClick={() => clearCanvasReset()}
+            onClick={() => resetCanvas()}
             className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded"
           >
             reset
           </button>
           <button
             onClick={() => setIsAutoReset(!isAutoReset)}
-            className={`hover:bg-gray-600 text-white font-bold py-1 px-2 rounded ${isAutoReset ? "bg-gray-700 " : "bg-gray-300 "}`}
+            className={`hover:bg-gray-600 text-white font-bold py-1 px-2 rounded ${
+              isAutoReset ? "bg-gray-700 " : "bg-gray-300 "
+            }`}
           >
             auto reset {isAutoReset ? "✔" : ""}
           </button>

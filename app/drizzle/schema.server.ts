@@ -1,8 +1,11 @@
-import {
-  sqliteTable,
-  text,
-  integer,
-} from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+
+export const user = sqliteTable("user", {
+  id: integer("id").primaryKey(),
+  email: text("email"),
+  password: text("password"),
+  salt: text("salt"),
+});
 
 export const kanji = sqliteTable("kanji", {
   id: integer("id").primaryKey(),
@@ -13,14 +16,7 @@ export const kanji = sqliteTable("kanji", {
   meanings: text("meanings"),
   jlpt: text("jlpt"),
   strokeCount: integer("strokeCount", { mode: "number" }),
-  userId: integer("userId").references(() => user.id)
-});
-
-export const user = sqliteTable("user", {
-  id: integer("id").primaryKey(),
-  email: text("email"),
-  password: text("password"),
-  salt: text("salt"),
+  userId: integer("userId").references(() => user.id),
 });
 
 export const writingHistory = sqliteTable("writingHistory", {

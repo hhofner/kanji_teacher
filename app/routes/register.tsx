@@ -1,15 +1,17 @@
-import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { z } from "zod";
-import { scrypt, randomBytes } from "~/utils/registration.server";
-import { db } from "~/drizzle/config.server";
-import { user } from "~/drizzle/schema.server";
 import { commitSession, getSession } from "~/session";
 import { createUser } from "~/models/user.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   let formData = await request.formData();
-  let { email, password, code } = Object.fromEntries(formData) as {email?: string, password?: string, code?: string};
+  let { email, password, code } = Object.fromEntries(formData) as {
+    email?: string;
+    password?: string;
+    code?: string;
+  };
 
   let requirementError;
   if (!email || !password || !code) {
@@ -37,7 +39,7 @@ export async function action({ request }: ActionFunctionArgs) {
   } else {
     // TODO: do something when email exists
 
-    const userWithoutPassword = await createUser(email, password)
+    const userWithoutPassword = await createUser(email, password);
     let session = await getSession();
     session.set("isLoggedIn", true);
     session.set("userId", userWithoutPassword.id);

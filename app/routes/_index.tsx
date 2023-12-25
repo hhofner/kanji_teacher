@@ -1,9 +1,10 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { endOfWeek, format, startOfWeek } from "date-fns";
 import { eq } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
 import { kanji } from "~/drizzle/schema.server";
+import { getUserId } from "~/session";
 
 export const meta: MetaFunction = () => {
   return [
@@ -12,7 +13,13 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
+  // Show kanjis for logged in user
+  const userId = await getUserId(request);
+  if (!userId) {
+    return { kanjis: [] };
+  }
+
   const startDay = format(startOfWeek(new Date()), "MM/dd");
   const kanjis = await db.select().from(kanji).where(eq(kanji.date, startDay));
   return { kanjis };

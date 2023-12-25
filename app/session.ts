@@ -10,7 +10,7 @@ if (!SESSION_SECRET) {
 }
 
 interface User {
-  id: string
+  id: string;
 }
 
 const USER_SESSION_KEY = "userId";
@@ -42,9 +42,8 @@ export async function getUserId(
 ): Promise<User["id"] | undefined> {
   const session = await getSession(request.headers.get("cookie"));
   const userId = session.get(USER_SESSION_KEY);
-  return userId;
+  return userId as User["id"] | undefined;
 }
-
 
 export async function requireUserId(
   request: Request,
@@ -64,13 +63,13 @@ export async function requireUser(request: Request) {
   // TODO: Move this into some function
   // const user = await getUserById(userId);
   // if (user) return user;
-  
+
   const possibleUser = await db
     .select()
     .from(user)
     .where(eq(user.id, parseInt(userId)));
 
-  if (possibleUser[0]) return possibleUser[0]
+  if (possibleUser[0]) return possibleUser[0];
 
   throw await logout(request);
 }
