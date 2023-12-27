@@ -71,18 +71,36 @@ export default function RegisterPage() {
   console.log("zodE", zodError);
   const error = (actionData as { error?: string })?.error;
   return (
-    <div>
-      <h2>Register</h2>
-      <Form method="post">
-        <input type="email" name="email" required placeholder="Email" />
+    <div className="mx-auto mt-8 max-w-xs lg:max-w-sm">
+      <h2 className="text-2xl mb-6 font-bold">Register</h2>
+      <Form method="post" className="space-y-2">
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="Email"
+          className="w-full p-4 rounded-md border-gray-100 border focus:border-sky-600 focus:ring-sky-600"
+        />
         <input
           type="password"
           name="password"
+          className="w-full p-4 rounded-md border-gray-100 border focus:border-sky-600 focus:ring-sky-600"
           required
           placeholder="Password"
         />
-        <input type="text" name="code" required placeholder="Invite Code" />
-        <button type="submit">Submit</button>
+        <input
+          type="text"
+          name="code"
+          required
+          placeholder="Invite Code"
+          className="w-full p-4 rounded-md border-gray-100 border focus:border-sky-600 focus:ring-sky-600"
+        />
+        <button
+          type="submit"
+          className="w-full rounded-md bg-blue-600 px-3 py-2 font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 focus:ring-offset-gray-900"
+        >
+          Submit
+        </button>
 
         {error && <p className="mt-4 font-medium text-red-500">{error}</p>}
         {zodError &&

@@ -60,6 +60,7 @@ export default function LoginPage() {
         <p>You're signed in!</p>
       ) : (
         <Form method="post">
+          <h2 className="text-2xl mb-6 font-bold">Log In</h2>
           <div className="space-y-2">
             <input
               className="w-full p-4 rounded-md border-gray-100 border focus:border-sky-600 focus:ring-sky-600"
