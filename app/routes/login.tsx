@@ -4,7 +4,7 @@ import {
   redirect,
   json,
 } from "@remix-run/node";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
 import { commitSession, getSession } from "~/session";
 import { verifyLogin } from "~/models/user.server";
 
@@ -25,10 +25,10 @@ export async function action({ request }: ActionFunctionArgs) {
     return json({ error }, 401);
   }
 
-  const userWithoutPassword = await verifyLogin(email, password)
+  const userWithoutPassword = await verifyLogin(email, password);
 
   if (!userWithoutPassword) {
-    error = "Credentials are wrong"
+    error = "Credentials are wrong";
     return json({ error }, 401);
   }
 
@@ -51,7 +51,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function LoginPage() {
   let data = useLoaderData<typeof loader>();
-  console.log("data: ", data.userId)
+  console.log("data: ", data.userId);
   let actionData = useActionData<typeof action>();
 
   return (
@@ -62,14 +62,14 @@ export default function LoginPage() {
         <Form method="post">
           <div className="space-y-2">
             <input
-              className="w-full rounded-md border-black focus:border-sky-600 focus:ring-sky-600"
+              className="w-full p-4 rounded-md border-gray-100 border focus:border-sky-600 focus:ring-sky-600"
               type="email"
               name="email"
               required
               placeholder="Email"
             />
             <input
-              className="w-full rounded-md border-gray-100 focus:border-sky-600 focus:ring-sky-600"
+              className="w-full p-4 border rounded-md border-gray-100 focus:border-sky-600 focus:ring-sky-600"
               type="password"
               name="password"
               required
@@ -83,9 +83,13 @@ export default function LoginPage() {
             </button>
           </div>
 
-          {actionData?.error && (
-            <p className="mt-4 font-medium text-red-500">{actionData.error}</p>
-          )}
+          <p className="mt-4 font-medium text-red-500">{actionData?.error}</p>
+          <div className="w-full mt-8 text-center">
+            or{" "}
+            <Link to="/register" className="font-bold">
+              register
+            </Link>
+          </div>
         </Form>
       )}
     </div>

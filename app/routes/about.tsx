@@ -31,6 +31,12 @@ export default function About() {
         <li></li>
         <li></li>
       </ul>
+      <p>
+        If you're interested in this project and would like to see it developed
+        further (ie, as a native app, or an API), then consider donating,
+        sending me a message on X or Mastodon or giving this project a thumbs
+        up.
+      </p>
     </div>
   );
 }

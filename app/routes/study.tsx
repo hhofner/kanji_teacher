@@ -9,11 +9,11 @@ import {
 import { eq } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
 import { kanji } from "~/drizzle/schema.server";
-import { requireUserId } from "~/session";
+import { requireUser } from "~/session";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  await requireUserId(request);
+  await requireUser(request);
   const startDay = format(startOfWeek(new Date()), "MM/dd");
   const kanjis = await db.select().from(kanji).where(eq(kanji.date, startDay));
   return { kanjis };

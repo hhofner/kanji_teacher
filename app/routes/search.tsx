@@ -1,8 +1,9 @@
-import { json, type ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { Form, useActionData, useFetcher } from "@remix-run/react";
 import { type action as kanjiAddAction } from "./api.kanji.add";
 import { useState } from "react";
-import { requireUserId } from "~/session";
+import { requireUser } from "~/session";
 
 interface KanjiApiResponse {
   grade: number;
@@ -19,8 +20,8 @@ interface KanjiApiResponse {
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const userId = await requireUserId(request)
-  return null
+  await requireUser(request);
+  return null;
 }
 
 export async function action({ request }: ActionFunctionArgs) {
