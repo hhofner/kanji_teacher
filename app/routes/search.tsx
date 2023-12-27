@@ -32,7 +32,6 @@ export async function action({ request }: ActionFunctionArgs) {
     return json({ error: "Bad request" }, 400);
   }
   const queries = rawQuery.split("");
-  console.log("query", queries);
   if (queries.length > 0) {
     const promiseList = queries.map(async (q: string) => {
       const results = await fetch(`https://kanjiapi.dev/v1/kanji/${q}`);
@@ -43,7 +42,6 @@ export async function action({ request }: ActionFunctionArgs) {
     });
 
     const resultList = await Promise.all(promiseList);
-    console.log("resultList", resultList.filter(Boolean));
 
     return {
       resultList: resultList.filter(Boolean),
