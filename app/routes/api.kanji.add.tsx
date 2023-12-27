@@ -2,8 +2,10 @@ import { type ActionFunctionArgs, json } from "@remix-run/node";
 import { format, startOfWeek } from "date-fns";
 import { db } from "~/drizzle/config.server";
 import { kanji } from "~/drizzle/schema.server";
+import { requireUserId } from "~/session";
 
 export async function action({ request }: ActionFunctionArgs) {
+  const userId = await requireUserId(request);
   const formData = await request.formData();
   const kanjiQuery = formData.get("kanji");
   if (kanjiQuery) {
@@ -19,6 +21,7 @@ export async function action({ request }: ActionFunctionArgs) {
         meanings: kanjiInfo.meanings.join(","),
         jlpt: kanjiInfo.jlpt,
         strokeCount: kanjiInfo.stroke_count,
+        userId: parseInt(userId),
       });
       return json({ ok: true });
     } else {
