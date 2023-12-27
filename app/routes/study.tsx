@@ -6,16 +6,19 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
 import { kanji } from "~/drizzle/schema.server";
 import { requireUser } from "~/session";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  await requireUser(request);
+  const user = await requireUser(request);
   const startDay = format(startOfWeek(new Date()), "MM/dd");
-  const kanjis = await db.select().from(kanji).where(eq(kanji.date, startDay));
+  const kanjis = await db
+    .select()
+    .from(kanji)
+    .where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
   return { kanjis };
 }
 
@@ -376,65 +379,80 @@ export default function Study() {
         {noKanjisExist ? (
           <div className="w-full text-center">No kanjis selected, add some</div>
         ) : (
-          <div className="flex items-center justify-center mb-4">
-            <button
-              id="prev"
-              onClick={() => previousKanji()}
-              className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-l"
-            >
-              ←
-            </button>
-            <div
-              id="character"
-              className="relative mx-4 py-2 px-4 border rounded text-6xl text-bold bg-white text-black"
-            >
-              <span className={`${hidden ? "invisible" : ""}`}>
-                {kanjis[currentKanji].character}
-              </span>
-              <span
-                className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${
-                  hidden ? "" : "invisible"
-                }`}
+          <>
+            <div className="flex items-center justify-center mb-2">
+              <button
+                id="prev"
+                onClick={() => previousKanji()}
+                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-l"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 16 16"
+                ←
+              </button>
+              <div
+                id="character"
+                className="relative mx-4 py-2 px-4 border rounded text-6xl text-bold bg-white text-black"
+              >
+                <span className={`${hidden ? "invisible" : ""}`}>
+                  {kanjis[currentKanji].character}
+                </span>
+                <span
+                  className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${
+                    hidden ? "" : "invisible"
+                  }`}
                 >
-                  <path
-                    fill="currentColor"
-                    d="M8 11c-1.65 0-3-1.35-3-3s1.35-3 3-3s3 1.35 3 3s-1.35 3-3 3m0-5c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M8 13c-3.19 0-5.99-1.94-6.97-4.84a.442.442 0 0 1 0-.32C2.01 4.95 4.82 3 8 3s5.99 1.94 6.97 4.84c.04.1.04.22 0 .32C13.99 11.05 11.18 13 8 13M2.03 8c.89 2.4 3.27 4 5.97 4s5.07-1.6 5.97-4C13.08 5.6 10.7 4 8 4S2.93 5.6 2.03 8"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M14 14.5a.47.47 0 0 1-.35-.15l-12-12c-.2-.2-.2-.51 0-.71c.2-.2.51-.2.71 0l11.99 12.01c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15Z"
-                  />
-                </svg>
-              </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M8 11c-1.65 0-3-1.35-3-3s1.35-3 3-3s3 1.35 3 3s-1.35 3-3 3m0-5c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"
+                    />
+                    <path
+                      fill="currentColor"
+                      d="M8 13c-3.19 0-5.99-1.94-6.97-4.84a.442.442 0 0 1 0-.32C2.01 4.95 4.82 3 8 3s5.99 1.94 6.97 4.84c.04.1.04.22 0 .32C13.99 11.05 11.18 13 8 13M2.03 8c.89 2.4 3.27 4 5.97 4s5.07-1.6 5.97-4C13.08 5.6 10.7 4 8 4S2.93 5.6 2.03 8"
+                    />
+                    <path
+                      fill="currentColor"
+                      d="M14 14.5a.47.47 0 0 1-.35-.15l-12-12c-.2-.2-.2-.51 0-.71c.2-.2.51-.2.71 0l11.99 12.01c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15Z"
+                    />
+                  </svg>
+                </span>
+              </div>
+              <button
+                id="next"
+                onClick={() => nextKanji()}
+                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-r"
+              >
+                →
+              </button>
             </div>
-            <button
-              id="next"
-              onClick={() => nextKanji()}
-              className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-r"
-            >
-              →
-            </button>
-          </div>
+            <div className="w-full flex justify-center gap-2 mb-6">
+              {kanjis.map((_, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => setCurrentKanji(idx)}
+                  className={`rounded-full w-2 h-2 border border-black ${
+                    idx === currentKanji ? "bg-black" : "cursor-pointer"
+                  }`}
+                ></div>
+              ))}
+            </div>
+          </>
         )}
         {!noKanjisExist && (
-          <div className="w-full text-center text-zinc-500 mb-6">
+          <div className="w-full text-center text-zinc-500 mb-2">
             {kanjis[currentKanji].meanings
               ?.split(",")
               .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
           </div>
         )}
         {!noKanjisExist && (
-          <div>{kanjis[currentKanji].strokeCount || "error"} strokes</div>
+          <div className="mb-4">
+            {kanjis[currentKanji].strokeCount || "error"} strokes
+          </div>
         )}
         <div className="mb-2 flex gap-4">
           <button
@@ -504,7 +522,7 @@ export function ErrorBoundary() {
   }
 
   if (error.status === 404) {
-    return <div>Note not found</div>;
+    return <div>Kanji not found</div>;
   }
 
   return <div>An unexpected error occurred: {error.statusText}</div>;
