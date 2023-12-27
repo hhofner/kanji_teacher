@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { endOfWeek, format, startOfWeek } from "date-fns";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
 import { kanji } from "~/drizzle/schema.server";
 import { getUserId } from "~/session";
@@ -21,7 +21,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 
   const startDay = format(startOfWeek(new Date()), "MM/dd");
-  const kanjis = await db.select().from(kanji).where(eq(kanji.date, startDay));
+  const kanjis = await db
+    .select()
+    .from(kanji)
+    .where(and(eq(kanji.date, startDay), eq(kanji.userId, parseInt(userId))));
   return { kanjis };
 }
 
