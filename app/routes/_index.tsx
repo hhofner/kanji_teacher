@@ -77,12 +77,19 @@ export default function Index() {
         </div>
       </div>
       <div className="mb-6 text-gray-200">
-        <h3 className="text-lg font-semibold mb-2 text-black">Kanji Drawn This Week</h3>
-        <p className="mb-2 text-black">{kanjiDrawn}</p>
-        <h3 className="text-lg font-semibold mb-2">Quizzes Taken Yesterday</h3>
-        <p className="mb-2">{quizzesTaken}</p>
-        <h3 className="text-lg font-semibold mb-2">Passages Read Yesterday</h3>
-        <p className="mb-2">{passagesRead}</p>
+        <div className="flex gap-4 mb-12 justify-evenly">
+          <div className="rounded bg-zinc-100 p-4">
+            <h3 className="text-2xl font-semibold mb-2 text-black">{kanjiDrawn}</h3>
+            <p className="mb-2 text-black tracking-tight">Kanji Drawn This Week</p>
+          </div>
+          <div className="rounded bg-zinc-100 p-4">
+            <h3 className="text-2xl font-semibold mb-2">{quizzesTaken}</h3>
+            <p className="mb-2 tracking-tight">Quizzes Taken Yesterday</p></div>
+          <div className="rounded bg-zinc-100 p-4">
+            <h3 className="text-2xl font-semibold mb-2">{passagesRead}</h3>
+            <p className="mb-2 tracking-tight">Passages Read Yesterday</p>
+          </div>
+        </div>
         <div className="flex gap-4 w-full justify-center">
           <Link to="/study">
             <button className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200">
