@@ -4,36 +4,42 @@ import { eq } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
 import { user } from "~/drizzle/schema.server";
 
-type User = typeof user.$inferSelect
+type User = typeof user.$inferSelect;
 
 export async function getUserById(id: User["id"]) {
-  const potentialUser = await db.select().from(user).where(eq(user.id, id))
+  const potentialUser = await db.select().from(user).where(eq(user.id, id));
   if (potentialUser[0]) {
-    return potentialUser[0]
+    return potentialUser[0];
   }
-  return undefined
+  return undefined;
 }
 
 export async function getUserByEmail(email: User["email"]) {
-  if (!email) return undefined
-  const potentialUser = await db.select().from(user).where(eq(user.email, email))
+  if (!email) return undefined;
+  const potentialUser = await db
+    .select()
+    .from(user)
+    .where(eq(user.email, email));
   if (potentialUser[0]) {
-    return potentialUser[0]
+    return potentialUser[0];
   }
-  return undefined
+  return undefined;
 }
 
 export async function createUser(email: User["email"], password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await db.insert(user).values({
-    email,
-    password: hashedPassword,
-  }).returning()
+  const newUser = await db
+    .insert(user)
+    .values({
+      email,
+      password: hashedPassword,
+    })
+    .returning();
 
   const { password: _password, ...userWithoutPassword } = newUser[0];
 
-  return userWithoutPassword
+  return userWithoutPassword;
 }
 
 // export async function deleteUserByEmail(email: User["email"]) {
@@ -44,17 +50,17 @@ export async function verifyLogin(
   email: User["email"],
   password: User["password"],
 ) {
-  if (!email || !password) return undefined
-  const userWithPassword = await db.selectDistinct().from(user).where(eq(user.email, email))
+  if (!email || !password) return undefined;
+  const userWithPassword = await db
+    .selectDistinct()
+    .from(user)
+    .where(eq(user.email, email));
 
   if (!userWithPassword[0] || !userWithPassword[0].password) {
     return null;
   }
 
-  const isValid = await bcrypt.compare(
-    password,
-    userWithPassword[0].password
-  );
+  const isValid = await bcrypt.compare(password, userWithPassword[0].password);
 
   if (!isValid) {
     return null;

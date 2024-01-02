@@ -17,7 +17,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   // Show kanjis for logged in user
   const userId = await getUserId(request);
   if (!userId) {
-    return { kanjis: [], kanjiDrawn: [], quizzesTaken: 0, passagesRead: 0 }
+    return { kanjis: [], kanjiDrawn: [], quizzesTaken: 0, passagesRead: 0 };
   }
 
   const startDay = format(startOfWeek(new Date()), "MM/dd");
@@ -25,7 +25,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .select()
     .from(kanji)
     .where(and(eq(kanji.date, startDay), eq(kanji.userId, parseInt(userId))));
-  const kanjisDrawn = await db.select().from(writingLog).where(eq(writingLog.userId, parseInt(userId)));
+  const kanjisDrawn = await db
+    .select()
+    .from(writingLog)
+    .where(eq(writingLog.userId, parseInt(userId)));
   const kanjiDrawn = kanjisDrawn.length;
   return { kanjis, kanjiDrawn, quizzesTaken: 0, passagesRead: 0 };
 }
@@ -33,7 +36,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function Index() {
   const startDay = format(startOfWeek(new Date()), "MM/dd");
   const endDay = format(endOfWeek(new Date()), "MM/dd");
-  const { kanjis, kanjiDrawn, quizzesTaken, passagesRead } = useLoaderData<typeof loader>();
+  const { kanjis, kanjiDrawn, quizzesTaken, passagesRead } =
+    useLoaderData<typeof loader>();
   return (
     <div className="space-y-6 relative">
       <div className="space-y-4">
@@ -79,12 +83,17 @@ export default function Index() {
       <div className="mb-6 text-gray-200">
         <div className="flex gap-4 mb-12 justify-evenly">
           <div className="rounded bg-zinc-100 p-4">
-            <h3 className="text-2xl font-semibold mb-2 text-black">{kanjiDrawn}</h3>
-            <p className="mb-2 text-black tracking-tight">Kanji Drawn This Week</p>
+            <h3 className="text-2xl font-semibold mb-2 text-black">
+              {kanjiDrawn}
+            </h3>
+            <p className="mb-2 text-black tracking-tight">
+              Kanji Drawn This Week
+            </p>
           </div>
           <div className="rounded bg-zinc-100 p-4">
             <h3 className="text-2xl font-semibold mb-2">{quizzesTaken}</h3>
-            <p className="mb-2 tracking-tight">Quizzes Taken Yesterday</p></div>
+            <p className="mb-2 tracking-tight">Quizzes Taken Yesterday</p>
+          </div>
           <div className="rounded bg-zinc-100 p-4">
             <h3 className="text-2xl font-semibold mb-2">{passagesRead}</h3>
             <p className="mb-2 tracking-tight">Passages Read Yesterday</p>
