@@ -29,11 +29,12 @@ void migrate(db, {
 });
 
 export default {
-  schema: "./schema.server.ts",
+  schema: "app/drizzle/schema.server.ts",
   driver: "turso",
   dbCredentials: {
     url: process.env.DATABASE_PATH,
     authToken: process.env.AUTH_TOKEN,
   },
   verbose: true,
+  out: "app/drizzle/migrations",
 } satisfies Config;

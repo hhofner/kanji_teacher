@@ -3,7 +3,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { endOfWeek, format, startOfWeek } from "date-fns";
 import { eq, and } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
-import { kanji } from "~/drizzle/schema.server";
+import { kanji, writingLog } from "~/drizzle/schema.server";
 import { getUserId } from "~/session";
 
 export const meta: MetaFunction = () => {
@@ -17,7 +17,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   // Show kanjis for logged in user
   const userId = await getUserId(request);
   if (!userId) {
-    return { kanjis: [] };
+    return { kanjis: [], kanjiDrawn: [], quizzesTaken: 0, passagesRead: 0 }
   }
 
   const startDay = format(startOfWeek(new Date()), "MM/dd");
@@ -25,13 +25,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .select()
     .from(kanji)
     .where(and(eq(kanji.date, startDay), eq(kanji.userId, parseInt(userId))));
-  return { kanjis };
+  const kanjisDrawn = await db.select().from(writingLog).where(eq(writingLog.userId, parseInt(userId)));
+  const kanjiDrawn = kanjisDrawn.length;
+  return { kanjis, kanjiDrawn, quizzesTaken: 0, passagesRead: 0 };
 }
 
 export default function Index() {
   const startDay = format(startOfWeek(new Date()), "MM/dd");
   const endDay = format(endOfWeek(new Date()), "MM/dd");
-  const { kanjis } = useLoaderData<typeof loader>();
+  const { kanjis, kanjiDrawn, quizzesTaken, passagesRead } = useLoaderData<typeof loader>();
   return (
     <div className="space-y-6 relative">
       <div className="space-y-4">
@@ -75,12 +77,12 @@ export default function Index() {
         </div>
       </div>
       <div className="mb-6 text-gray-200">
-        <h3 className="text-lg font-semibold mb-2">Kanji Drawn Yesterday</h3>
-        <p className="mb-2">354</p>
+        <h3 className="text-lg font-semibold mb-2 text-black">Kanji Drawn This Week</h3>
+        <p className="mb-2 text-black">{kanjiDrawn}</p>
         <h3 className="text-lg font-semibold mb-2">Quizzes Taken Yesterday</h3>
-        <p className="mb-2">12</p>
+        <p className="mb-2">{quizzesTaken}</p>
         <h3 className="text-lg font-semibold mb-2">Passages Read Yesterday</h3>
-        <p className="mb-2">4</p>
+        <p className="mb-2">{passagesRead}</p>
         <div className="flex gap-4 w-full justify-center">
           <Link to="/study">
             <button className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200">

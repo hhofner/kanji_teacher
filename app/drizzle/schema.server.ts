@@ -19,10 +19,9 @@ export const kanji = sqliteTable("kanji", {
   userId: integer("userId").references(() => user.id),
 });
 
-export const writingHistory = sqliteTable("writingHistory", {
+export const writingLog = sqliteTable("writingLog", {
   id: integer("id").primaryKey(),
   datetime: text("datetime"),
   character: text("character"),
-  userId: integer("id").references(() => user.id),
-  type: text("type"),
+  userId: integer("userId").references(() => user.id),
 });

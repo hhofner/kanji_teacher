@@ -3,6 +3,7 @@ import { LazyBrush } from "lazy-brush";
 import { format, startOfWeek } from "date-fns";
 import {
   isRouteErrorResponse,
+  useFetcher,
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
@@ -11,6 +12,7 @@ import { db } from "~/drizzle/config.server";
 import { kanji } from "~/drizzle/schema.server";
 import { requireUser } from "~/session";
 import type { LoaderFunctionArgs } from "@remix-run/node";
+import { type action as kanjiRecordAction } from "./api.kanji.record";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
@@ -29,6 +31,7 @@ export default function Study() {
   const [drawnCount, setDrawnCount] = useState(0);
   const [isAutoReset, setIsAutoReset] = useState(false);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
+  const fetcher = useFetcher<typeof kanjiRecordAction>();
 
   const { kanjis } = useLoaderData<typeof loader>();
   const noKanjisExist = kanjis.length === 0;
@@ -58,6 +61,24 @@ export default function Study() {
   const x = useRef(0);
   const y = useRef(0);
 
+  function handleKanjiStrokeCount() {
+    if (kanjis[currentKanji]) {
+      if (kanjis[currentKanji].strokeCount === strokeCount + 1 && isAutoReset) {
+        setStrokeCount(0);
+        clearCanvasReset();
+        setDrawnCount((drawnCount) => drawnCount + 1);
+        fetcher.submit(
+          { kanji: kanjis[currentKanji].character },
+          { method: "POST", action: "/api/kanji/record" },
+        );
+      } else {
+        setStrokeCount((strokeCount) => strokeCount + 1);
+      }
+    } else {
+      setStrokeCount((strokeCount) => strokeCount + 1);
+    }
+  }
+
   function handleMouseDown() {
     isPressing.current = true;
   }
@@ -75,18 +96,7 @@ export default function Study() {
       .current!.getContext("2d")!
       .drawImage(canvasTempRef.current!, 0, 0, w, h);
     canvasTempRef.current!.getContext("2d")!.clearRect(0, 0, w, h);
-
-    if (kanjis[currentKanji]) {
-      if (kanjis[currentKanji].strokeCount === strokeCount + 1 && isAutoReset) {
-        setStrokeCount(0);
-        clearCanvasReset();
-        setDrawnCount((drawnCount) => drawnCount + 1);
-      } else {
-        setStrokeCount((strokeCount) => strokeCount + 1);
-      }
-    } else {
-      setStrokeCount((strokeCount) => strokeCount + 1);
-    }
+    handleKanjiStrokeCount();
   }
 
   function internalHandlePointerMove(newX: number, newY: number) {
@@ -348,6 +358,10 @@ export default function Study() {
     if (kanjiStrokeCount) {
       if (strokeCount >= kanjiStrokeCount) {
         setDrawnCount((drawnCount) => drawnCount + 1);
+        fetcher.submit(
+          { kanji: kanjis[currentKanji].character },
+          { method: "POST", action: "/api/kanji/record" },
+        );
       }
     }
     clearCanvasReset();
