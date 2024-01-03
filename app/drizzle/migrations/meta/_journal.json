@@ -15,6 +15,20 @@
       "when": 1704181705808,
       "tag": "0001_foamy_frog_thor",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1704279960133,
+      "tag": "0002_perfect_captain_america",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1704280254815,
+      "tag": "0003_supreme_the_fury",
+      "breakpoints": true
     }
   ]
 }
