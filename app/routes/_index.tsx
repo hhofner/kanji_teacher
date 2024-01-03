@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { endOfWeek, format, startOfWeek } from "date-fns";
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
 import { kanji, writingLog } from "~/drizzle/schema.server";
 import { getUserId } from "~/session";
@@ -25,10 +25,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .select()
     .from(kanji)
     .where(and(eq(kanji.date, startDay), eq(kanji.userId, parseInt(userId))));
-  const kanjisDrawn = await db
-    .select()
-    .from(writingLog)
-    .where(eq(writingLog.userId, parseInt(userId)));
+  const kanjisDrawn = await db.select().from(writingLog).where(
+    and(eq(writingLog.userId, parseInt(userId)), sql`strftime('%Y-%m-%d %H:%M:%S', ${writingLog.datetime}) >= datetime('now', 'weekday 0', '-7 days')`))
   const kanjiDrawn = kanjisDrawn.length;
   return { kanjis, kanjiDrawn, quizzesTaken: 0, passagesRead: 0 };
 }

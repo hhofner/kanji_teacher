@@ -394,7 +394,7 @@ export default function Study() {
           <div className="w-full text-center">No kanjis selected, add some</div>
         ) : (
           <>
-            <div className="flex items-center justify-center mb-2">
+            <div className="flex items-center justify-center mb-2 select-none">
               <button
                 id="prev"
                 onClick={() => previousKanji()}
@@ -405,6 +405,7 @@ export default function Study() {
               <div
                 id="character"
                 className="relative mx-4 py-2 px-4 border rounded text-6xl text-bold bg-white text-black"
+                onClick={() => setHidden(!hidden)}
               >
                 <span className={`${hidden ? "invisible" : ""}`}>
                   {kanjis[currentKanji].character}
@@ -500,7 +501,7 @@ export default function Study() {
           </div>
         </div>
         <div className="p-4">
-          <div className="aspect-square relative" ref={canvasContainerRef}>
+          <div className="aspect-square relative select-none" ref={canvasContainerRef}>
             <canvas
               ref={canvasInterfaceRef}
               className="border-2 border-gray-500 absolute left-0 top-0 z-40 h-full w-full aspect-square"
