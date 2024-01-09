@@ -9,10 +9,11 @@ import {
 } from "@remix-run/react";
 import { eq, and } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
-import { kanji } from "~/drizzle/schema.server";
+import { kanji, setting } from "~/drizzle/schema.server";
 import { requireUser } from "~/session";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { type action as kanjiRecordAction } from "./api.kanji.record";
+import { type action as settingSetAction } from "./api.setting.set";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
@@ -21,19 +22,30 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .select()
     .from(kanji)
     .where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
-  return { kanjis };
+
+  const rawSettings = await db.select().from(setting).where(eq(setting.userId, user.id));
+  let settings = {
+    isAutoReset: false,
+    lastKanjiIndex: 0,
+  }
+  if (rawSettings.length > 0) {
+    settings = rawSettings[0];
+  }
+  return { kanjis, isAutoReset: settings.isAutoReset, lastKanjiIndex: settings.lastKanjiIndex  }
 }
 
 export default function Study() {
+  const { kanjis, isAutoReset: autoResetSetting, lastKanjiIndex } = useLoaderData<typeof loader>();
+
   const [strokeCount, setStrokeCount] = useState(0);
-  const [currentKanji, setCurrentKanji] = useState(0);
+  const [currentKanji, setCurrentKanji] = useState(lastKanjiIndex)
   const [hidden, setHidden] = useState(false);
   const [drawnCount, setDrawnCount] = useState(0);
-  const [isAutoReset, setIsAutoReset] = useState(false);
+  const [isAutoReset, setIsAutoReset] = useState(autoResetSetting);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const fetcher = useFetcher<typeof kanjiRecordAction>();
+  const settingsFetcher = useFetcher<typeof settingSetAction>()
 
-  const { kanjis } = useLoaderData<typeof loader>();
   const noKanjisExist = kanjis.length === 0;
 
   const lazy = useMemo(
@@ -60,6 +72,14 @@ export default function Study() {
 
   const x = useRef(0);
   const y = useRef(0);
+
+  function handleAutoResetChange() {
+    settingsFetcher.submit(
+      { isAutoReset: !isAutoReset, lastKanjiIndex: currentKanji },
+      { method: "POST", action: "/api/setting/set" },
+    )
+    setIsAutoReset(!isAutoReset);
+  }
 
   function handleKanjiStrokeCount() {
     if (kanjis[currentKanji]) {
@@ -370,8 +390,16 @@ export default function Study() {
   function nextKanji() {
     if (currentKanji === kanjis.length - 1) {
       setCurrentKanji(0);
+      settingsFetcher.submit(
+        { isAutoReset, lastKanjiIndex: 0 },
+        { method: "POST", action: "/api/setting/set" },
+      )
     } else {
       setCurrentKanji(currentKanji + 1);
+      settingsFetcher.submit(
+        { isAutoReset, lastKanjiIndex: currentKanji + 1 },
+        { method: "POST", action: "/api/setting/set" },
+      )
     }
     clearCanvasReset();
     setStrokeCount(0);
@@ -380,8 +408,16 @@ export default function Study() {
   function previousKanji() {
     if (currentKanji === 0) {
       setCurrentKanji(kanjis.length - 1);
+      settingsFetcher.submit(
+        { isAutoReset, lastKanjiIndex: kanjis.length - 1 },
+        { method: "POST", action: "/api/setting/set" },
+      )
     } else {
       setCurrentKanji(currentKanji - 1);
+      settingsFetcher.submit(
+        { isAutoReset, lastKanjiIndex: currentKanji - 1 },
+        { method: "POST", action: "/api/setting/set" },
+      )
     }
     clearCanvasReset();
     setStrokeCount(0);
@@ -465,6 +501,20 @@ export default function Study() {
           </div>
         )}
         {!noKanjisExist && (
+          <div className="w-full text-center text-zinc-500 mb-2">
+            {kanjis[currentKanji].onyomi
+              ?.split(",")
+              .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
+          </div>
+        )}
+        {!noKanjisExist && (
+          <div className="w-full text-center text-zinc-500 mb-2">
+            {kanjis[currentKanji].kunyomi
+              ?.split(",")
+              .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
+          </div>
+        )}
+        {!noKanjisExist && (
           <div className="mb-4">
             {kanjis[currentKanji].strokeCount || "error"} strokes
           </div>
@@ -484,7 +534,7 @@ export default function Study() {
             reset
           </button>
           <button
-            onClick={() => setIsAutoReset(!isAutoReset)}
+            onClick={() => handleAutoResetChange()}
             className={`hover:bg-gray-600 text-white font-bold py-1 px-2 rounded ${
               isAutoReset ? "bg-gray-700 " : "bg-gray-300 "
             }`}

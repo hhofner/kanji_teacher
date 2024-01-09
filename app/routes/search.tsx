@@ -88,14 +88,17 @@ export default function Search() {
               <p className="text-3xl">{kanji.kanji}</p>
               <small>{kanji.meanings && kanji.meanings[0]}</small>
             </div>
-            <button
-              onClick={() => setAddedKanjis([...addedKanjis, kanji.kanji])}
-              value={kanji.kanji}
-              name="kanji"
-              className="bg-blue-500 rounded p-1 h-fit text-white"
-            >
-              Add
-            </button>
+            {addedKanjis.includes(kanji.kanji) ?
+              <span className="bg-blue-500 rounded p-1 h-fit text-white">✅</span>
+              :
+              <button
+                onClick={() => setAddedKanjis([...addedKanjis, kanji.kanji])}
+                value={kanji.kanji}
+                name="kanji"
+                className="bg-blue-500 rounded p-1 h-fit text-white"
+              >
+                Add
+              </button>}
           </fetcher.Form>
         ))}
       </div>

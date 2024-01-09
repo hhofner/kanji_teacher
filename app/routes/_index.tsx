@@ -52,12 +52,12 @@ export default function Index() {
             </button>
           </Link>
         </div>
-        <div className="flex justify-around bg-zinc-100 rounded p-4">
+        <div className="flex justify-around bg-zinc-100 rounded p-4 flex-wrap">
           {kanjis.length <= 0 ? (
             <p>No kanjis selected. Add some!</p>
           ) : (
             kanjis.map((kanji) => (
-              <Link key={kanji.id} to={`/kanji/${kanji.id}`}>
+              <Link key={kanji!.id} to={`/kanji/${kanji!.id}`}>
                 <div className="md:text-6xl text-4xl p-1">
                   {kanji.character}
                 </div>

@@ -24,6 +24,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return session.data;
 }
 
+const validRoutes = ["/about", "/search"];
+
 export default function App() {
   let data = useLoaderData<typeof loader>();
   let location = useLocation();
@@ -37,7 +39,7 @@ export default function App() {
       </head>
       <body
         className={`min-h-webkit antialiased ${
-          location.pathname === "/about" ? "" : "overflow-hidden"
+          validRoutes.includes(location.pathname) ? "" : "overflow-hidden"
         }`}
       >
         <div className="bg-white p-8 rounded-lg md:max-w-3xl mx-auto w-full">

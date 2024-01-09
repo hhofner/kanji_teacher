@@ -29,6 +29,13 @@
       "when": 1704280254815,
       "tag": "0003_supreme_the_fury",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1704804465953,
+      "tag": "0004_lucky_fantastic_four",
+      "breakpoints": true
     }
   ]
 }

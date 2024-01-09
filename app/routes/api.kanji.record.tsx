@@ -6,7 +6,6 @@ import { requireUserId } from "~/session";
 
 export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
-  console.log("userId", userId);
   const formData = await request.formData();
   const kanji = formData.get("kanji") as string | undefined;
 
