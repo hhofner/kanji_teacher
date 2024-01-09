@@ -31,7 +31,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (rawSettings.length > 0) {
     settings = rawSettings[0];
   }
-  return { kanjis, isAutoReset: settings.isAutoReset, lastKanjiIndex: settings.lastKanjiIndex  }
+  return { kanjis, isAutoReset: settings.isAutoReset, lastKanjiIndex: settings.lastKanjiIndex }
 }
 
 export default function Study() {
@@ -447,9 +447,8 @@ export default function Study() {
                   {kanjis[currentKanji].character}
                 </span>
                 <span
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${
-                    hidden ? "" : "invisible"
-                  }`}
+                  className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${hidden ? "" : "invisible"
+                    }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -485,9 +484,8 @@ export default function Study() {
                 <div
                   key={idx}
                   onClick={() => setCurrentKanji(idx)}
-                  className={`rounded-full w-2 h-2 border border-black ${
-                    idx === currentKanji ? "bg-black" : "cursor-pointer"
-                  }`}
+                  className={`rounded-full w-2 h-2 border border-black ${idx === currentKanji ? "bg-black" : "cursor-pointer"
+                    }`}
                 ></div>
               ))}
             </div>
@@ -535,9 +533,8 @@ export default function Study() {
           </button>
           <button
             onClick={() => handleAutoResetChange()}
-            className={`hover:bg-gray-600 text-white font-bold py-1 px-2 rounded ${
-              isAutoReset ? "bg-gray-700 " : "bg-gray-300 "
-            }`}
+            className={`hover:bg-gray-600 text-white font-bold py-1 px-2 rounded ${isAutoReset ? "bg-gray-700 " : "bg-gray-300 "
+              }`}
           >
             auto reset {isAutoReset ? "✔" : ""}
           </button>
@@ -555,18 +552,30 @@ export default function Study() {
             <canvas
               ref={canvasInterfaceRef}
               className="border-2 border-gray-500 absolute left-0 top-0 z-40 h-full w-full aspect-square"
+              style={
+                { WebkitUserSelect: "none" }
+              }
             />
             <canvas
               ref={canvasTempRef}
               className="border-2 border-gray-500 absolute left-0 top-0 z-30 h-full w-full aspect-square"
+              style={
+                { WebkitUserSelect: "none" }
+              }
             ></canvas>
             <canvas
               ref={canvasDrawingRef}
               className="border-2 border-gray-500 absolute left-0 top-0 z-20 h-full w-full aspect-square"
+              style={
+                { WebkitUserSelect: "none" }
+              }
             ></canvas>
             <canvas
               ref={canvasGridRef}
               className="border-2 border-gray-500 absolute left-0 top-0 z-10 h-full w-full aspect-square"
+              style={
+                { WebkitUserSelect: "none" }
+              }
             ></canvas>
           </div>
         </div>
