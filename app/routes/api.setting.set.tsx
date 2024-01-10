@@ -12,18 +12,20 @@ export async function action({ request }: ActionFunctionArgs) {
   const lastKanjiIndex = formData.get("lastKanjiIndex") as string | undefined;
 
   if (userId) {
-    await db.insert(setting).values({
-      isAutoReset: isAutoReset === "true",
-      lastKanjiIndex: parseInt(lastKanjiIndex ?? "0"),
-      userId: parseInt(userId),
-    })
+    await db
+      .insert(setting)
+      .values({
+        isAutoReset: isAutoReset === "true",
+        lastKanjiIndex: parseInt(lastKanjiIndex ?? "0"),
+        userId: parseInt(userId),
+      })
       .onConflictDoUpdate({
         target: [setting.userId],
         set: {
           isAutoReset: isAutoReset === "true",
           lastKanjiIndex: parseInt(lastKanjiIndex ?? "0"),
         },
-      })
+      });
   }
 
   return json({ ok: true });

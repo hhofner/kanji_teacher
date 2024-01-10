@@ -23,28 +23,39 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .from(kanji)
     .where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
 
-  const rawSettings = await db.select().from(setting).where(eq(setting.userId, user.id));
+  const rawSettings = await db
+    .select()
+    .from(setting)
+    .where(eq(setting.userId, user.id));
   let settings = {
     isAutoReset: false,
     lastKanjiIndex: 0,
-  }
+  };
   if (rawSettings.length > 0) {
     settings = rawSettings[0];
   }
-  return { kanjis, isAutoReset: settings.isAutoReset, lastKanjiIndex: settings.lastKanjiIndex }
+  return {
+    kanjis,
+    isAutoReset: settings.isAutoReset,
+    lastKanjiIndex: settings.lastKanjiIndex,
+  };
 }
 
 export default function Study() {
-  const { kanjis, isAutoReset: autoResetSetting, lastKanjiIndex } = useLoaderData<typeof loader>();
+  const {
+    kanjis,
+    isAutoReset: autoResetSetting,
+    lastKanjiIndex,
+  } = useLoaderData<typeof loader>();
 
   const [strokeCount, setStrokeCount] = useState(0);
-  const [currentKanji, setCurrentKanji] = useState(lastKanjiIndex)
+  const [currentKanji, setCurrentKanji] = useState(lastKanjiIndex);
   const [hidden, setHidden] = useState(false);
   const [drawnCount, setDrawnCount] = useState(0);
   const [isAutoReset, setIsAutoReset] = useState(autoResetSetting);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const fetcher = useFetcher<typeof kanjiRecordAction>();
-  const settingsFetcher = useFetcher<typeof settingSetAction>()
+  const settingsFetcher = useFetcher<typeof settingSetAction>();
 
   const noKanjisExist = kanjis.length === 0;
 
@@ -77,7 +88,7 @@ export default function Study() {
     settingsFetcher.submit(
       { isAutoReset: !isAutoReset, lastKanjiIndex: currentKanji },
       { method: "POST", action: "/api/setting/set" },
-    )
+    );
     setIsAutoReset(!isAutoReset);
   }
 
@@ -393,13 +404,13 @@ export default function Study() {
       settingsFetcher.submit(
         { isAutoReset, lastKanjiIndex: 0 },
         { method: "POST", action: "/api/setting/set" },
-      )
+      );
     } else {
       setCurrentKanji(currentKanji + 1);
       settingsFetcher.submit(
         { isAutoReset, lastKanjiIndex: currentKanji + 1 },
         { method: "POST", action: "/api/setting/set" },
-      )
+      );
     }
     clearCanvasReset();
     setStrokeCount(0);
@@ -411,13 +422,13 @@ export default function Study() {
       settingsFetcher.submit(
         { isAutoReset, lastKanjiIndex: kanjis.length - 1 },
         { method: "POST", action: "/api/setting/set" },
-      )
+      );
     } else {
       setCurrentKanji(currentKanji - 1);
       settingsFetcher.submit(
         { isAutoReset, lastKanjiIndex: currentKanji - 1 },
         { method: "POST", action: "/api/setting/set" },
-      )
+      );
     }
     clearCanvasReset();
     setStrokeCount(0);
@@ -447,8 +458,9 @@ export default function Study() {
                   {kanjis[currentKanji].character}
                 </span>
                 <span
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${hidden ? "" : "invisible"
-                    }`}
+                  className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${
+                    hidden ? "" : "invisible"
+                  }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -484,34 +496,37 @@ export default function Study() {
                 <div
                   key={idx}
                   onClick={() => setCurrentKanji(idx)}
-                  className={`rounded-full w-2 h-2 border border-black ${idx === currentKanji ? "bg-black" : "cursor-pointer"
-                    }`}
+                  className={`rounded-full w-2 h-2 border border-black ${
+                    idx === currentKanji ? "bg-black" : "cursor-pointer"
+                  }`}
                 ></div>
               ))}
             </div>
           </>
         )}
-        {!noKanjisExist && (
-          <div className="w-full text-center text-zinc-500 mb-2">
-            {kanjis[currentKanji].meanings
-              ?.split(",")
-              .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
-          </div>
-        )}
-        {!noKanjisExist && (
-          <div className="w-full text-center text-zinc-500 mb-2">
-            {kanjis[currentKanji].onyomi
-              ?.split(",")
-              .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
-          </div>
-        )}
-        {!noKanjisExist && (
-          <div className="w-full text-center text-zinc-500 mb-2">
-            {kanjis[currentKanji].kunyomi
-              ?.split(",")
-              .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
-          </div>
-        )}
+        <div className="mb-2">
+          {!noKanjisExist && (
+            <div className="w-full text-center text-zinc-500">
+              {kanjis[currentKanji].meanings
+                ?.split(",")
+                .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
+            </div>
+          )}
+          {!noKanjisExist && (
+            <div className="w-full text-center text-zinc-500">
+              {kanjis[currentKanji].onyomi
+                ?.split(",")
+                .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
+            </div>
+          )}
+          {!noKanjisExist && (
+            <div className="w-full text-center text-zinc-500">
+              {kanjis[currentKanji].kunyomi
+                ?.split(",")
+                .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
+            </div>
+          )}
+        </div>
         {!noKanjisExist && (
           <div className="mb-4">
             {kanjis[currentKanji].strokeCount || "error"} strokes
@@ -533,8 +548,9 @@ export default function Study() {
           </button>
           <button
             onClick={() => handleAutoResetChange()}
-            className={`hover:bg-gray-600 text-white font-bold py-1 px-2 rounded ${isAutoReset ? "bg-gray-700 " : "bg-gray-300 "
-              }`}
+            className={`hover:bg-gray-600 text-white font-bold py-1 px-2 rounded ${
+              isAutoReset ? "bg-gray-700 " : "bg-gray-300 "
+            }`}
           >
             auto reset {isAutoReset ? "✔" : ""}
           </button>
@@ -548,34 +564,29 @@ export default function Study() {
           </div>
         </div>
         <div className="p-4">
-          <div className="aspect-square relative select-none" ref={canvasContainerRef}>
+          <div
+            className="aspect-square relative select-none"
+            ref={canvasContainerRef}
+          >
             <canvas
               ref={canvasInterfaceRef}
               className="border-2 border-gray-500 absolute left-0 top-0 z-40 h-full w-full aspect-square"
-              style={
-                { WebkitUserSelect: "none" }
-              }
+              style={{ WebkitUserSelect: "none" }}
             />
             <canvas
               ref={canvasTempRef}
               className="border-2 border-gray-500 absolute left-0 top-0 z-30 h-full w-full aspect-square"
-              style={
-                { WebkitUserSelect: "none" }
-              }
+              style={{ WebkitUserSelect: "none" }}
             ></canvas>
             <canvas
               ref={canvasDrawingRef}
               className="border-2 border-gray-500 absolute left-0 top-0 z-20 h-full w-full aspect-square"
-              style={
-                { WebkitUserSelect: "none" }
-              }
+              style={{ WebkitUserSelect: "none" }}
             ></canvas>
             <canvas
               ref={canvasGridRef}
               className="border-2 border-gray-500 absolute left-0 top-0 z-10 h-full w-full aspect-square"
-              style={
-                { WebkitUserSelect: "none" }
-              }
+              style={{ WebkitUserSelect: "none" }}
             ></canvas>
           </div>
         </div>

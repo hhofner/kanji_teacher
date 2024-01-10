@@ -77,12 +77,8 @@
           "name": "kanji_userId_user_id_fk",
           "tableFrom": "kanji",
           "tableTo": "user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -127,9 +123,7 @@
       "indexes": {
         "setting_userId_unique": {
           "name": "setting_userId_unique",
-          "columns": [
-            "userId"
-          ],
+          "columns": ["userId"],
           "isUnique": true
         }
       },
@@ -138,12 +132,8 @@
           "name": "setting_userId_user_id_fk",
           "tableFrom": "setting",
           "tableTo": "user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -226,12 +216,8 @@
           "name": "writingLog_userId_user_id_fk",
           "tableFrom": "writingLog",
           "tableTo": "user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
