@@ -7,8 +7,8 @@ import StrokeIndicator from "./StrokeIndicator";
 import { KanjiDb } from "~/types/kanji";
 
 interface Props {
-	onStroke: () => void;
-	onClear: () => void;
+	onStroke: (isValid: boolean) => void;
+	onClear: (isValid: boolean) => void;
 	onHide: () => void;
 	onAutoReset: () => void;
 	onIndexChange: (idx: number) => void;
@@ -37,16 +37,20 @@ export default function KanjiCanvas({ onStroke, onClear, onHide, onAutoReset, on
 	function handleNextKanji() {
 		if (currentKanjiIndex === kanjis.length - 1) {
 			setCurrentKanjiIndex(0);
+			onIndexChange(0)
 		} else {
 			setCurrentKanjiIndex(currentKanjiIndex + 1);
+			onIndexChange(currentKanjiIndex + 1)
 		}
 	}
 
 	function handlePreviousKanji() {
 		if (currentKanjiIndex === 0) {
 			setCurrentKanjiIndex(kanjis.length - 1);
+			onIndexChange(kanjis.length - 1)
 		} else {
 			setCurrentKanjiIndex(currentKanjiIndex - 1);
+			onIndexChange(currentKanjiIndex - 1)
 		}
 	}
 
@@ -85,7 +89,7 @@ export default function KanjiCanvas({ onStroke, onClear, onHide, onAutoReset, on
 		points.current = [];
 		if (hasDrawn.current) {
 			hasDrawn.current = false;
-			onStroke();
+			setDrawnCount(drawnCount + 1)
 		}
 		drawOntoDrawnCanvas();
 	}
@@ -106,7 +110,7 @@ export default function KanjiCanvas({ onStroke, onClear, onHide, onAutoReset, on
 		points.current = [];
 		if (hasDrawn.current) {
 			hasDrawn.current = false;
-			onStroke();
+			setDrawnCount(drawnCount + 1)
 		}
 	}
 
@@ -227,7 +231,8 @@ export default function KanjiCanvas({ onStroke, onClear, onHide, onAutoReset, on
 		if (!drawnCtx) return;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		ctx.clearRect(0, 0, drawnCanvas.width, drawnCanvas.height);
-		onClear();
+		if (currentKanji && currentKanji.strokeCount) { onClear(drawnCount >= currentKanji.strokeCount) }
+			setDrawnCount(0)
 	}
 
 	function loop() {

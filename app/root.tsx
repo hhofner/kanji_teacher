@@ -38,7 +38,7 @@ export default function App() {
         <Links />
       </head>
       <body
-        className={`min-h-webkit antialiased ${
+        className={`h-webkit antialiased ${
           validRoutes.includes(location.pathname) ? "" : "overflow-hidden"
         }`}
       >
