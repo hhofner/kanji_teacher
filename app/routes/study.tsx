@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { LazyBrush } from "lazy-brush";
 import { format, startOfWeek } from "date-fns";
 import {
 	isRouteErrorResponse,
@@ -28,6 +27,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function Study() {
 
 	const { kanjis } = useLoaderData<typeof loader>();
+  const fetcher = useFetcher<typeof kanjiRecordAction>();
 
 	return (
 		<KanjiCanvas onStroke={function(): void {
@@ -38,7 +38,7 @@ export default function Study() {
 			throw new Error("Function not implemented.");
 		}} onAutoReset={function(): void {
 			throw new Error("Function not implemented.");
-		}} isAutoReset={false} kanji={""} />
+		}} isAutoReset={false} currentIndex={0} kanjis={kanjis} />
 	);
 }
 

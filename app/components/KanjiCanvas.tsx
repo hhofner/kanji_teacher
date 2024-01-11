@@ -1,20 +1,23 @@
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import KanjiDisplay from "./KanjiDisplay";
 import KanjiListIndicator from "./KanjiListIndicator";
 import KanjiDescription from "./KanjiDescription";
 import StrokeIndicator from "./StrokeIndicator";
+import { KanjiDb } from "~/types/kanji";
 
 interface Props {
 	onStroke: () => void;
 	onClear: () => void;
 	onHide: () => void;
 	onAutoReset: () => void;
+	onIndexChange: (idx: number) => void;
 	isAutoReset: boolean;
-	kanji: string;
+	currentIndex: number;
+	kanjis: KanjiDb[];
 }
 
-export default function KanjiCanvas({ onStroke, onClear, onHide, onAutoReset, isAutoReset }: Props) {
+export default function KanjiCanvas({ onStroke, onClear, onHide, onAutoReset, onIndexChange, isAutoReset, currentIndex, kanjis }: Props) {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const canvasDrawnRef = useRef<HTMLCanvasElement | null>(null);
 	const canvasGridRef = useRef<HTMLCanvasElement | null>(null);
@@ -25,6 +28,27 @@ export default function KanjiCanvas({ onStroke, onClear, onHide, onAutoReset, is
 	const dpr = useRef(1);
 	const animationFrame = useRef(0);
 	const hasDrawn = useRef(false);
+
+	const [currentKanjiIndex, setCurrentKanjiIndex] = useState(currentIndex);
+	const currentKanji = kanjis[currentKanjiIndex];
+	const [drawnCount, setDrawnCount] = useState(0);
+	const [isHidden, setIsHidden] = useState(false)
+
+	function handleNextKanji() {
+		if (currentKanjiIndex === kanjis.length - 1) {
+			setCurrentKanjiIndex(0);
+		} else {
+			setCurrentKanjiIndex(currentKanjiIndex + 1);
+		}
+	}
+
+	function handlePreviousKanji() {
+		if (currentKanjiIndex === 0) {
+			setCurrentKanjiIndex(kanjis.length - 1);
+		} else {
+			setCurrentKanjiIndex(currentKanjiIndex - 1);
+		}
+	}
 
 	function drawOntoDrawnCanvas() {
 		const canvasDrawn = canvasDrawnRef.current;
@@ -273,10 +297,10 @@ export default function KanjiCanvas({ onStroke, onClear, onHide, onAutoReset, is
 					auto reset {isAutoReset ? "✔" : ""}
 				</button>
 			</div>
-			<StrokeIndicator strokeCount={0} drawnCount={0} />
-			<KanjiDescription meanings="" onyomi="" kunyomi="" />
-			<KanjiListIndicator kanjis={[]} currentIndex={0} onSetIndex={() => console.log("")} />
-			<KanjiDisplay character={"fda"} onNext={() => console.log("")} onSetHidden={() => console.log("")} onPrev={() => console.log("")} isHidden={true} />
+			<StrokeIndicator strokeCount={currentKanji.strokeCount} drawnCount={drawnCount} />
+			<KanjiDescription meanings={currentKanji.meanings} onyomi={currentKanji.onyomi} kunyomi={currentKanji.kunyomi} />
+			<KanjiListIndicator kanjis={kanjis.map(k => k.character)} currentIndex={currentKanjiIndex} onSetIndex={(idx: number) => setCurrentKanjiIndex(idx)} />
+			<KanjiDisplay character={currentKanji.character} onNext={() => handleNextKanji()} onSetHidden={() => setIsHidden(!isHidden)} onPrev={() => handlePreviousKanji()} isHidden={isHidden} />
 		</div>
 	);
 }

@@ -4,20 +4,8 @@ import { Form, useActionData, useFetcher } from "@remix-run/react";
 import { type action as kanjiAddAction } from "./api.kanji.add";
 import { useState } from "react";
 import { requireUser } from "~/session";
+import { KanjiShape } from "~/types/kanji";
 
-interface KanjiApiResponse {
-	grade: number;
-	heisig_en: string;
-	jlpt: number;
-	kanji: string;
-	kun_readings: string[];
-	meanings: string[];
-	name_readings: string[];
-	notes: string[];
-	on_readings: string[];
-	stroke_count: number;
-	unicode: string;
-}
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	await requireUser(request);
@@ -52,8 +40,8 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function Search() {
 	const actionData = useActionData<
-		| { error: string; resultList?: KanjiApiResponse[] }
-		| { resultList: KanjiApiResponse[]; error?: string }
+		| { error: string; resultList?: KanjiShape[] }
+		| { resultList: KanjiShape[]; error?: string }
 	>();
 	const fetcher = useFetcher<typeof kanjiAddAction>();
 	const [addedKanjis, setAddedKanjis] = useState<string[]>([]);
