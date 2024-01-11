@@ -5,34 +5,36 @@ import { kanji } from "~/drizzle/schema.server";
 import { requireUserId } from "~/session";
 
 export async function action({ request }: ActionFunctionArgs) {
-  const userId = await requireUserId(request);
-  const formData = await request.formData();
-  const kanjiQuery = formData.get("kanji");
-  if (kanjiQuery) {
-    const results = await fetch(`https://kanjiapi.dev/v1/kanji/${kanjiQuery}`);
-    const kanjiInfo = await results.json();
-    if (kanjiInfo && results.status === 200) {
-      const startDay = format(startOfWeek(new Date()), "MM/dd");
-      await db.insert(kanji).values({
-        date: startDay,
-        character: kanjiInfo.kanji,
-        kunyomi: kanjiInfo.kun_readings.join(","),
-        onyomi: kanjiInfo.on_readings.join(","),
-        meanings: kanjiInfo.meanings.join(","),
-        jlpt: kanjiInfo.jlpt,
-        strokeCount: kanjiInfo.stroke_count,
-        userId: parseInt(userId),
-      });
-      return json({ ok: true });
-    } else {
-      return json({ error: results.statusText }, 404);
-    }
-  } else {
-    return json(
-      {
-        error: "Bad request",
-      },
-      400,
-    );
-  }
+	const userId = await requireUserId(request);
+	const formData = await request.formData();
+	const kanjiQuery = formData.get("kanji");
+	if (kanjiQuery) {
+		const results = await fetch(
+			`https://kanjiapi.dev/v1/kanji/${kanjiQuery}`,
+		);
+		const kanjiInfo = await results.json();
+		if (kanjiInfo && results.status === 200) {
+			const startDay = format(startOfWeek(new Date()), "MM/dd");
+			await db.insert(kanji).values({
+				date: startDay,
+				character: kanjiInfo.kanji,
+				kunyomi: kanjiInfo.kun_readings.join(","),
+				onyomi: kanjiInfo.on_readings.join(","),
+				meanings: kanjiInfo.meanings.join(","),
+				jlpt: kanjiInfo.jlpt,
+				strokeCount: kanjiInfo.stroke_count,
+				userId: parseInt(userId),
+			});
+			return json({ ok: true });
+		} else {
+			return json({ error: results.statusText }, 404);
+		}
+	} else {
+		return json(
+			{
+				error: "Bad request",
+			},
+			400,
+		);
+	}
 }

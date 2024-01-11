@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       height: {
-        webkit: "100svh",
+        webkit: "100dvh",
       },
     },
   },

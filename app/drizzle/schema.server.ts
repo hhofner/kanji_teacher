@@ -28,7 +28,9 @@ export const writingLog = sqliteTable("writingLog", {
 
 export const setting = sqliteTable("setting", {
   id: integer("id").primaryKey(),
-  isAutoReset: integer("isAutoReset", { mode: 'boolean' }).notNull().default(true),
+  isAutoReset: integer("isAutoReset", { mode: "boolean" })
+    .notNull()
+    .default(true),
   userId: integer("userId").references(() => user.id),
   lastKanjiIndex: integer("lastKanjiIndex").notNull().default(0),
-})
+});
