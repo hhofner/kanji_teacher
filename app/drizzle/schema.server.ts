@@ -31,6 +31,8 @@ export const setting = sqliteTable("setting", {
   isAutoReset: integer("isAutoReset", { mode: "boolean" })
     .notNull()
     .default(true),
-  userId: integer("userId").references(() => user.id),
+  userId: integer("userId")
+    .references(() => user.id)
+    .unique(),
   lastKanjiIndex: integer("lastKanjiIndex").notNull().default(0),
 });

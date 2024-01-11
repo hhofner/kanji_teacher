@@ -8,7 +8,7 @@ import {
 } from "@remix-run/react";
 import { eq, and } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
-import { kanji } from "~/drizzle/schema.server";
+import { kanji, setting } from "~/drizzle/schema.server";
 import { requireUser } from "~/session";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { type action as kanjiRecordAction } from "./api.kanji.record";
@@ -21,7 +21,23 @@ export async function loader({ request }: LoaderFunctionArgs) {
 		.select()
 		.from(kanji)
 		.where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
-	return { kanjis };
+
+	const rawSettings = await db
+    .select()
+    .from(setting)
+    .where(eq(setting.userId, user.id));
+  let settings = {
+    isAutoReset: false,
+    lastKanjiIndex: 0,
+  };
+  if (rawSettings.length > 0) {
+    settings = rawSettings[0];
+  }
+  return {
+    kanjis,
+    isAutoReset: settings.isAutoReset,
+    lastKanjiIndex: settings.lastKanjiIndex,
+  };
 }
 
 export default function Study() {
