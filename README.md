@@ -36,3 +36,7 @@ Make sure to deploy the output of `remix build`
 
 - `build/`
 - `public/build/`
+
+## Icon Set
+
+https://remixicon.com/

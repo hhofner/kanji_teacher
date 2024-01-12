@@ -1,9 +1,14 @@
 import { json } from "@remix-run/node";
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
-import { Form, useActionData, useFetcher } from "@remix-run/react";
+import { Form, useActionData, useFetcher, useLoaderData } from "@remix-run/react";
 import { type action as kanjiAddAction } from "./api.kanji.add";
+import { type action as kanjiRemoveAction } from "./api.kanji.remove"
 import { useState } from "react";
 import { requireUser } from "~/session";
+import { format, startOfWeek } from "date-fns";
+import { kanji } from "~/drizzle/schema.server";
+import { db } from "~/drizzle/config.server";
+import { eq, and, sql } from "drizzle-orm";
 
 interface KanjiApiResponse {
   grade: number;
@@ -19,9 +24,21 @@ interface KanjiApiResponse {
   unicode: string;
 }
 
+interface KanjiData {
+  kanjiId: number;
+  character: string;
+}
+
 export async function loader({ request }: LoaderFunctionArgs) {
-  await requireUser(request);
-  return null;
+  const user = await requireUser(request);
+
+  const startDay = format(startOfWeek(new Date()), "MM/dd");
+  const kanjis = await db
+    .select()
+    .from(kanji)
+    .where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
+
+  return { kanjis }
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -56,14 +73,22 @@ export default function Search() {
     | { resultList: KanjiApiResponse[]; error?: string }
   >();
   const fetcher = useFetcher<typeof kanjiAddAction>();
-  const [addedKanjis, setAddedKanjis] = useState<string[]>([]);
+  const removeFetcher = useFetcher<typeof kanjiRemoveAction>();
+  const { kanjis } = useLoaderData<typeof loader>();
+  const [addedKanjis, setAddedKanjis] = useState<KanjiData[]>(kanjis.map(k => ({ character: k.character, kanjiId: k.id })))
+
+  function removeKanji(kanjiId: number) {
+    removeFetcher.submit({ kanjiId }, { method: "POST", action: "/api/kanji/remove" })
+    setAddedKanjis(addedKanjis.filter(k => k.kanjiId !== kanjiId))
+  }
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-4">
-        {addedKanjis.map((kanji) => (
-          <p className="text-3xl" key={kanji}>
-            {kanji}
+      <div className="flex items-center justify-center flex-wrap gap-4 bg-zinc-100 p-4 rounded">
+        {addedKanjis.map((kanji, idx) => (
+          <p className="text-4xl relative" key={kanji.character + idx}>
+            {kanji.character}
+            <svg onClick={() => removeKanji(kanji.kanjiId)} className="absolute -top-1 -right-1 opacity-25 cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path></svg>
           </p>
         ))}
       </div>
@@ -88,20 +113,13 @@ export default function Search() {
               <p className="text-3xl">{kanji.kanji}</p>
               <small>{kanji.meanings && kanji.meanings[0]}</small>
             </div>
-            {addedKanjis.includes(kanji.kanji) ? (
-              <span className="bg-blue-500 rounded p-1 h-fit text-white">
-                ✅
-              </span>
-            ) : (
-              <button
-                onClick={() => setAddedKanjis([...addedKanjis, kanji.kanji])}
-                value={kanji.kanji}
-                name="kanji"
-                className="bg-blue-500 rounded p-1 h-fit text-white"
-              >
-                Add
-              </button>
-            )}
+            <button
+              value={kanji.kanji}
+              name="kanji"
+              className="bg-blue-500 rounded p-1 h-fit text-white"
+            >
+              Add
+            </button>
           </fetcher.Form>
         ))}
       </div>
