@@ -42,10 +42,10 @@ export default function App() {
           validRoutes.includes(location.pathname) ? "" : "overflow-hidden"
         }`}
       >
-        <div className="bg-white p-8 rounded-lg md:max-w-3xl mx-auto w-full">
+        <div className="bg-white p-4 md:p-8 rounded-lg md:max-w-3xl mx-auto w-full">
           <div className="flex justify-between">
             <Link to="/">
-              <h1 className="text-2xl font-bold mb-8">
+              <h1 className="text-2xl font-bold md:mb-8 mb-4">
                 Oh My <span className="text-gray-400 italic">Kanji</span>
               </h1>
             </Link>

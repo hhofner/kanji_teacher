@@ -83,6 +83,7 @@ export default function Study() {
 
   const x = useRef(0);
   const y = useRef(0);
+  const [validStroke, setValidStroke] = useState(false);
 
   function handleAutoResetChange() {
     settingsFetcher.submit(
@@ -93,6 +94,7 @@ export default function Study() {
   }
 
   function handleKanjiStrokeCount() {
+    if (!validStroke) return
     if (kanjis[currentKanji]) {
       if (kanjis[currentKanji].strokeCount === strokeCount + 1 && isAutoReset) {
         setStrokeCount(0);
@@ -128,6 +130,7 @@ export default function Study() {
       .drawImage(canvasTempRef.current!, 0, 0, w, h);
     canvasTempRef.current!.getContext("2d")!.clearRect(0, 0, w, h);
     handleKanjiStrokeCount();
+    setValidStroke(false)
   }
 
   function internalHandlePointerMove(newX: number, newY: number) {
@@ -141,6 +144,7 @@ export default function Study() {
   }
 
   function handleTouchStart(e: TouchEvent) {
+    e.preventDefault()
     internalHandlePointerMove(
       e.changedTouches[0].clientX,
       e.changedTouches[0].clientY,
@@ -245,9 +249,12 @@ export default function Study() {
     }
 
     if (isDrawing.current) {
+      if (lazy.brushHasMoved()) {
+        setValidStroke(true)
+      }
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       // brush radius * 2
-      ctx.lineWidth = 10 * 2;
+      ctx.lineWidth = 14;
       points.current = [...points.current, lazy.getBrushCoordinates()];
 
       let p1 = points.current[0];
@@ -435,7 +442,7 @@ export default function Study() {
   }
 
   return (
-    <div>
+    <div className="select-none safari-no-select">
       <div className="flex flex-col">
         {noKanjisExist ? (
           <div className="w-full text-center">No kanjis selected, add some</div>
@@ -451,7 +458,7 @@ export default function Study() {
               </button>
               <div
                 id="character"
-                className="relative mx-4 py-2 px-4 border rounded text-6xl text-bold bg-white text-black"
+                className="relative mx-4 py-2 px-4 rounded text-6xl text-bold bg-white text-black"
                 onClick={() => setHidden(!hidden)}
               >
                 <span className={`${hidden ? "invisible" : ""}`}>
@@ -491,7 +498,7 @@ export default function Study() {
                 →
               </button>
             </div>
-            <div className="w-full flex justify-center gap-2 mb-6">
+            <div className="w-full flex justify-center gap-2 mb-4">
               {kanjis.map((_, idx) => (
                 <div
                   key={idx}
@@ -506,9 +513,10 @@ export default function Study() {
         )}
         <div className="mb-2">
           {!noKanjisExist && (
-            <div className="w-full text-center text-zinc-500">
+            <div className="px-2 w-full text-center text-zinc-500">
               {kanjis[currentKanji].meanings
                 ?.split(",")
+                .slice(0, 4)
                 .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
             </div>
           )}
@@ -528,11 +536,11 @@ export default function Study() {
           )}
         </div>
         {!noKanjisExist && (
-          <div className="mb-4">
+          <div className="mb-2">
             {kanjis[currentKanji].strokeCount || "error"} strokes
           </div>
         )}
-        <div className="mb-2 flex gap-4">
+        <div className="mb-2 flex gap-2">
           <button
             onClick={() => setHidden(!hidden)}
             id="toggle"
@@ -555,7 +563,7 @@ export default function Study() {
             auto reset {isAutoReset ? "✔" : ""}
           </button>
         </div>
-        <div className="flex justify-between w-full mb-4">
+        <div className="flex justify-between w-full mb-2">
           <div>
             stroke count: <span id="strokeCount">{strokeCount}</span>
           </div>
@@ -565,27 +573,27 @@ export default function Study() {
         </div>
         <div className="p-4">
           <div
-            className="aspect-square relative select-none"
+            className="aspect-square relative select-none max-w-md"
             ref={canvasContainerRef}
           >
             <canvas
               ref={canvasInterfaceRef}
-              className="border-2 border-gray-500 absolute left-0 top-0 z-40 h-full w-full aspect-square"
+              className="border-2 border-gray-200 absolute left-0 top-0 z-40 h-full w-full aspect-square rounded"
               style={{ WebkitUserSelect: "none" }}
             />
             <canvas
               ref={canvasTempRef}
-              className="border-2 border-gray-500 absolute left-0 top-0 z-30 h-full w-full aspect-square"
+              className="border-2 border-gray-200 absolute left-0 top-0 z-30 h-full w-full aspect-square rounded"
               style={{ WebkitUserSelect: "none" }}
             ></canvas>
             <canvas
               ref={canvasDrawingRef}
-              className="border-2 border-gray-500 absolute left-0 top-0 z-20 h-full w-full aspect-square"
+              className="border-2 border-gray-200 absolute left-0 top-0 z-20 h-full w-full aspect-square rounded"
               style={{ WebkitUserSelect: "none" }}
             ></canvas>
             <canvas
               ref={canvasGridRef}
-              className="border-2 border-gray-500 absolute left-0 top-0 z-10 h-full w-full aspect-square"
+              className="border-2 border-gray-200 absolute left-0 top-0 z-10 h-full w-full aspect-square rounded"
               style={{ WebkitUserSelect: "none" }}
             ></canvas>
           </div>
