@@ -38,11 +38,11 @@ export default function App() {
         <Links />
       </head>
       <body
-        className={`min-h-webkit antialiased ${
+        className={`h-webkit antialiased ${
           validRoutes.includes(location.pathname) ? "" : "overflow-hidden"
         }`}
       >
-        <div className="bg-white p-4 md:p-8 rounded-lg md:max-w-3xl mx-auto w-full">
+        <div className="bg-white p-4 md:p-8 rounded-lg md:max-w-3xl mx-auto w-full h-full flex flex-col">
           <div className="flex justify-between">
             <Link to="/">
               <h1 className="text-2xl font-bold md:mb-8 mb-4">

@@ -94,7 +94,7 @@ export default function Study() {
   }
 
   function handleKanjiStrokeCount() {
-    if (!validStroke) return
+    if (!validStroke) return;
     if (kanjis[currentKanji]) {
       if (kanjis[currentKanji].strokeCount === strokeCount + 1 && isAutoReset) {
         setStrokeCount(0);
@@ -130,7 +130,7 @@ export default function Study() {
       .drawImage(canvasTempRef.current!, 0, 0, w, h);
     canvasTempRef.current!.getContext("2d")!.clearRect(0, 0, w, h);
     handleKanjiStrokeCount();
-    setValidStroke(false)
+    setValidStroke(false);
   }
 
   function internalHandlePointerMove(newX: number, newY: number) {
@@ -144,7 +144,7 @@ export default function Study() {
   }
 
   function handleTouchStart(e: TouchEvent) {
-    e.preventDefault()
+    e.preventDefault();
     internalHandlePointerMove(
       e.changedTouches[0].clientX,
       e.changedTouches[0].clientY,
@@ -250,7 +250,7 @@ export default function Study() {
 
     if (isDrawing.current) {
       if (lazy.brushHasMoved()) {
-        setValidStroke(true)
+        setValidStroke(true);
       }
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       // brush radius * 2

@@ -44,7 +44,7 @@ export default function Index() {
   const { kanjis, kanjiDrawn, quizzesTaken, passagesRead } =
     useLoaderData<typeof loader>();
   return (
-    <div className="space-y-6 relative">
+    <div className="space-y-6 relative h-full">
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <div className="flex flex-col">
@@ -111,10 +111,7 @@ export default function Index() {
             </button>
           </Link>
           <Link to="/quiz">
-            <button
-              disabled
-              className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200"
-            >
+            <button className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200">
               Take Quizzes
             </button>
           </Link>
