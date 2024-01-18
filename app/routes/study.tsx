@@ -37,7 +37,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return {
     kanjis,
     isAutoReset: settings.isAutoReset,
-    lastKanjiIndex: settings.lastKanjiIndex,
+    lastKanjiIndex: settings.lastKanjiIndex > kanjis.length ? 0 : settings.lastKanjiIndex,
   };
 }
 
@@ -48,6 +48,7 @@ export default function Study() {
     lastKanjiIndex,
   } = useLoaderData<typeof loader>();
 
+  console.log(lastKanjiIndex)
   const [strokeCount, setStrokeCount] = useState(0);
   const [currentKanji, setCurrentKanji] = useState(lastKanjiIndex);
   const [hidden, setHidden] = useState(false);
@@ -63,7 +64,7 @@ export default function Study() {
     () =>
       new LazyBrush({
         enabled: true,
-        radius: 10,
+        radius: 1,
       }),
     [],
   );
@@ -71,10 +72,10 @@ export default function Study() {
   let width = useRef(300);
   let height = useRef(300);
 
-  const canvasInterfaceRef = useRef<HTMLCanvasElement | null>(null);
-  const canvasTempRef = useRef<HTMLCanvasElement | null>(null);
-  const canvasDrawingRef = useRef<HTMLCanvasElement | null>(null);
-  const canvasGridRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasInterfaceRef = useRef<HTMLCanvasElement>(null);
+  const canvasTempRef = useRef<HTMLCanvasElement>(null);
+  const canvasDrawingRef = useRef<HTMLCanvasElement>(null);
+  const canvasGridRef = useRef<HTMLCanvasElement>(null);
 
   const isPressing = useRef(false);
   const isDrawing = useRef(false);
@@ -517,21 +518,21 @@ export default function Study() {
               {kanjis[currentKanji].meanings
                 ?.split(",")
                 .slice(0, 4)
-                .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
+                .join(", ")}
             </div>
           )}
           {!noKanjisExist && (
             <div className="w-full text-center text-zinc-500">
               {kanjis[currentKanji].onyomi
                 ?.split(",")
-                .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
+                .join(", ")}
             </div>
           )}
           {!noKanjisExist && (
             <div className="w-full text-center text-zinc-500">
               {kanjis[currentKanji].kunyomi
                 ?.split(",")
-                .map((meaning, idx) => <span key={idx}>{`${meaning}, `}</span>)}
+                .join(", ")}
             </div>
           )}
         </div>
@@ -546,13 +547,13 @@ export default function Study() {
             id="toggle"
             className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded"
           >
-            hide
+            Hide
           </button>
           <button
             onClick={() => resetCanvas()}
             className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded"
           >
-            reset
+            Reset
           </button>
           <button
             onClick={() => handleAutoResetChange()}
@@ -560,15 +561,15 @@ export default function Study() {
               isAutoReset ? "bg-gray-700 " : "bg-gray-300 "
             }`}
           >
-            auto reset {isAutoReset ? "✔" : ""}
+            Auto Reset {isAutoReset ? "✔" : ""}
           </button>
         </div>
         <div className="flex justify-between w-full mb-2">
           <div>
-            stroke count: <span id="strokeCount">{strokeCount}</span>
+            Stroke Count: <span id="strokeCount">{strokeCount}</span>
           </div>
           <div>
-            drawn count: <span id="drawnCount">{drawnCount}</span>
+            Drawn Count: <span id="drawnCount">{drawnCount}</span>
           </div>
         </div>
         <div className="p-4">

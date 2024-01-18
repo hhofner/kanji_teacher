@@ -2,9 +2,11 @@ import { json } from "@remix-run/node";
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import {
   Form,
+  isRouteErrorResponse,
   useActionData,
   useFetcher,
   useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import { type action as kanjiAddAction } from "./api.kanji.add";
 import { type action as kanjiRemoveAction } from "./api.kanji.remove";
@@ -34,18 +36,6 @@ interface KanjiData {
   character: string;
 }
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  const user = await requireUser(request);
-
-  const startDay = format(startOfWeek(new Date()), "MM/dd");
-  const kanjis = await db
-    .select()
-    .from(kanji)
-    .where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
-
-  return { kanjis };
-}
-
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const rawQuery = formData.get("q") as string | undefined;
@@ -70,6 +60,20 @@ export async function action({ request }: ActionFunctionArgs) {
     };
   }
   return { resultList: [] };
+}
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const user = await requireUser(request);
+
+  const startDay = format(startOfWeek(new Date()), "MM/dd");
+  const kanjis = await db
+    .select()
+    .from(kanji)
+    .where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
+
+
+  console.log("kanjis", kanjis)
+  return { kanjis };
 }
 
 export default function Search() {
@@ -146,3 +150,22 @@ export default function Search() {
     </div>
   );
 }
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (error instanceof Error) {
+    return <div>An unexpected error occurred: {error.message}</div>;
+  }
+
+  if (!isRouteErrorResponse(error)) {
+    return <h1>Unknown Error</h1>;
+  }
+
+  if (error.status === 404) {
+    return <div>Hello</div>;
+  }
+
+  return <div>An unexpected error occurred: {error.statusText}</div>;
+}
+
