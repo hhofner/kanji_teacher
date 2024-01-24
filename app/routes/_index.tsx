@@ -5,6 +5,15 @@ import { eq, and, sql } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
 import { kanji, writingLog } from "~/drizzle/schema.server";
 import { getUserId } from "~/session";
+import { Button } from "~/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card"
 
 export const meta: MetaFunction = () => {
   return [
@@ -48,80 +57,47 @@ export default function Index() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <div className="flex flex-col">
-            <h2 className="text-xl font-semibold">This Week's Kanji</h2>
-            <span className="text-sm">
+            <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">This Week's Kanji</h2>
+            <small className="text-sm">
               {startDay} - {endDay}
-            </span>
+            </small>
           </div>
           <Link to="/search">
-            <button className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition-colors">
+            <Button variant="outline">
               Set
-            </button>
+            </Button>
           </Link>
         </div>
-        <div className="flex justify-around bg-zinc-100 rounded p-4 flex-wrap">
-          {kanjis.length <= 0 ? (
-            <p>No kanjis selected. Add some!</p>
-          ) : (
-            kanjis.map((kanji) => (
-              <Link key={kanji!.id} to={`/kanji/${kanji!.id}`}>
-                <div className="md:text-6xl text-4xl p-1">
-                  {kanji.character}
-                </div>
-              </Link>
-            ))
-          )}
+        <div className="grid grid-cols-8 justify-center">{kanjis.length <= 0 ? (
+          <p>No kanjis selected. Add some!</p>
+        ) : (
+          kanjis.map((kanji) => (
+            <Link key={kanji!.id} to={`/kanji/${kanji!.id}`}>
+              <div className="md:text-6xl text-4xl p-1">
+                {kanji?.character}
+              </div>
+            </Link>
+          ))
+        )}
         </div>
       </div>
-      <div className="mb-6 text-gray-200">
-        <h3 className="text-lg font-semibold mb-2">Upcoming test</h3>
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-sm">November 31, 2023</span>
-          <button
-            disabled
-            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition-colors disabled:bg-gray-200"
-          >
-            Test
-          </button>
-        </div>
-      </div>
-      <div className="mb-6 text-gray-200">
-        <div className="flex gap-4 mb-12 justify-evenly">
-          <div className="rounded bg-zinc-100 p-4">
-            <h3 className="text-2xl font-semibold mb-2 text-black">
-              {kanjiDrawn}
-            </h3>
-            <p className="mb-2 text-black tracking-tight">
-              Kanji Drawn This Week
-            </p>
-          </div>
-          <div className="rounded bg-zinc-100 p-4">
-            <h3 className="text-2xl font-semibold mb-2">{quizzesTaken}</h3>
-            <p className="mb-2 tracking-tight">Quizzes Taken Yesterday</p>
-          </div>
-          <div className="rounded bg-zinc-100 p-4">
-            <h3 className="text-2xl font-semibold mb-2">{passagesRead}</h3>
-            <p className="mb-2 tracking-tight">Passages Read Yesterday</p>
-          </div>
+      <div className="mb-6">
+        <div className="flex gap-4 mb-12">
+          <Card>
+            <CardHeader><h4 className="scroll-m-20 text-xl font-semibold tracking-tight">Kanj Drawn This Week</h4></CardHeader>
+            <CardContent><p className="leading-7 [&:not(:first-child)]:mt-6">{kanjiDrawn}</p></CardContent>
+          </Card>
         </div>
         <div className="flex gap-4 w-full justify-center">
           <Link to="/study">
-            <button className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200">
+            <Button>
               Write Kanji
-            </button>
+            </Button>
           </Link>
           <Link to="/quiz">
-            <button className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200">
+            <Button>
               Take Quizzes
-            </button>
-          </Link>
-          <Link to="/read">
-            <button
-              disabled
-              className="bg-black text-white px-4 py-2 rounded w-full hover:bg-gray-800 transition-colors disabled:bg-gray-200"
-            >
-              Read Passages
-            </button>
+            </Button>
           </Link>
         </div>
       </div>

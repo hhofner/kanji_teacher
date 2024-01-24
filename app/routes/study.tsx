@@ -14,6 +14,7 @@ import { requireUser } from "~/session";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { type action as kanjiRecordAction } from "./api.kanji.record";
 import { type action as settingSetAction } from "./api.setting.set";
+import { Button } from "~/components/ui/button";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
@@ -48,7 +49,6 @@ export default function Study() {
     lastKanjiIndex,
   } = useLoaderData<typeof loader>();
 
-  console.log(lastKanjiIndex)
   const [strokeCount, setStrokeCount] = useState(0);
   const [currentKanji, setCurrentKanji] = useState(lastKanjiIndex);
   const [hidden, setHidden] = useState(false);
@@ -445,18 +445,11 @@ export default function Study() {
   return (
     <div className="select-none safari-no-select">
       <div className="flex flex-col">
-        {noKanjisExist ? (
+        <div className="flex mb-6 justify-center">{noKanjisExist ? (
           <div className="w-full text-center">No kanjis selected, add some</div>
         ) : (
           <>
-            <div className="flex items-center justify-center mb-2 select-none">
-              <button
-                id="prev"
-                onClick={() => previousKanji()}
-                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-l"
-              >
-                ←
-              </button>
+            <div className="flex items-center justify-center mb-2 select-none w-1/2">
               <div
                 id="character"
                 className="relative mx-4 py-2 px-4 rounded text-6xl text-bold bg-white text-black"
@@ -466,9 +459,8 @@ export default function Study() {
                   {kanjis[currentKanji].character}
                 </span>
                 <span
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${
-                    hidden ? "" : "invisible"
-                  }`}
+                  className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${hidden ? "" : "invisible"
+                    }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -491,50 +483,39 @@ export default function Study() {
                   </svg>
                 </span>
               </div>
-              <button
-                id="next"
-                onClick={() => nextKanji()}
-                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-r"
-              >
-                →
-              </button>
-            </div>
-            <div className="w-full flex justify-center gap-2 mb-4">
-              {kanjis.map((_, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => setCurrentKanji(idx)}
-                  className={`rounded-full w-2 h-2 border border-black ${
-                    idx === currentKanji ? "bg-black" : "cursor-pointer"
-                  }`}
-                ></div>
-              ))}
             </div>
           </>
         )}
-        <div className="mb-2">
-          {!noKanjisExist && (
-            <div className="px-2 w-full text-center text-zinc-500">
-              {kanjis[currentKanji].meanings
-                ?.split(",")
-                .slice(0, 4)
-                .join(", ")}
-            </div>
-          )}
-          {!noKanjisExist && (
-            <div className="w-full text-center text-zinc-500">
-              {kanjis[currentKanji].onyomi
-                ?.split(",")
-                .join(", ")}
-            </div>
-          )}
-          {!noKanjisExist && (
-            <div className="w-full text-center text-zinc-500">
-              {kanjis[currentKanji].kunyomi
-                ?.split(",")
-                .join(", ")}
-            </div>
-          )}
+          <div className="mb-2 w-1/2">
+            {!noKanjisExist && (
+              <div>
+                <div className="w-full text-zinc-500">
+                  {kanjis[currentKanji].meanings
+                    ?.split(",")
+                    .slice(0, 4)
+                    .join(", ")}
+                </div></div>
+            )}
+            {!noKanjisExist && (
+              <div className="w-full text-zinc-500">
+                {kanjis[currentKanji].onyomi
+                  ?.split(",")
+                  .slice(0, 4)
+                  .join(", ")}
+
+              </div>
+            )}
+            {!noKanjisExist && (
+              <div>
+                <div className="w-full text-zinc-500">
+                  {kanjis[currentKanji].kunyomi
+                    ?.split(",")
+                    .slice(0, 4)
+                    .join(", ")}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         {!noKanjisExist && (
           <div className="mb-2">
@@ -542,27 +523,25 @@ export default function Study() {
           </div>
         )}
         <div className="mb-2 flex gap-2">
-          <button
+          <Button
+            variant="outline"
             onClick={() => setHidden(!hidden)}
             id="toggle"
-            className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded"
           >
             Hide
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="outline"
             onClick={() => resetCanvas()}
-            className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded"
           >
             Reset
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="outline"
             onClick={() => handleAutoResetChange()}
-            className={`hover:bg-gray-600 text-white font-bold py-1 px-2 rounded ${
-              isAutoReset ? "bg-gray-700 " : "bg-gray-300 "
-            }`}
           >
             Auto Reset {isAutoReset ? "✔" : ""}
-          </button>
+          </Button>
         </div>
         <div className="flex justify-between w-full mb-2">
           <div>
@@ -574,7 +553,7 @@ export default function Study() {
         </div>
         <div className="p-4">
           <div
-            className="aspect-square relative select-none max-w-md"
+            className="aspect-square relative select-none max-w-md mx-auto"
             ref={canvasContainerRef}
           >
             <canvas

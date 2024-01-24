@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@libsql/client": "^0.4.0-pre.5",
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-slot": "^1.0.2",
     "@remix-run/css-bundle": "^2.3.0",
     "@remix-run/node": "^2.3.0",
     "@remix-run/react": "^2.3.0",
@@ -25,6 +27,8 @@
     "@types/lazy-brush": "^1.0.3",
     "bcrypt": "^5.1.1",
     "better-sqlite3": "^9.1.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.29.0",
@@ -33,6 +37,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remix-utils": "^7.1.0",
+    "tailwind-merge": "^2.2.0",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"
   },
   "devDependencies": {
