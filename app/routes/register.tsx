@@ -3,7 +3,8 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { z } from "zod";
 import { commitSession, getSession } from "~/session";
-import { createUser } from "~/models/user.server";
+import { createUser, getUserByEmail } from "~/models/user.server";
+import { Button } from "~/components/ui/button";
 
 export async function action({ request }: ActionFunctionArgs) {
   let formData = await request.formData();
@@ -38,6 +39,15 @@ export async function action({ request }: ActionFunctionArgs) {
     return json({ zodError: parsedSchema.error }, 401);
   } else {
     // TODO: do something when email exists
+    const existingUser = await getUserByEmail(email);
+    if (existingUser) {
+      return json(
+        {
+          error: "A user already exists with this email",
+        },
+        { status: 400 },
+      );
+    }
 
     const userWithoutPassword = await createUser(email, password);
     let session = await getSession();
@@ -68,7 +78,6 @@ export default function RegisterPage() {
       zodError?: z.ZodError<{ email: string; password: string; code: string }>;
     }
   )?.zodError;
-  console.log("zodE", zodError);
   const error = (actionData as { error?: string })?.error;
   return (
     <div className="mx-auto mt-8 max-w-xs lg:max-w-sm">
@@ -95,12 +104,12 @@ export default function RegisterPage() {
           placeholder="Invite Code"
           className="w-full p-4 rounded-md border-gray-100 border focus:border-sky-600 focus:ring-sky-600"
         />
-        <button
+        <Button
           type="submit"
-          className="w-full rounded-md bg-blue-600 px-3 py-2 font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 focus:ring-offset-gray-900"
+          className="w-full"
         >
           Submit
-        </button>
+        </Button>
 
         {error && <p className="mt-4 font-medium text-red-500">{error}</p>}
         {zodError &&

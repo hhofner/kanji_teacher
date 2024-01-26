@@ -7,6 +7,7 @@ import {
 import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
 import { commitSession, getSession } from "~/session";
 import { verifyLogin } from "~/models/user.server";
+import { Button } from "~/components/ui/button";
 
 export async function action({ request }: ActionFunctionArgs) {
   let formData = await request.formData();
@@ -79,9 +80,9 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-8">
-            <button className="w-full rounded-md bg-blue-600 px-3 py-2 font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 focus:ring-offset-gray-900">
+            <Button className="w-full">
               Log in
-            </button>
+            </Button>
           </div>
 
           <p className="mt-4 font-medium text-red-500">{actionData?.error}</p>
