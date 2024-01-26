@@ -2,6 +2,20 @@
 
 - [Remix Docs](https://remix.run/docs)
 
+## Deployment
+
+### Dev
+application name: **kanji_teacher**.
+```
+fly deploy -a kanji_teacher
+```
+
+### Prod
+application name: **oh-my-kanji**
+```
+fly deploy -a oh-my-kanji
+```
+
 ## Development
 
 From your terminal:
