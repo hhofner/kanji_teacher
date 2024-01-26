@@ -7,3 +7,5 @@ node_modules
 
 ./kanji.db
 kanji.db
+
+.DS_Store
