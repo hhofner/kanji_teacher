@@ -5,14 +5,18 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev --manual",
+    "build": "run-s build:*",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc",
     "db:migrations": "drizzle-kit generate:sqlite --out ./app/drizzle/migrations --schema ./app/drizzle/schema.server.ts",
     "db:drop": "drizzle-kit drop --config=./app/drizzle/config.server.ts",
     "db:studio": "drizzle-kit studio --config=./app/drizzle/config.server.ts",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "build:remix": "remix build",
+    "build:worker": "remix-pwa build",
+    "dev": "run-p dev:*",
+    "dev:remix": "remix dev --manual",
+    "dev:worker": "remix-pwa dev"
   },
   "dependencies": {
     "@libsql/client": "^0.4.0-pre.5",
@@ -39,7 +43,13 @@
     "remix-utils": "^7.1.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "@remix-pwa/cache": "^2.0.12",
+    "@remix-pwa/sw": "^2.1.12",
+    "@remix-pwa/strategy": "^2.1.9",
+    "@remix-pwa/push": "^1.0.9",
+    "@remix-pwa/client": "^2.0.1",
+    "@remix-pwa/sync": "^2.0.1"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.5.0",
@@ -51,7 +61,12 @@
     "eslint": "^8.38.0",
     "prettier": "3.1.1",
     "tailwindcss": "^3.3.5",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "@remix-pwa/worker-runtime": "^2.0.8",
+    "@remix-pwa/dev": "2.0.31",
+    "remix-pwa": "^3.0.19",
+    "npm-run-all": "^4.1.5",
+    "glob": "^10.3.10"
   },
   "engines": {
     "node": ">=18.0.0"
