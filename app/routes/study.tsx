@@ -522,26 +522,34 @@ export default function Study() {
             {kanjis[currentKanji].strokeCount || "error"} strokes
           </div>
         )}
-        <div className="mb-2 flex gap-2">
+        <div className="mb-2 flex gap-2 flex-wrap">
           <Button
-            variant="outline"
+            variant="secondary"
             onClick={() => setHidden(!hidden)}
             id="toggle"
           >
             Hide
           </Button>
           <Button
-            variant="outline"
+            variant="secondary"
             onClick={() => resetCanvas()}
           >
             Reset
           </Button>
           <Button
-            variant="outline"
+            variant="secondary"
             onClick={() => handleAutoResetChange()}
           >
             Auto Reset {isAutoReset ? "✔" : ""}
           </Button>
+          <div className="flex gap-2 ml-auto">
+            <Button variant="outline" onClick={() => previousKanji()}>
+              Prev
+            </Button>
+            <Button variant="outline" onClick={() => nextKanji()}>
+              Next
+            </Button>
+          </div>
         </div>
         <div className="flex justify-between w-full mb-2">
           <div>

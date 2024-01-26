@@ -42,7 +42,7 @@ export default function App() {
           validRoutes.includes(location.pathname) ? "" : "overflow-hidden"
         }`}
       >
-        <div className="bg-white p-4 md:p-8 rounded-lg md:max-w-3xl mx-auto w-full h-full flex flex-col">
+        <div className="bg-white p-4 md:p-8 rounded-lg md:max-w-3xl mx-auto  h-full flex flex-col">
           <header className="flex justify-between mb-12">
             <Link to="/">
               <h1 className="text-2xl font-bold md:mb-8">
