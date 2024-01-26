@@ -8,7 +8,7 @@ export const loader = async () => {
       start_url: '/',
       display: 'standalone',
       background_color: '#d3d7dd',
-      theme_color: '#c34138',
+      theme_color: '#16A34A',
       shortcuts: [
         {
           name: 'Homepage',

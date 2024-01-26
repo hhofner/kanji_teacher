@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-8">
       <h1 className="text-3xl">About: How It Works</h1>
       <p>
         Oh My Kanji is a simple application meant to encourage you to write Kanji characters more. It is meant
@@ -25,8 +25,8 @@ export default function About() {
       </ul>
       <p>
         If you're interested in this project and would like to see it developed
-        further (ie, as a native app, an API, or anything else), then consider <a href="https://www.buymeacoffee.com/hhofner">donating</a>,
-        sending me a message on <a href="https://twitter.com/hofner_pls">X</a> or <a href="https://mozilla.social/@hans">Mastodon</a>.
+        further (ie, as a native app, an API, or anything else), then consider <a className="font-bold" href="https://www.buymeacoffee.com/hhofner">donating</a>,
+        sending me a message on <a className="font-bold" href="https://twitter.com/hofner_pls">X</a> or <a className="font-bold" href="https://mozilla.social/@hans">Mastodon</a>.
       </p>
     </div>
   );
