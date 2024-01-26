@@ -38,7 +38,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return {
     kanjis,
     isAutoReset: settings.isAutoReset,
-    lastKanjiIndex: settings.lastKanjiIndex > kanjis.length ? 0 : settings.lastKanjiIndex,
+    lastKanjiIndex:
+      settings.lastKanjiIndex > kanjis.length ? 0 : settings.lastKanjiIndex,
   };
 }
 
@@ -445,47 +446,51 @@ export default function Study() {
   return (
     <div className="select-none safari-no-select">
       <div className="flex flex-col">
-        <div className="flex mb-6 justify-center">{noKanjisExist ? (
-          <div className="w-full text-center">No kanjis selected, add some</div>
-        ) : (
-          <>
-            <div className="flex items-center justify-center mb-2 select-none w-1/2">
-              <div
-                id="character"
-                className="relative mx-4 py-2 px-4 rounded text-6xl text-bold bg-white text-black"
-                onClick={() => setHidden(!hidden)}
-              >
-                <span className={`${hidden ? "invisible" : ""}`}>
-                  {kanjis[currentKanji].character}
-                </span>
-                <span
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${hidden ? "" : "invisible"
-                    }`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M8 11c-1.65 0-3-1.35-3-3s1.35-3 3-3s3 1.35 3 3s-1.35 3-3 3m0-5c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"
-                    />
-                    <path
-                      fill="currentColor"
-                      d="M8 13c-3.19 0-5.99-1.94-6.97-4.84a.442.442 0 0 1 0-.32C2.01 4.95 4.82 3 8 3s5.99 1.94 6.97 4.84c.04.1.04.22 0 .32C13.99 11.05 11.18 13 8 13M2.03 8c.89 2.4 3.27 4 5.97 4s5.07-1.6 5.97-4C13.08 5.6 10.7 4 8 4S2.93 5.6 2.03 8"
-                    />
-                    <path
-                      fill="currentColor"
-                      d="M14 14.5a.47.47 0 0 1-.35-.15l-12-12c-.2-.2-.2-.51 0-.71c.2-.2.51-.2.71 0l11.99 12.01c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15Z"
-                    />
-                  </svg>
-                </span>
-              </div>
+        <div className="flex mb-6 justify-center">
+          {noKanjisExist ? (
+            <div className="w-full text-center">
+              No kanjis selected, add some
             </div>
-          </>
-        )}
+          ) : (
+            <>
+              <div className="flex items-center justify-center mb-2 select-none w-1/2">
+                <div
+                  id="character"
+                  className="relative mx-4 py-2 px-4 rounded text-6xl text-bold bg-white text-black"
+                  onClick={() => setHidden(!hidden)}
+                >
+                  <span className={`${hidden ? "invisible" : ""}`}>
+                    {kanjis[currentKanji].character}
+                  </span>
+                  <span
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${
+                      hidden ? "" : "invisible"
+                    }`}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M8 11c-1.65 0-3-1.35-3-3s1.35-3 3-3s3 1.35 3 3s-1.35 3-3 3m0-5c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"
+                      />
+                      <path
+                        fill="currentColor"
+                        d="M8 13c-3.19 0-5.99-1.94-6.97-4.84a.442.442 0 0 1 0-.32C2.01 4.95 4.82 3 8 3s5.99 1.94 6.97 4.84c.04.1.04.22 0 .32C13.99 11.05 11.18 13 8 13M2.03 8c.89 2.4 3.27 4 5.97 4s5.07-1.6 5.97-4C13.08 5.6 10.7 4 8 4S2.93 5.6 2.03 8"
+                      />
+                      <path
+                        fill="currentColor"
+                        d="M14 14.5a.47.47 0 0 1-.35-.15l-12-12c-.2-.2-.2-.51 0-.71c.2-.2.51-.2.71 0l11.99 12.01c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15Z"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
           <div className="mb-2 w-1/2">
             {!noKanjisExist && (
               <div>
@@ -494,15 +499,12 @@ export default function Study() {
                     ?.split(",")
                     .slice(0, 4)
                     .join(", ")}
-                </div></div>
+                </div>
+              </div>
             )}
             {!noKanjisExist && (
               <div className="w-full text-zinc-500">
-                {kanjis[currentKanji].onyomi
-                  ?.split(",")
-                  .slice(0, 4)
-                  .join(", ")}
-
+                {kanjis[currentKanji].onyomi?.split(",").slice(0, 4).join(", ")}
               </div>
             )}
             {!noKanjisExist && (
@@ -530,16 +532,10 @@ export default function Study() {
           >
             Hide
           </Button>
-          <Button
-            variant="secondary"
-            onClick={() => resetCanvas()}
-          >
+          <Button variant="secondary" onClick={() => resetCanvas()}>
             Reset
           </Button>
-          <Button
-            variant="secondary"
-            onClick={() => handleAutoResetChange()}
-          >
+          <Button variant="secondary" onClick={() => handleAutoResetChange()}>
             Auto Reset {isAutoReset ? "✔" : ""}
           </Button>
           <div className="flex gap-2 ml-auto">

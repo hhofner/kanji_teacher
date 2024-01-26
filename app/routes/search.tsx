@@ -16,7 +16,7 @@ import { format, startOfWeek } from "date-fns";
 import { kanji } from "~/drizzle/schema.server";
 import { db } from "~/drizzle/config.server";
 import { eq, and, sql } from "drizzle-orm";
-import { Input } from "~/components/ui/input"
+import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 
 interface KanjiApiResponse {
@@ -73,8 +73,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .from(kanji)
     .where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
 
-
-  console.log("kanjis", kanjis)
+  console.log("kanjis", kanjis);
   return { kanjis };
 }
 
@@ -125,7 +124,9 @@ export default function Search() {
             type="search"
             className="w-full border rounded text-[16px]"
           />
-          <Button type="submit" variant="outline">Search</Button>
+          <Button type="submit" variant="outline">
+            Search
+          </Button>
         </div>
       </Form>
       <div>
@@ -139,10 +140,7 @@ export default function Search() {
               <p className="text-3xl">{kanji.kanji}</p>
               <small>{kanji.meanings && kanji.meanings[0]}</small>
             </div>
-            <Button
-              value={kanji.kanji}
-              name="kanji"
-            >
+            <Button value={kanji.kanji} name="kanji">
               Add
             </Button>
           </fetcher.Form>
@@ -169,4 +167,3 @@ export function ErrorBoundary() {
 
   return <div>An unexpected error occurred: {error.statusText}</div>;
 }
-

@@ -13,7 +13,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card"
+} from "~/components/ui/card";
 
 export const meta: MetaFunction = () => {
   return [
@@ -57,47 +57,53 @@ export default function Index() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <div className="flex flex-col">
-            <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">This Week's Kanji</h2>
+            <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+              This Week's Kanji
+            </h2>
             <small className="text-sm">
               {startDay} - {endDay}
             </small>
           </div>
           <Link to="/search">
-            <Button variant="outline">
-              Set
-            </Button>
+            <Button variant="outline">Set</Button>
           </Link>
         </div>
-        <div className="grid grid-cols-8 justify-center">{kanjis.length <= 0 ? (
-          <p>No kanjis selected. Add some!</p>
-        ) : (
-          kanjis.map((kanji) => (
-            <Link key={kanji!.id} to={`/kanji/${kanji!.id}`}>
-              <div className="md:text-6xl text-4xl p-1">
-                {kanji?.character}
-              </div>
-            </Link>
-          ))
-        )}
+        <div >
+          {kanjis.length <= 0 ? (
+            <p>No kanjis selected. Add some!</p>
+          ) : (
+            <div className="grid grid-cols-8 justify-center">
+              {kanjis.map((kanji) => (
+              <Link key={kanji!.id} to={`/kanji/${kanji!.id}`}>
+                <div className="md:text-6xl text-4xl p-1">
+                  {kanji?.character}
+                </div>
+              </Link>
+            ))}</div>
+          )}
         </div>
       </div>
       <div className="mb-6">
         <div className="flex gap-4 mb-12">
           <Card>
-            <CardHeader><h4 className="scroll-m-20 text-xl font-semibold tracking-tight">Kanj Drawn This Week</h4></CardHeader>
-            <CardContent><p className="leading-7 [&:not(:first-child)]:mt-6">{kanjiDrawn}</p></CardContent>
+            <CardHeader>
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                Kanj Drawn This Week
+              </h4>
+            </CardHeader>
+            <CardContent>
+              <p className="leading-7 [&:not(:first-child)]:mt-6">
+                {kanjiDrawn}
+              </p>
+            </CardContent>
           </Card>
         </div>
         <div className="flex gap-4 w-full justify-center">
           <Link to="/study">
-            <Button>
-              Write Kanji
-            </Button>
+            <Button>Write Kanji</Button>
           </Link>
           <Link to="/quiz">
-            <Button>
-              Take Quizzes
-            </Button>
+            <Button>Take Quizzes</Button>
           </Link>
         </div>
       </div>
