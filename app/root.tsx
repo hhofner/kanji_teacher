@@ -2,7 +2,6 @@ import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Link,
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -13,6 +12,8 @@ import {
 import stylesheet from "~/tailwind.css";
 import Username from "./components/Username";
 import { getSession } from "~/session";
+import { useSWEffect } from '@remix-pwa/sw'
+import { LiveReload } from '@remix-pwa/sw'
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -29,11 +30,13 @@ const validRoutes = ["/about", "/search"];
 export default function App() {
   let data = useLoaderData<typeof loader>();
   let location = useLocation();
+  useSWEffect();
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="manifest" href="/manifest.webmanifest" />
         <Meta />
         <Links />
       </head>
