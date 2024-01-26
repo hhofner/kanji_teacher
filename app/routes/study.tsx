@@ -14,6 +14,7 @@ import { requireUser } from "~/session";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { type action as kanjiRecordAction } from "./api.kanji.record";
 import { type action as settingSetAction } from "./api.setting.set";
+import { Button } from "~/components/ui/button";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
@@ -37,7 +38,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return {
     kanjis,
     isAutoReset: settings.isAutoReset,
-    lastKanjiIndex: settings.lastKanjiIndex > kanjis.length ? 0 : settings.lastKanjiIndex,
+    lastKanjiIndex:
+      settings.lastKanjiIndex > kanjis.length ? 0 : settings.lastKanjiIndex,
   };
 }
 
@@ -48,7 +50,6 @@ export default function Study() {
     lastKanjiIndex,
   } = useLoaderData<typeof loader>();
 
-  console.log(lastKanjiIndex)
   const [strokeCount, setStrokeCount] = useState(0);
   const [currentKanji, setCurrentKanji] = useState(lastKanjiIndex);
   const [hidden, setHidden] = useState(false);
@@ -445,124 +446,106 @@ export default function Study() {
   return (
     <div className="select-none safari-no-select">
       <div className="flex flex-col">
-        {noKanjisExist ? (
-          <div className="w-full text-center">No kanjis selected, add some</div>
-        ) : (
-          <>
-            <div className="flex items-center justify-center mb-2 select-none">
-              <button
-                id="prev"
-                onClick={() => previousKanji()}
-                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-l"
-              >
-                ←
-              </button>
-              <div
-                id="character"
-                className="relative mx-4 py-2 px-4 rounded text-6xl text-bold bg-white text-black"
-                onClick={() => setHidden(!hidden)}
-              >
-                <span className={`${hidden ? "invisible" : ""}`}>
-                  {kanjis[currentKanji].character}
-                </span>
-                <span
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${
-                    hidden ? "" : "invisible"
-                  }`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M8 11c-1.65 0-3-1.35-3-3s1.35-3 3-3s3 1.35 3 3s-1.35 3-3 3m0-5c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"
-                    />
-                    <path
-                      fill="currentColor"
-                      d="M8 13c-3.19 0-5.99-1.94-6.97-4.84a.442.442 0 0 1 0-.32C2.01 4.95 4.82 3 8 3s5.99 1.94 6.97 4.84c.04.1.04.22 0 .32C13.99 11.05 11.18 13 8 13M2.03 8c.89 2.4 3.27 4 5.97 4s5.07-1.6 5.97-4C13.08 5.6 10.7 4 8 4S2.93 5.6 2.03 8"
-                    />
-                    <path
-                      fill="currentColor"
-                      d="M14 14.5a.47.47 0 0 1-.35-.15l-12-12c-.2-.2-.2-.51 0-.71c.2-.2.51-.2.71 0l11.99 12.01c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15Z"
-                    />
-                  </svg>
-                </span>
-              </div>
-              <button
-                id="next"
-                onClick={() => nextKanji()}
-                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-r"
-              >
-                →
-              </button>
+        <div className="flex mb-6 justify-center">
+          {noKanjisExist ? (
+            <div className="w-full text-center">
+              No kanjis selected, add some
             </div>
-            <div className="w-full flex justify-center gap-2 mb-4">
-              {kanjis.map((_, idx) => (
+          ) : (
+            <>
+              <div className="flex items-center justify-center mb-2 select-none w-1/2">
                 <div
-                  key={idx}
-                  onClick={() => setCurrentKanji(idx)}
-                  className={`rounded-full w-2 h-2 border border-black ${
-                    idx === currentKanji ? "bg-black" : "cursor-pointer"
-                  }`}
-                ></div>
-              ))}
-            </div>
-          </>
-        )}
-        <div className="mb-2">
-          {!noKanjisExist && (
-            <div className="px-2 w-full text-center text-zinc-500">
-              {kanjis[currentKanji].meanings
-                ?.split(",")
-                .slice(0, 4)
-                .join(", ")}
-            </div>
+                  id="character"
+                  className="relative mx-4 py-2 px-4 rounded text-6xl text-bold bg-white text-black"
+                  onClick={() => setHidden(!hidden)}
+                >
+                  <span className={`${hidden ? "invisible" : ""}`}>
+                    {kanjis[currentKanji].character}
+                  </span>
+                  <span
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${
+                      hidden ? "" : "invisible"
+                    }`}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M8 11c-1.65 0-3-1.35-3-3s1.35-3 3-3s3 1.35 3 3s-1.35 3-3 3m0-5c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"
+                      />
+                      <path
+                        fill="currentColor"
+                        d="M8 13c-3.19 0-5.99-1.94-6.97-4.84a.442.442 0 0 1 0-.32C2.01 4.95 4.82 3 8 3s5.99 1.94 6.97 4.84c.04.1.04.22 0 .32C13.99 11.05 11.18 13 8 13M2.03 8c.89 2.4 3.27 4 5.97 4s5.07-1.6 5.97-4C13.08 5.6 10.7 4 8 4S2.93 5.6 2.03 8"
+                      />
+                      <path
+                        fill="currentColor"
+                        d="M14 14.5a.47.47 0 0 1-.35-.15l-12-12c-.2-.2-.2-.51 0-.71c.2-.2.51-.2.71 0l11.99 12.01c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15Z"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </>
           )}
-          {!noKanjisExist && (
-            <div className="w-full text-center text-zinc-500">
-              {kanjis[currentKanji].onyomi
-                ?.split(",")
-                .join(", ")}
-            </div>
-          )}
-          {!noKanjisExist && (
-            <div className="w-full text-center text-zinc-500">
-              {kanjis[currentKanji].kunyomi
-                ?.split(",")
-                .join(", ")}
-            </div>
-          )}
+          <div className="mb-2 w-1/2">
+            {!noKanjisExist && (
+              <div>
+                <div className="w-full text-zinc-500">
+                  {kanjis[currentKanji].meanings
+                    ?.split(",")
+                    .slice(0, 4)
+                    .join(", ")}
+                </div>
+              </div>
+            )}
+            {!noKanjisExist && (
+              <div className="w-full text-zinc-500">
+                {kanjis[currentKanji].onyomi?.split(",").slice(0, 4).join(", ")}
+              </div>
+            )}
+            {!noKanjisExist && (
+              <div>
+                <div className="w-full text-zinc-500">
+                  {kanjis[currentKanji].kunyomi
+                    ?.split(",")
+                    .slice(0, 4)
+                    .join(", ")}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         {!noKanjisExist && (
           <div className="mb-2">
             {kanjis[currentKanji].strokeCount || "error"} strokes
           </div>
         )}
-        <div className="mb-2 flex gap-2">
-          <button
+        <div className="mb-2 flex gap-2 flex-wrap">
+          <Button
+            variant="secondary"
             onClick={() => setHidden(!hidden)}
             id="toggle"
-            className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded"
           >
             Hide
-          </button>
-          <button
-            onClick={() => resetCanvas()}
-            className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1 px-2 rounded"
-          >
+          </Button>
+          <Button variant="secondary" onClick={() => resetCanvas()}>
             Reset
-          </button>
-          <button
-            onClick={() => handleAutoResetChange()}
-            className={`hover:bg-gray-600 text-white font-bold py-1 px-2 rounded ${
-              isAutoReset ? "bg-gray-700 " : "bg-gray-300 "
-            }`}
-          >
+          </Button>
+          <Button variant="secondary" onClick={() => handleAutoResetChange()}>
             Auto Reset {isAutoReset ? "✔" : ""}
-          </button>
+          </Button>
+          <div className="flex gap-2 ml-auto">
+            <Button variant="outline" onClick={() => previousKanji()}>
+              Prev
+            </Button>
+            <Button variant="outline" onClick={() => nextKanji()}>
+              Next
+            </Button>
+          </div>
         </div>
         <div className="flex justify-between w-full mb-2">
           <div>
@@ -574,7 +557,7 @@ export default function Study() {
         </div>
         <div className="p-4">
           <div
-            className="aspect-square relative select-none max-w-md"
+            className="aspect-square relative select-none max-w-md mx-auto"
             ref={canvasContainerRef}
           >
             <canvas

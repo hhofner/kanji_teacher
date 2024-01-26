@@ -16,6 +16,8 @@ import { format, startOfWeek } from "date-fns";
 import { kanji } from "~/drizzle/schema.server";
 import { db } from "~/drizzle/config.server";
 import { eq, and, sql } from "drizzle-orm";
+import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
 
 interface KanjiApiResponse {
   grade: number;
@@ -71,8 +73,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .from(kanji)
     .where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
 
-
-  console.log("kanjis", kanjis)
+  console.log("kanjis", kanjis);
   return { kanjis };
 }
 
@@ -98,7 +99,7 @@ export default function Search() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-center flex-wrap gap-4 bg-zinc-100 p-4 rounded">
+      <div className="grid grid-cols-8 flex-wrap gap-4 bg-zinc-100 p-4 rounded">
         {addedKanjis.map((kanji, idx) => (
           <p className="text-4xl relative" key={kanji.character + idx}>
             {kanji.character}
@@ -118,12 +119,14 @@ export default function Search() {
       </div>
       <Form className="flex flex-col gap-4" method="post">
         <div className="flex gap-2 items-center">
-          <input
+          <Input
             name="q"
             type="search"
-            className="w-full border rounded border-blue-400"
+            className="w-full border rounded text-[16px]"
           />
-          <button type="submit">Search</button>
+          <Button type="submit" variant="outline">
+            Search
+          </Button>
         </div>
       </Form>
       <div>
@@ -137,13 +140,9 @@ export default function Search() {
               <p className="text-3xl">{kanji.kanji}</p>
               <small>{kanji.meanings && kanji.meanings[0]}</small>
             </div>
-            <button
-              value={kanji.kanji}
-              name="kanji"
-              className="bg-blue-500 rounded p-1 h-fit text-white"
-            >
+            <Button value={kanji.kanji} name="kanji">
               Add
-            </button>
+            </Button>
           </fetcher.Form>
         ))}
       </div>
@@ -168,4 +167,3 @@ export function ErrorBoundary() {
 
   return <div>An unexpected error occurred: {error.statusText}</div>;
 }
-
