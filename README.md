@@ -7,7 +7,7 @@
 ### Dev
 application name: **kanji_teacher**.
 ```
-fly deploy -a kanji_teacher
+fly deploy -a kanji-teacher
 ```
 
 ### Prod
