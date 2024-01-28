@@ -73,7 +73,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .from(kanji)
     .where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
 
-  console.log("kanjis", kanjis);
   return { kanjis };
 }
 
@@ -88,6 +87,7 @@ export default function Search() {
   const [addedKanjis, setAddedKanjis] = useState<KanjiData[]>(
     kanjis.map((k) => ({ character: k.character, kanjiId: k.id })),
   );
+  const [tempAddedKanji, setTempAddedKanji] = useState<string[]>([]);
 
   function removeKanji(kanjiId: number) {
     removeFetcher.submit(
@@ -95,6 +95,10 @@ export default function Search() {
       { method: "POST", action: "/api/kanji/remove" },
     );
     setAddedKanjis(addedKanjis.filter((k) => k.kanjiId !== kanjiId));
+  }
+
+  function addToTemp(kanji: string) {
+    setTempAddedKanji([...tempAddedKanji, kanji]);
   }
 
   return (
@@ -130,21 +134,25 @@ export default function Search() {
         </div>
       </Form>
       <div>
-        {actionData?.resultList?.map((kanji) => (
-          <fetcher.Form
-            className="flex justify-between items-center"
-            method="post"
-            action="/api/kanji/add"
-          >
-            <div className="flex flex-col gap-1">
-              <p className="text-3xl">{kanji.kanji}</p>
-              <small>{kanji.meanings && kanji.meanings[0]}</small>
+        <fetcher.Form
+          method="post"
+          action="/api/kanji/add"
+        >
+          {actionData?.resultList?.map((kanji, idx) => (
+            <div
+              className="flex justify-between items-center"
+              key={kanji.kanji + idx}
+             >
+              <div className="flex flex-col gap-1">
+                <p className="text-3xl">{kanji.kanji}</p>
+                <small>{kanji.meanings && kanji.meanings[0]}</small>
+              </div>
+              <Button value={kanji.kanji} name="kanji" onClick={() => addToTemp(kanji.kanji)}>
+                {tempAddedKanji.includes(kanji.kanji) ? <span>Added</span> : <span>Add</span> }
+              </Button>
             </div>
-            <Button value={kanji.kanji} name="kanji">
-              Add
-            </Button>
-          </fetcher.Form>
-        ))}
+          ))}
+        </fetcher.Form>
       </div>
     </div>
   );
