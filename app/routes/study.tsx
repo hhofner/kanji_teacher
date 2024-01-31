@@ -51,7 +51,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     kanjis,
     isAutoReset: settings.isAutoReset,
     lastKanjiIndex:
-      settings.lastKanjiIndex > kanjis.length ? 0 : settings.lastKanjiIndex,
+      settings.lastKanjiIndex >= kanjis.length ? 0 : settings.lastKanjiIndex,
   };
 }
 
@@ -516,22 +516,22 @@ export default function Study() {
                 </div>
               )}
               {!noKanjisExist && (
-                <DrawerTrigger>
+                <div><DrawerTrigger onClick={() => setSelectedInfo("onyomi")}>
                   <div className="w-full text-zinc-500">
                     {kanjis[currentKanji].onyomi?.split(",").slice(0, 4).join(", ")}
                   </div>
-                </DrawerTrigger>
+                </DrawerTrigger></div>
               )}
               {!noKanjisExist && (
-                <div>
+                <div><DrawerTrigger onClick={() => setSelectedInfo("kunyomi")}>
                   <div className="w-full text-zinc-500">
                     {kanjis[currentKanji].kunyomi
                       ?.split(",")
                       .slice(0, 4)
                       .join(", ")}
                   </div>
-                </div>
-              )}
+                </DrawerTrigger>
+                </div>              )}
             </div>
           </div>
           {!noKanjisExist && (
@@ -601,10 +601,19 @@ export default function Study() {
       </div>
       <DrawerContent className="px-4">
         <DrawerHeader>
-          <DrawerTitle>{selectedInfo} readings for {kanjis[currentKanji].character}</DrawerTitle>
+          <DrawerTitle><h2 className="text-3xl">{selectedInfo} readings for {kanjis[currentKanji].character}</h2></DrawerTitle>
         </DrawerHeader>
         <Separator />
-        <p> table and stuff </p>
+        <ul className="p-4 pb-16">
+          <li className="flex justify-between items-center">
+           <ruby className="text-2xl">在外<rp>(</rp><rt>ざいがい</rt><rp>)</rp> </ruby>
+           <div>overseas, abroad</div>
+          </li>
+          <li className="flex justify-between items-center gap-2">
+           <ruby className="text-2xl grow basis-56">顕在<rp>(</rp><rt>けんざい</rt><rp>)</rp></ruby>
+           <p>being actual (as opposed to hidden or latent), being apparent, being obvious, being tangible, being revealed</p>
+          </li>
+        </ul>
       </DrawerContent>
     </Drawer>
   )
