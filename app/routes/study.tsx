@@ -14,7 +14,6 @@ import { requireUser } from "~/session";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { type action as kanjiRecordAction } from "./api.kanji.record";
 import { type action as settingSetAction } from "./api.setting.set";
-import { type action as kanjiReadingsAction } from "./api.kanji.readings";
 import { Button } from "~/components/ui/button";
 import {
   Drawer,
@@ -52,7 +51,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
     for (let k = 0; k < kanjis.length; k++) {
       const kanjiCharacter = kanjis[k].character
       const kanjiOnyomi = toHiragana(kanjis[k].onyomi?.split(",")?.[0].replace(".", "") || "")
-      console.log("onyomi", kanjiOnyomi)
       const kanjiKunyomi = kanjis[k].kunyomi?.split(",")?.[0].replace(".", "") || ""
       const onResults = await db.select().from(words).where(and(like(words.kanji, `%${kanjiCharacter}%`), like(words.reading, `%${kanjiOnyomi}%`))).limit(5)
       const kunResults = await db.select().from(words).where(and(like(words.kanji, `%${kanjiCharacter}%`), like(words.reading, `%${kanjiKunyomi}%`))).limit(5)
@@ -85,7 +83,6 @@ export default function Study() {
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const fetcher = useFetcher<typeof kanjiRecordAction>();
   const settingsFetcher = useFetcher<typeof settingSetAction>();
-  const kanjiReadingsFetcher = useFetcher<typeof kanjiReadingsAction>();
 
   const noKanjisExist = kanjis.length === 0;
 
@@ -472,11 +469,6 @@ export default function Study() {
 
   async function openReadings(info: "Kunyomi" | "Onyomi") {
     setSelectedInfo(info);
-    const result = await kanjiReadingsFetcher.submit(
-      { kanji: kanjis[currentKanji].character },
-      { method: "POST", action: "/api/kanji/readings" },
-    );
-    console.log("results", result)
   }
 
   return (
