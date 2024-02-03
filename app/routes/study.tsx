@@ -7,14 +7,24 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import { eq, and } from "drizzle-orm";
+import { eq, and, like } from "drizzle-orm";
 import { db } from "~/drizzle/config.server";
-import { kanji, setting } from "~/drizzle/schema.server";
+import { kanji, setting, words } from "~/drizzle/schema.server";
 import { requireUser } from "~/session";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { type action as kanjiRecordAction } from "./api.kanji.record";
 import { type action as settingSetAction } from "./api.setting.set";
+import { type action as kanjiReadingsAction } from "./api.kanji.readings";
 import { Button } from "~/components/ui/button";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "~/components/ui/drawer"
+import { Separator } from "~/components/ui/separator"
+import { toHiragana } from "wanakana"
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
@@ -35,11 +45,26 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (rawSettings.length > 0) {
     settings = rawSettings[0];
   }
+  let kanjiWords: { kunReadings: {id: number, kanji: string | null, reading: string | null, gloss: string | null, position: string | null}[], onReadings: {id: number, kanji: string | null, reading: string | null, gloss: string | null, position: string | null}[] }[] = [];
+
+
+  if (kanjis.length > 0) {
+    for (let k = 0; k < kanjis.length; k++) {
+      const kanjiCharacter = kanjis[k].character
+      const kanjiOnyomi = toHiragana(kanjis[k].onyomi?.split(",")?.[0].replace(".", "") || "")
+      console.log("onyomi", kanjiOnyomi)
+      const kanjiKunyomi = kanjis[k].kunyomi?.split(",")?.[0].replace(".", "") || ""
+      const onResults = await db.select().from(words).where(and(like(words.kanji, `%${kanjiCharacter}%`), like(words.reading, `%${kanjiOnyomi}%`))).limit(5)
+      const kunResults = await db.select().from(words).where(and(like(words.kanji, `%${kanjiCharacter}%`), like(words.reading, `%${kanjiKunyomi}%`))).limit(5)
+      kanjiWords = [...kanjiWords, {kunReadings: kunResults, onReadings: onResults }]
+    }
+  }
   return {
     kanjis,
     isAutoReset: settings.isAutoReset,
     lastKanjiIndex:
-      settings.lastKanjiIndex > kanjis.length ? 0 : settings.lastKanjiIndex,
+      settings.lastKanjiIndex >= kanjis.length ? 0 : settings.lastKanjiIndex,
+    kanjiWords
   };
 }
 
@@ -48,6 +73,7 @@ export default function Study() {
     kanjis,
     isAutoReset: autoResetSetting,
     lastKanjiIndex,
+    kanjiWords,
   } = useLoaderData<typeof loader>();
 
   const [strokeCount, setStrokeCount] = useState(0);
@@ -55,9 +81,11 @@ export default function Study() {
   const [hidden, setHidden] = useState(false);
   const [drawnCount, setDrawnCount] = useState(0);
   const [isAutoReset, setIsAutoReset] = useState(autoResetSetting);
+  const [selectedInfo, setSelectedInfo] = useState<"Kunyomi" | "Onyomi" | "">("")
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const fetcher = useFetcher<typeof kanjiRecordAction>();
   const settingsFetcher = useFetcher<typeof settingSetAction>();
+  const kanjiReadingsFetcher = useFetcher<typeof kanjiReadingsAction>();
 
   const noKanjisExist = kanjis.length === 0;
 
@@ -171,7 +199,6 @@ export default function Study() {
   function drawInterface() {
     const ctx = canvasInterfaceRef.current!.getContext("2d");
     const brush = lazy.getBrushCoordinates();
-    // console.log(brush.x, brush.y)
     if (!ctx) return;
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
@@ -443,148 +470,178 @@ export default function Study() {
     setStrokeCount(0);
   }
 
+  async function openReadings(info: "Kunyomi" | "Onyomi") {
+    setSelectedInfo(info);
+    const result = await kanjiReadingsFetcher.submit(
+      { kanji: kanjis[currentKanji].character },
+      { method: "POST", action: "/api/kanji/readings" },
+    );
+    console.log("results", result)
+  }
+
   return (
-    <div className="select-none safari-no-select">
-      <div className="flex flex-col">
-        <div className="flex mb-6 justify-center">
-          {noKanjisExist ? (
-            <div className="w-full text-center">
-              No kanjis selected, add some
-            </div>
-          ) : (
-            <>
-              <div className="flex items-center justify-center mb-2 select-none w-1/2">
-                <div
-                  id="character"
-                  className="relative mx-4 py-2 px-4 rounded text-6xl text-bold bg-white text-black"
-                  onClick={() => setHidden(!hidden)}
-                >
-                  <span className={`${hidden ? "invisible" : ""}`}>
-                    {kanjis[currentKanji].character}
-                  </span>
-                  <span
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${
-                      hidden ? "" : "invisible"
-                    }`}
+    <Drawer>
+      <div className="select-none safari-no-select">
+        <div className="flex flex-col">
+          <div className="flex mb-6 justify-center">
+            {noKanjisExist ? (
+              <div className="w-full text-center">
+                No kanjis selected, add some
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-center mb-2 select-none w-1/2">
+                  <div
+                    id="character"
+                    className="relative mx-4 py-2 px-4 rounded text-6xl text-bold bg-white text-black"
+                    onClick={() => setHidden(!hidden)}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="32"
-                      height="32"
-                      viewBox="0 0 16 16"
+                    <span className={`${hidden ? "invisible" : ""}`}>
+                      {kanjis[currentKanji].character}
+                    </span>
+                    <span
+                      className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${hidden ? "" : "invisible"
+                        }`}
                     >
-                      <path
-                        fill="currentColor"
-                        d="M8 11c-1.65 0-3-1.35-3-3s1.35-3 3-3s3 1.35 3 3s-1.35 3-3 3m0-5c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"
-                      />
-                      <path
-                        fill="currentColor"
-                        d="M8 13c-3.19 0-5.99-1.94-6.97-4.84a.442.442 0 0 1 0-.32C2.01 4.95 4.82 3 8 3s5.99 1.94 6.97 4.84c.04.1.04.22 0 .32C13.99 11.05 11.18 13 8 13M2.03 8c.89 2.4 3.27 4 5.97 4s5.07-1.6 5.97-4C13.08 5.6 10.7 4 8 4S2.93 5.6 2.03 8"
-                      />
-                      <path
-                        fill="currentColor"
-                        d="M14 14.5a.47.47 0 0 1-.35-.15l-12-12c-.2-.2-.2-.51 0-.71c.2-.2.51-.2.71 0l11.99 12.01c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15Z"
-                      />
-                    </svg>
-                  </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M8 11c-1.65 0-3-1.35-3-3s1.35-3 3-3s3 1.35 3 3s-1.35 3-3 3m0-5c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"
+                        />
+                        <path
+                          fill="currentColor"
+                          d="M8 13c-3.19 0-5.99-1.94-6.97-4.84a.442.442 0 0 1 0-.32C2.01 4.95 4.82 3 8 3s5.99 1.94 6.97 4.84c.04.1.04.22 0 .32C13.99 11.05 11.18 13 8 13M2.03 8c.89 2.4 3.27 4 5.97 4s5.07-1.6 5.97-4C13.08 5.6 10.7 4 8 4S2.93 5.6 2.03 8"
+                        />
+                        <path
+                          fill="currentColor"
+                          d="M14 14.5a.47.47 0 0 1-.35-.15l-12-12c-.2-.2-.2-.51 0-.71c.2-.2.51-.2.71 0l11.99 12.01c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15Z"
+                        />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </>
+              </>
+            )}
+            <div className="mb-2 w-1/2">
+              {!noKanjisExist && (
+                <div>
+                  <div className="w-full text-zinc-500">
+                    {kanjis[currentKanji].meanings
+                      ?.split(",")
+                      .slice(0, 4)
+                      .join(", ")}
+                  </div>
+                </div>
+              )}
+              {!noKanjisExist && (
+                <div><DrawerTrigger onClick={() => openReadings("Onyomi")}>
+                  <div className="w-full text-zinc-500 bg-zinc-200 p-1 rounded-lg">
+                    {kanjis[currentKanji].onyomi?.split(",").slice(0, 4).join(", ")}
+                  </div>
+                </DrawerTrigger></div>
+              )}
+              {!noKanjisExist && (
+                <div><DrawerTrigger onClick={() => openReadings("Kunyomi")}>
+                  <div className="w-full text-zinc-500 bg-zinc-200 p-1 rounded-lg mt-1">
+                    {kanjis[currentKanji].kunyomi
+                      ?.split(",")
+                      .slice(0, 4)
+                      .join(", ")}
+                  </div>
+                </DrawerTrigger>
+                </div>              )}
+            </div>
+          </div>
+          {!noKanjisExist && (
+            <div className="mb-2">
+              {kanjis[currentKanji].strokeCount || "error"} strokes
+            </div>
           )}
-          <div className="mb-2 w-1/2">
-            {!noKanjisExist && (
-              <div>
-                <div className="w-full text-zinc-500">
-                  {kanjis[currentKanji].meanings
-                    ?.split(",")
-                    .slice(0, 4)
-                    .join(", ")}
-                </div>
-              </div>
-            )}
-            {!noKanjisExist && (
-              <div className="w-full text-zinc-500">
-                {kanjis[currentKanji].onyomi?.split(",").slice(0, 4).join(", ")}
-              </div>
-            )}
-            {!noKanjisExist && (
-              <div>
-                <div className="w-full text-zinc-500">
-                  {kanjis[currentKanji].kunyomi
-                    ?.split(",")
-                    .slice(0, 4)
-                    .join(", ")}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-        {!noKanjisExist && (
-          <div className="mb-2">
-            {kanjis[currentKanji].strokeCount || "error"} strokes
-          </div>
-        )}
-        <div className="mb-2 flex gap-2 flex-wrap">
-          <Button
-            variant="secondary"
-            onClick={() => setHidden(!hidden)}
-            id="toggle"
-          >
-            Hide
-          </Button>
-          <Button variant="secondary" onClick={() => resetCanvas()}>
-            Reset
-          </Button>
-          <Button variant="secondary" onClick={() => handleAutoResetChange()}>
-            Auto Reset {isAutoReset ? "✔" : ""}
-          </Button>
-          <div className="flex gap-2 ml-auto">
-            <Button variant="outline" onClick={() => previousKanji()}>
-              Prev
+          <div className="mb-2 flex gap-2 flex-wrap">
+            <Button
+              variant="secondary"
+              onClick={() => setHidden(!hidden)}
+              id="toggle"
+            >
+              Hide
             </Button>
-            <Button variant="outline" onClick={() => nextKanji()}>
-              Next
+            <Button variant="secondary" onClick={() => resetCanvas()}>
+              Reset
             </Button>
+            <Button variant="secondary" onClick={() => handleAutoResetChange()}>
+              Auto Reset {isAutoReset ? "✔" : ""}
+            </Button>
+            <div className="flex gap-2 ml-auto">
+              <Button variant="outline" onClick={() => previousKanji()}>
+                Prev
+              </Button>
+              <Button variant="outline" onClick={() => nextKanji()}>
+                Next
+              </Button>
+            </div>
           </div>
-        </div>
-        <div className="flex justify-between w-full mb-2">
-          <div>
-            Stroke Count: <span id="strokeCount">{strokeCount}</span>
+          <div className="flex justify-between w-full mb-2">
+            <div>
+              Stroke Count: <span id="strokeCount">{strokeCount}</span>
+            </div>
+            <div>
+              Drawn Count: <span id="drawnCount">{drawnCount}</span>
+            </div>
           </div>
-          <div>
-            Drawn Count: <span id="drawnCount">{drawnCount}</span>
-          </div>
-        </div>
-        <div className="p-4">
-          <div
-            className="aspect-square relative select-none max-w-md mx-auto"
-            ref={canvasContainerRef}
-          >
-            <canvas
-              ref={canvasInterfaceRef}
-              className="border-2 border-gray-200 absolute left-0 top-0 z-40 h-full w-full aspect-square rounded"
-              style={{ WebkitUserSelect: "none" }}
-            />
-            <canvas
-              ref={canvasTempRef}
-              className="border-2 border-gray-200 absolute left-0 top-0 z-30 h-full w-full aspect-square rounded"
-              style={{ WebkitUserSelect: "none" }}
-            ></canvas>
-            <canvas
-              ref={canvasDrawingRef}
-              className="border-2 border-gray-200 absolute left-0 top-0 z-20 h-full w-full aspect-square rounded"
-              style={{ WebkitUserSelect: "none" }}
-            ></canvas>
-            <canvas
-              ref={canvasGridRef}
-              className="border-2 border-gray-200 absolute left-0 top-0 z-10 h-full w-full aspect-square rounded"
-              style={{ WebkitUserSelect: "none" }}
-            ></canvas>
+          <div className="p-4">
+            <div
+              className="aspect-square relative select-none max-w-md mx-auto"
+              ref={canvasContainerRef}
+            >
+              <canvas
+                ref={canvasInterfaceRef}
+                className="border-2 border-gray-200 absolute left-0 top-0 z-40 h-full w-full aspect-square rounded"
+                style={{ WebkitUserSelect: "none" }}
+              />
+              <canvas
+                ref={canvasTempRef}
+                className="border-2 border-gray-200 absolute left-0 top-0 z-30 h-full w-full aspect-square rounded"
+                style={{ WebkitUserSelect: "none" }}
+              ></canvas>
+              <canvas
+                ref={canvasDrawingRef}
+                className="border-2 border-gray-200 absolute left-0 top-0 z-20 h-full w-full aspect-square rounded"
+                style={{ WebkitUserSelect: "none" }}
+              ></canvas>
+              <canvas
+                ref={canvasGridRef}
+                className="border-2 border-gray-200 absolute left-0 top-0 z-10 h-full w-full aspect-square rounded"
+                style={{ WebkitUserSelect: "none" }}
+              ></canvas>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+      <DrawerContent className="px-4">
+        <DrawerHeader>
+          <DrawerTitle><h2 className="text-3xl">{selectedInfo} readings for {kanjis[currentKanji].character}</h2></DrawerTitle>
+        </DrawerHeader>
+        <Separator />
+        <ul className="p-4 pb-16">
+          {
+            kanjiWords[currentKanji] && kanjiWords[currentKanji][selectedInfo === "Kunyomi" ? "kunReadings" : "onReadings"].map((kanjiWord) => {
+              return (
+                <li key={kanjiWord.id} className="flex justify-between items-center gap-2">
+                  <ruby className="text-2xl grow basis-56">{kanjiWord.kanji}<rp>(</rp><rt>{kanjiWord.reading}</rt><rp>)</rp></ruby>
+                  <p className="text-right">{kanjiWord.gloss}</p>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </DrawerContent>
+    </Drawer>
+  )
 }
 
 export function ErrorBoundary() {

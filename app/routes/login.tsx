@@ -52,7 +52,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function LoginPage() {
   let data = useLoaderData<typeof loader>();
-  console.log("data: ", data.userId);
   let actionData = useActionData<typeof action>();
 
   return (

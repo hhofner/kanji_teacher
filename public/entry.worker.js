@@ -1926,6 +1926,13 @@ var require_manifest_webmanifest = __commonJS({
   }
 });
 
+// routes-module:routes/api.kanji.readings.tsx?worker
+var require_api_kanji_readings = __commonJS({
+  "routes-module:routes/api.kanji.readings.tsx?worker"(exports, module) {
+    module.exports = {};
+  }
+});
+
 // routes-module:routes/api.kanji.record.tsx?worker
 var require_api_kanji_record = __commonJS({
   "routes-module:routes/api.kanji.record.tsx?worker"(exports, module) {
@@ -6630,21 +6637,22 @@ self.addEventListener("message", (event) => {
 // entry-module:@remix-pwa/build/magic
 var route0 = __toESM(require_root());
 var route1 = __toESM(require_manifest_webmanifest());
-var route2 = __toESM(require_api_kanji_record());
-var route3 = __toESM(require_api_kanji_remove());
-var route4 = __toESM(require_api_setting_set());
-var route5 = __toESM(require_api_kanji_add());
-var route6 = __toESM(require_register());
-var route7 = __toESM(require_index());
-var route8 = __toESM(require_logout());
-var route9 = __toESM(require_search());
-var route10 = __toESM(require_about());
-var route11 = __toESM(require_login());
-var route12 = __toESM(require_study());
-var route13 = __toESM(require_quiz());
+var route2 = __toESM(require_api_kanji_readings());
+var route3 = __toESM(require_api_kanji_record());
+var route4 = __toESM(require_api_kanji_remove());
+var route5 = __toESM(require_api_setting_set());
+var route6 = __toESM(require_api_kanji_add());
+var route7 = __toESM(require_register());
+var route8 = __toESM(require_index());
+var route9 = __toESM(require_logout());
+var route10 = __toESM(require_search());
+var route11 = __toESM(require_about());
+var route12 = __toESM(require_login());
+var route13 = __toESM(require_study());
+var route14 = __toESM(require_quiz());
 
 // assets-module:@remix-pwa/dev?assets
-var assets = ["/build/root-KSOUB6YX.js", "/build/manifest-2B630611.js", "/build/entry.client-XGIGBHBP.js", "/build/__remix_entry_dev-MVPDH756.js", "/build/routes/study-5DEDDULG.js", "/build/routes/search-Q72SHJO5.js", "/build/routes/register-UGARFCEM.js", "/build/routes/quiz-XLPZ47NE.js", "/build/routes/manifest[.]webmanifest-J3KYYY3Q.js", "/build/routes/logout-GGSXPJWV.js", "/build/routes/login-TURTDYQW.js", "/build/routes/api.setting.set-DTF7TK4J.js", "/build/routes/api.kanji.remove-PWPNVNBF.js", "/build/routes/api.kanji.record-GLA2QCMY.js", "/build/routes/api.kanji.add-ERCTBUP2.js", "/build/routes/about-DE355P6H.js", "/build/routes/_index-FXBRZZRH.js", "/build/_assets/tailwind-QBR5TGMG.css", "/build/_shared/runtime-GC7QIU56.js", "/build/_shared/remix_hmr-6MBP7STH.js", "/build/_shared/react-dom-BEFB7ICU.js", "/build/_shared/react-3OYUNTOK.js", "/build/_shared/jsx-runtime-7NXSP56X.js", "/build/_shared/jsx-dev-runtime-RDH4Y5YT.js", "/build/_shared/esm-WE7QIGDO.js", "/build/_shared/client-DFZR44C7.js", "/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-WXCBL6BE.js", "/build/_shared/chunk-W45KTK3N.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-QQHLOKQ2.js", "/build/_shared/chunk-PNG5AS42.js", "/build/_shared/chunk-LT2IJX5R.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-G7CHZRZX.js", "/build/_shared/chunk-G3ACJGOK.js", "/build/_shared/chunk-CT6P2CZL.js", "/build/_shared/chunk-BOXFZXVX.js"];
+var assets = ["/build/root-EZZZT5TN.js", "/build/manifest-4628E37A.js", "/build/entry.client-XGIGBHBP.js", "/build/__remix_entry_dev-FIOZUGGH.js", "/build/_assets/tailwind-BQPLS4XB.css", "/build/_shared/runtime-GC7QIU56.js", "/build/_shared/remix_hmr-6MBP7STH.js", "/build/_shared/react-dom-BEFB7ICU.js", "/build/_shared/react-3OYUNTOK.js", "/build/_shared/jsx-runtime-7NXSP56X.js", "/build/_shared/jsx-dev-runtime-RDH4Y5YT.js", "/build/_shared/esm-WE7QIGDO.js", "/build/_shared/client-DFZR44C7.js", "/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-WXCBL6BE.js", "/build/_shared/chunk-WQPGVTUQ.js", "/build/_shared/chunk-W45KTK3N.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-QQHLOKQ2.js", "/build/_shared/chunk-PNG5AS42.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-G7CHZRZX.js", "/build/_shared/chunk-G3ACJGOK.js", "/build/_shared/chunk-CT6P2CZL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/routes/study-W3L3QRAF.js", "/build/routes/search-ISYFRWVN.js", "/build/routes/register-Z4K474PR.js", "/build/routes/quiz-XLPZ47NE.js", "/build/routes/manifest[.]webmanifest-J3KYYY3Q.js", "/build/routes/logout-GGSXPJWV.js", "/build/routes/login-5GHTBMSV.js", "/build/routes/api.setting.set-DTF7TK4J.js", "/build/routes/api.kanji.remove-PWPNVNBF.js", "/build/routes/api.kanji.record-GLA2QCMY.js", "/build/routes/api.kanji.readings-DYUODYK5.js", "/build/routes/api.kanji.add-ERCTBUP2.js", "/build/routes/about-DE355P6H.js", "/build/routes/_index-KHLTILFJ.js"];
 
 // entry-module:@remix-pwa/build/magic
 var routes = {
@@ -6664,13 +6672,21 @@ var routes = {
     caseSensitive: void 0,
     module: route1
   },
+  "routes/api.kanji.readings": {
+    id: "routes/api.kanji.readings",
+    parentId: "root",
+    path: "api/kanji/readings",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route2
+  },
   "routes/api.kanji.record": {
     id: "routes/api.kanji.record",
     parentId: "root",
     path: "api/kanji/record",
     index: void 0,
     caseSensitive: void 0,
-    module: route2
+    module: route3
   },
   "routes/api.kanji.remove": {
     id: "routes/api.kanji.remove",
@@ -6678,7 +6694,7 @@ var routes = {
     path: "api/kanji/remove",
     index: void 0,
     caseSensitive: void 0,
-    module: route3
+    module: route4
   },
   "routes/api.setting.set": {
     id: "routes/api.setting.set",
@@ -6686,7 +6702,7 @@ var routes = {
     path: "api/setting/set",
     index: void 0,
     caseSensitive: void 0,
-    module: route4
+    module: route5
   },
   "routes/api.kanji.add": {
     id: "routes/api.kanji.add",
@@ -6694,7 +6710,7 @@ var routes = {
     path: "api/kanji/add",
     index: void 0,
     caseSensitive: void 0,
-    module: route5
+    module: route6
   },
   "routes/register": {
     id: "routes/register",
@@ -6702,7 +6718,7 @@ var routes = {
     path: "register",
     index: void 0,
     caseSensitive: void 0,
-    module: route6
+    module: route7
   },
   "routes/_index": {
     id: "routes/_index",
@@ -6710,7 +6726,7 @@ var routes = {
     path: void 0,
     index: true,
     caseSensitive: void 0,
-    module: route7
+    module: route8
   },
   "routes/logout": {
     id: "routes/logout",
@@ -6718,7 +6734,7 @@ var routes = {
     path: "logout",
     index: void 0,
     caseSensitive: void 0,
-    module: route8
+    module: route9
   },
   "routes/search": {
     id: "routes/search",
@@ -6726,7 +6742,7 @@ var routes = {
     path: "search",
     index: void 0,
     caseSensitive: void 0,
-    module: route9
+    module: route10
   },
   "routes/about": {
     id: "routes/about",
@@ -6734,7 +6750,7 @@ var routes = {
     path: "about",
     index: void 0,
     caseSensitive: void 0,
-    module: route10
+    module: route11
   },
   "routes/login": {
     id: "routes/login",
@@ -6742,7 +6758,7 @@ var routes = {
     path: "login",
     index: void 0,
     caseSensitive: void 0,
-    module: route11
+    module: route12
   },
   "routes/study": {
     id: "routes/study",
@@ -6750,7 +6766,7 @@ var routes = {
     path: "study",
     index: void 0,
     caseSensitive: void 0,
-    module: route12
+    module: route13
   },
   "routes/quiz": {
     id: "routes/quiz",
@@ -6758,7 +6774,7 @@ var routes = {
     path: "quiz",
     index: void 0,
     caseSensitive: void 0,
-    module: route13
+    module: route14
   }
 };
 var entry = { module: entry_worker_exports };
