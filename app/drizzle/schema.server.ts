@@ -36,3 +36,12 @@ export const setting = sqliteTable("setting", {
     .unique(),
   lastKanjiIndex: integer("lastKanjiIndex").notNull().default(0),
 });
+
+export const words = sqliteTable("words", {
+  id: integer("id").primaryKey(),
+  kanji: text("kanji"),
+  reading: text("reading"),
+  gloss: text("gloss"),
+  position: text("position"),
+});
+

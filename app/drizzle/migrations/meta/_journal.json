@@ -36,6 +36,13 @@
       "when": 1704804465953,
       "tag": "0004_lucky_fantastic_four",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1706871878820,
+      "tag": "0005_secret_ultimates",
+      "breakpoints": true
     }
   ]
 }

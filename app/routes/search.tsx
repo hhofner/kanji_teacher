@@ -73,7 +73,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .from(kanji)
     .where(and(eq(kanji.date, startDay), eq(kanji.userId, user.id)));
 
-  console.log("kanjis", kanjis);
   return { kanjis };
 }
 
