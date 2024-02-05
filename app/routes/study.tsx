@@ -85,6 +85,8 @@ export default function Study() {
   const settingsFetcher = useFetcher<typeof settingSetAction>();
 
   const noKanjisExist = kanjis.length === 0;
+  const kanjiKunReadingsExist = kanjis[currentKanji].kunyomi !== "";
+  const kanjiOnReadingsExist = kanjis[currentKanji].onyomi !== "";
 
   const lazy = useMemo(
     () =>
@@ -225,7 +227,7 @@ export default function Study() {
     // Horizontal Line
     ctx.beginPath();
     ctx.moveTo(ctx.canvas.width / (dpi.current * 2), 0);
-    ctx.strokeStyle = "#F0F8FF";
+    ctx.strokeStyle = "#e5e7eb";
     ctx.lineWidth = 4;
     ctx.lineTo(
       ctx.canvas.width / (dpi.current * 2),
@@ -236,7 +238,7 @@ export default function Study() {
     // Vertical
     ctx.beginPath();
     ctx.moveTo(0, ctx.canvas.height / (dpi.current * 2));
-    ctx.strokeStyle = "#F0F8FF";
+    ctx.strokeStyle = "#e5e7eb";
     ctx.lineWidth = 4;
     ctx.lineTo(
       ctx.canvas.width / dpi.current,
@@ -530,14 +532,14 @@ export default function Study() {
                   </div>
                 </div>
               )}
-              {!noKanjisExist && (
+              {!noKanjisExist && kanjiOnReadingsExist && (
                 <div><DrawerTrigger onClick={() => openReadings("Onyomi")}>
                   <div className="w-full text-zinc-500 bg-zinc-200 p-1 rounded-lg">
                     {kanjis[currentKanji].onyomi?.split(",").slice(0, 4).join(", ")}
                   </div>
                 </DrawerTrigger></div>
               )}
-              {!noKanjisExist && (
+              {!noKanjisExist && kanjiKunReadingsExist && (
                 <div><DrawerTrigger onClick={() => openReadings("Kunyomi")}>
                   <div className="w-full text-zinc-500 bg-zinc-200 p-1 rounded-lg mt-1">
                     {kanjis[currentKanji].kunyomi
@@ -556,16 +558,16 @@ export default function Study() {
           )}
           <div className="mb-2 flex gap-2 flex-wrap">
             <Button
-              variant="secondary"
+              variant="secondary" className="text-xs"
               onClick={() => setHidden(!hidden)}
               id="toggle"
             >
               Hide
             </Button>
-            <Button variant="secondary" onClick={() => resetCanvas()}>
+            <Button className="text-xs" variant="secondary" onClick={() => resetCanvas()}>
               Reset
             </Button>
-            <Button variant="secondary" onClick={() => handleAutoResetChange()}>
+            <Button className="text-xs" variant="secondary" onClick={() => handleAutoResetChange()}>
               Auto Reset {isAutoReset ? "✔" : ""}
             </Button>
             <div className="flex gap-2 ml-auto">
