@@ -1,109 +1,35 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
-import { endOfWeek, format, startOfWeek } from "date-fns";
-import { eq, and, sql } from "drizzle-orm";
-import { db } from "~/drizzle/config.server";
-import { kanji, writingLog } from "~/drizzle/schema.server";
-import { getUserId } from "~/session";
+import { Link } from "@remix-run/react";
 import { Button } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "~/components/ui/card";
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "Kanji Teacher" },
-    { name: "description", content: "Learning Kanji" },
-  ];
-};
-
-export async function loader({ request }: LoaderFunctionArgs) {
-  // Show kanjis for logged in user
-  const userId = await getUserId(request);
-  if (!userId) {
-    return { kanjis: [], kanjiDrawn: [], quizzesTaken: 0, passagesRead: 0 };
-  }
-
-  const startDay = format(startOfWeek(new Date()), "MM/dd");
-  const kanjis = await db
-    .select()
-    .from(kanji)
-    .where(and(eq(kanji.date, startDay), eq(kanji.userId, parseInt(userId))));
-  const kanjisDrawn = await db
-    .select()
-    .from(writingLog)
-    .where(
-      and(
-        eq(writingLog.userId, parseInt(userId)),
-        sql`strftime('%Y-%m-%d %H:%M:%S', ${writingLog.datetime}) >= datetime('now', 'weekday 0', '-7 days')`,
-      ),
-    );
-  const kanjiDrawn = kanjisDrawn.length;
-  return { kanjis, kanjiDrawn, quizzesTaken: 0, passagesRead: 0 };
-}
 
 export default function Index() {
-  const startDay = format(startOfWeek(new Date()), "MM/dd");
-  const endDay = format(endOfWeek(new Date()), "MM/dd");
-  const { kanjis, kanjiDrawn, quizzesTaken, passagesRead } =
-    useLoaderData<typeof loader>();
   return (
-    <div className="space-y-6 relative h-full">
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <div className="flex flex-col">
-            <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-              This Week's Kanji
-            </h2>
-            <small className="text-sm">
-              {startDay} - {endDay}
-            </small>
-          </div>
-          <Link to="/search">
-            <Button variant="outline">Set</Button>
-          </Link>
-        </div>
-        <div >
-          {kanjis.length <= 0 ? (
-            <p>No kanjis selected. Add some!</p>
-          ) : (
-            <div className="grid grid-cols-8 justify-center">
-              {kanjis.map((kanji) => (
-              <Link key={kanji!.id} to={`/kanji/${kanji!.id}`}>
-                <div className="md:text-6xl text-4xl p-1">
-                  {kanji?.character}
-                </div>
-              </Link>
-            ))}</div>
-          )}
+    <div className="md:space-y-8 space-y-16">
+      <div className="md:space-y-4 space-y-8">
+        <h1 className="md:text-6xl text-4xl font-bold">
+          Improve your Kanji ability by staying motivated to write.
+        </h1>
+        <div className="flex flex-col justify-center items-center gap-8">
+          <img src="/icons/ios-1024.png" className="w-32 h-32 rounded-2xl" alt="Oh My Kanji icon of a kanji character brush"/>
+          <p>
+            Oh My Kanji is a companion PWA app for your Kanji study routine,
+            avalible for any platform that has a browser. Select the Kanjis to
+            study for the week, and then get to writing. Oh My Kanji provides to
+            you a canvas to write as much as possible so that you can learn Kanji
+            characters more effectively.
+          </p>
         </div>
       </div>
-      <div className="mb-6">
-        <div className="flex gap-4 mb-12">
-          <Card>
-            <CardHeader>
-              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                Kanj Drawn This Week
-              </h4>
-            </CardHeader>
-            <CardContent>
-              <p className="leading-7 [&:not(:first-child)]:mt-6">
-                {kanjiDrawn}
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="flex gap-4 w-full justify-center">
-          <Link to="/study">
-            <Button>Write Kanji</Button>
-          </Link>
-          <Link to="/quiz">
-            <Button>Take Quizzes</Button>
-          </Link>
-        </div>
+      <div className="w-full flex justify-center">
+        <Link to="/app">
+          <Button className="font-bold flex gap-4 group">
+            <span>Try It Out</span>
+            <svg className="-translate-x-2 group-hover:translate-x-0 transition-all" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </Button>
+        </Link>
       </div>
+      <footer className="flex justify-center translate-y-24">
+        <small>Made by 0x888fff, find me on <a href="https://mozilla.social/@hans" className="mr-1 cursor-pointer font-bold">Mastodon</a>or<a href="https://twitter.com/hofner_pls" className="ml-1 cursor-pointer font-bold">Twitter</a></small>.
+      </footer>
     </div>
   );
 }

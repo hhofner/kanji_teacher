@@ -12,8 +12,8 @@ import {
 import stylesheet from "~/tailwind.css";
 import Username from "./components/Username";
 import { getSession } from "~/session";
-import { useSWEffect } from '@remix-pwa/sw'
-import { LiveReload } from '@remix-pwa/sw'
+import { useSWEffect } from "@remix-pwa/sw";
+import { LiveReload } from "@remix-pwa/sw";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -37,7 +37,13 @@ export default function App() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="manifest" href="/manifest.webmanifest" />
-        <link href="icons/ios-1024.png" id="icons/ios-1024.png" rel="apple-touch-icon" sizes="1024x1024" type="image/png"/>
+        <link
+          href="icons/ios-1024.png"
+          id="icons/ios-1024.png"
+          rel="apple-touch-icon"
+          sizes="1024x1024"
+          type="image/png"
+        />
         <Meta />
         <Links />
       </head>

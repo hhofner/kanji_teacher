@@ -21,9 +21,9 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "~/components/ui/drawer"
-import { Separator } from "~/components/ui/separator"
-import { toHiragana } from "wanakana"
+} from "~/components/ui/drawer";
+import { Separator } from "~/components/ui/separator";
+import { toHiragana } from "wanakana";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
@@ -44,17 +44,55 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (rawSettings.length > 0) {
     settings = rawSettings[0];
   }
-  let kanjiWords: { kunReadings: {id: number, kanji: string | null, reading: string | null, gloss: string | null, position: string | null}[], onReadings: {id: number, kanji: string | null, reading: string | null, gloss: string | null, position: string | null}[] }[] = [];
-
+  let kanjiWords: {
+    kunReadings: {
+      id: number;
+      kanji: string | null;
+      reading: string | null;
+      gloss: string | null;
+      position: string | null;
+    }[];
+    onReadings: {
+      id: number;
+      kanji: string | null;
+      reading: string | null;
+      gloss: string | null;
+      position: string | null;
+    }[];
+  }[] = [];
 
   if (kanjis.length > 0) {
     for (let k = 0; k < kanjis.length; k++) {
-      const kanjiCharacter = kanjis[k].character
-      const kanjiOnyomi = toHiragana(kanjis[k].onyomi?.split(",")?.[0].replace(".", "") || "")
-      const kanjiKunyomi = kanjis[k].kunyomi?.split(",")?.[0].replace(".", "") || ""
-      const onResults = await db.select().from(words).where(and(like(words.kanji, `%${kanjiCharacter}%`), like(words.reading, `%${kanjiOnyomi}%`))).limit(5)
-      const kunResults = await db.select().from(words).where(and(like(words.kanji, `%${kanjiCharacter}%`), like(words.reading, `%${kanjiKunyomi}%`))).limit(5)
-      kanjiWords = [...kanjiWords, {kunReadings: kunResults, onReadings: onResults }]
+      const kanjiCharacter = kanjis[k].character;
+      const kanjiOnyomi = toHiragana(
+        kanjis[k].onyomi?.split(",")?.[0].replace(".", "") || "",
+      );
+      const kanjiKunyomi =
+        kanjis[k].kunyomi?.split(",")?.[0].replace(".", "") || "";
+      const onResults = await db
+        .select()
+        .from(words)
+        .where(
+          and(
+            like(words.kanji, `%${kanjiCharacter}%`),
+            like(words.reading, `%${kanjiOnyomi}%`),
+          ),
+        )
+        .limit(5);
+      const kunResults = await db
+        .select()
+        .from(words)
+        .where(
+          and(
+            like(words.kanji, `%${kanjiCharacter}%`),
+            like(words.reading, `%${kanjiKunyomi}%`),
+          ),
+        )
+        .limit(5);
+      kanjiWords = [
+        ...kanjiWords,
+        { kunReadings: kunResults, onReadings: onResults },
+      ];
     }
   }
   return {
@@ -62,7 +100,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     isAutoReset: settings.isAutoReset,
     lastKanjiIndex:
       settings.lastKanjiIndex >= kanjis.length ? 0 : settings.lastKanjiIndex,
-    kanjiWords
+    kanjiWords,
   };
 }
 
@@ -79,7 +117,9 @@ export default function Study() {
   const [hidden, setHidden] = useState(false);
   const [drawnCount, setDrawnCount] = useState(0);
   const [isAutoReset, setIsAutoReset] = useState(autoResetSetting);
-  const [selectedInfo, setSelectedInfo] = useState<"Kunyomi" | "Onyomi" | "">("")
+  const [selectedInfo, setSelectedInfo] = useState<"Kunyomi" | "Onyomi" | "">(
+    "",
+  );
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const fetcher = useFetcher<typeof kanjiRecordAction>();
   const settingsFetcher = useFetcher<typeof settingSetAction>();
@@ -494,8 +534,9 @@ export default function Study() {
                       {kanjis[currentKanji].character}
                     </span>
                     <span
-                      className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${hidden ? "" : "invisible"
-                        }`}
+                      className={`absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 text-gray-700 ${
+                        hidden ? "" : "invisible"
+                      }`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -533,22 +574,29 @@ export default function Study() {
                 </div>
               )}
               {!noKanjisExist && kanjiOnReadingsExist && (
-                <div><DrawerTrigger onClick={() => openReadings("Onyomi")}>
-                  <div className="w-full text-zinc-500 bg-zinc-200 p-1 rounded-lg">
-                    {kanjis[currentKanji].onyomi?.split(",").slice(0, 4).join(", ")}
-                  </div>
-                </DrawerTrigger></div>
+                <div>
+                  <DrawerTrigger onClick={() => openReadings("Onyomi")}>
+                    <div className="w-full text-zinc-500 bg-zinc-200 p-1 rounded-lg">
+                      {kanjis[currentKanji].onyomi
+                        ?.split(",")
+                        .slice(0, 4)
+                        .join(", ")}
+                    </div>
+                  </DrawerTrigger>
+                </div>
               )}
               {!noKanjisExist && kanjiKunReadingsExist && (
-                <div><DrawerTrigger onClick={() => openReadings("Kunyomi")}>
-                  <div className="w-full text-zinc-500 bg-zinc-200 p-1 rounded-lg mt-1">
-                    {kanjis[currentKanji].kunyomi
-                      ?.split(",")
-                      .slice(0, 4)
-                      .join(", ")}
-                  </div>
-                </DrawerTrigger>
-                </div>              )}
+                <div>
+                  <DrawerTrigger onClick={() => openReadings("Kunyomi")}>
+                    <div className="w-full text-zinc-500 bg-zinc-200 p-1 rounded-lg mt-1">
+                      {kanjis[currentKanji].kunyomi
+                        ?.split(",")
+                        .slice(0, 4)
+                        .join(", ")}
+                    </div>
+                  </DrawerTrigger>
+                </div>
+              )}
             </div>
           </div>
           {!noKanjisExist && (
@@ -558,16 +606,25 @@ export default function Study() {
           )}
           <div className="mb-2 flex gap-2 flex-wrap">
             <Button
-              variant="secondary" className="text-xs"
+              variant="secondary"
+              className="text-xs"
               onClick={() => setHidden(!hidden)}
               id="toggle"
             >
               Hide
             </Button>
-            <Button className="text-xs" variant="secondary" onClick={() => resetCanvas()}>
+            <Button
+              className="text-xs"
+              variant="secondary"
+              onClick={() => resetCanvas()}
+            >
               Reset
             </Button>
-            <Button className="text-xs" variant="secondary" onClick={() => handleAutoResetChange()}>
+            <Button
+              className="text-xs"
+              variant="secondary"
+              onClick={() => handleAutoResetChange()}
+            >
               Auto Reset {isAutoReset ? "✔" : ""}
             </Button>
             <div className="flex gap-2 ml-auto">
@@ -618,24 +675,37 @@ export default function Study() {
       </div>
       <DrawerContent className="px-4">
         <DrawerHeader>
-          <DrawerTitle><h2 className="text-3xl">{selectedInfo} readings for {kanjis[currentKanji].character}</h2></DrawerTitle>
+          <DrawerTitle>
+            <h2 className="text-3xl">
+              {selectedInfo} readings for {kanjis[currentKanji].character}
+            </h2>
+          </DrawerTitle>
         </DrawerHeader>
         <Separator />
         <ul className="p-4 pb-16">
-          {
-            kanjiWords[currentKanji] && kanjiWords[currentKanji][selectedInfo === "Kunyomi" ? "kunReadings" : "onReadings"].map((kanjiWord) => {
+          {kanjiWords[currentKanji] &&
+            kanjiWords[currentKanji][
+              selectedInfo === "Kunyomi" ? "kunReadings" : "onReadings"
+            ].map((kanjiWord) => {
               return (
-                <li key={kanjiWord.id} className="flex justify-between items-center gap-2">
-                  <ruby className="text-2xl grow basis-56">{kanjiWord.kanji}<rp>(</rp><rt>{kanjiWord.reading}</rt><rp>)</rp></ruby>
+                <li
+                  key={kanjiWord.id}
+                  className="flex justify-between items-center gap-2"
+                >
+                  <ruby className="text-2xl grow basis-56">
+                    {kanjiWord.kanji}
+                    <rp>(</rp>
+                    <rt>{kanjiWord.reading}</rt>
+                    <rp>)</rp>
+                  </ruby>
                   <p className="text-right">{kanjiWord.gloss}</p>
                 </li>
-              )
-            })
-          }
+              );
+            })}
         </ul>
       </DrawerContent>
     </Drawer>
-  )
+  );
 }
 
 export function ErrorBoundary() {

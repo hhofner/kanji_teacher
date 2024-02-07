@@ -104,10 +104,7 @@ export default function RegisterPage() {
           placeholder="Invite Code"
           className="w-full p-4 rounded-md border-gray-100 border focus:border-sky-600 focus:ring-sky-600"
         />
-        <Button
-          type="submit"
-          className="w-full"
-        >
+        <Button type="submit" className="w-full">
           Submit
         </Button>
 

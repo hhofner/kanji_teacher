@@ -5,13 +5,17 @@
 ## Deployment
 
 ### Dev
+
 application name: **kanji_teacher**.
+
 ```
 fly deploy -a kanji-teacher
 ```
 
 ### Prod
+
 application name: **oh-my-kanji**
+
 ```
 fly deploy -a oh-my-kanji
 ```

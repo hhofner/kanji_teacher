@@ -2010,6 +2010,13 @@ var require_quiz = __commonJS({
   }
 });
 
+// routes-module:routes/app.tsx?worker
+var require_app = __commonJS({
+  "routes-module:routes/app.tsx?worker"(exports, module) {
+    module.exports = {};
+  }
+});
+
 // node_modules/@remix-run/router/dist/router.js
 var router_exports = {};
 __export(router_exports, {
@@ -6601,7 +6608,10 @@ var assetsHandler = cacheFirst({
     ignoreVary: true
   }
 });
-var defaultFetchHandler = ({ context, request }) => {
+var defaultFetchHandler = ({
+  context,
+  request
+}) => {
   const type = matchRequest(request);
   if (type === "asset") {
     return assetsHandler(context.event.request);
@@ -6642,9 +6652,10 @@ var route10 = __toESM(require_about());
 var route11 = __toESM(require_login());
 var route12 = __toESM(require_study());
 var route13 = __toESM(require_quiz());
+var route14 = __toESM(require_app());
 
 // assets-module:@remix-pwa/dev?assets
-var assets = ["/build/root-2DVAIDN6.js", "/build/manifest-24ECAB71.js", "/build/entry.client-XGIGBHBP.js", "/build/__remix_entry_dev-MVPDH756.js", "/build/routes/study-RHCXOXSD.js", "/build/routes/search-E6DLOZHM.js", "/build/routes/register-Z4K474PR.js", "/build/routes/quiz-XLPZ47NE.js", "/build/routes/manifest[.]webmanifest-J3KYYY3Q.js", "/build/routes/logout-GGSXPJWV.js", "/build/routes/login-RWUX27HN.js", "/build/routes/api.setting.set-DTF7TK4J.js", "/build/routes/api.kanji.remove-PWPNVNBF.js", "/build/routes/api.kanji.record-GLA2QCMY.js", "/build/routes/api.kanji.add-ERCTBUP2.js", "/build/routes/about-DE355P6H.js", "/build/routes/_index-P2UXY25I.js", "/build/_assets/tailwind-2JXHX6MQ.css", "/build/_shared/runtime-GC7QIU56.js", "/build/_shared/remix_hmr-6MBP7STH.js", "/build/_shared/react-dom-BEFB7ICU.js", "/build/_shared/react-3OYUNTOK.js", "/build/_shared/jsx-runtime-7NXSP56X.js", "/build/_shared/jsx-dev-runtime-RDH4Y5YT.js", "/build/_shared/esm-WE7QIGDO.js", "/build/_shared/client-DFZR44C7.js", "/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-WXCBL6BE.js", "/build/_shared/chunk-WQPGVTUQ.js", "/build/_shared/chunk-W45KTK3N.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-QQHLOKQ2.js", "/build/_shared/chunk-PNG5AS42.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-G7CHZRZX.js", "/build/_shared/chunk-G3ACJGOK.js", "/build/_shared/chunk-CT6P2CZL.js", "/build/_shared/chunk-BOXFZXVX.js"];
+var assets = ["/build/root-GJL25XLC.js", "/build/manifest-ECD9AF5C.js", "/build/entry.client-LN4K2DJU.js", "/build/__remix_entry_dev-FIOZUGGH.js", "/build/_assets/tailwind-X5OAKR6N.css", "/build/_shared/runtime-GC7QIU56.js", "/build/_shared/remix_hmr-6MBP7STH.js", "/build/_shared/react-dom-BEFB7ICU.js", "/build/_shared/react-3OYUNTOK.js", "/build/_shared/jsx-runtime-7NXSP56X.js", "/build/_shared/jsx-dev-runtime-RDH4Y5YT.js", "/build/_shared/esm-WE7QIGDO.js", "/build/_shared/client-DFZR44C7.js", "/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-XCXTTUMG.js", "/build/_shared/chunk-WXCBL6BE.js", "/build/_shared/chunk-WQPGVTUQ.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-QQHLOKQ2.js", "/build/_shared/chunk-PNG5AS42.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-G7CHZRZX.js", "/build/_shared/chunk-G3ACJGOK.js", "/build/_shared/chunk-CT6P2CZL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/routes/study-PLAYCSAH.js", "/build/routes/search-C6355UDK.js", "/build/routes/register-4AW4TUM7.js", "/build/routes/quiz-4EOPFVXT.js", "/build/routes/manifest[.]webmanifest-J3KYYY3Q.js", "/build/routes/logout-GGSXPJWV.js", "/build/routes/login-CDC4VFJ4.js", "/build/routes/app-J5TGOB7B.js", "/build/routes/api.setting.set-DTF7TK4J.js", "/build/routes/api.kanji.remove-PWPNVNBF.js", "/build/routes/api.kanji.record-GLA2QCMY.js", "/build/routes/api.kanji.add-ERCTBUP2.js", "/build/routes/about-3PHEPXZG.js", "/build/routes/_index-7WVRERE3.js"];
 
 // entry-module:@remix-pwa/build/magic
 var routes = {
@@ -6759,6 +6770,14 @@ var routes = {
     index: void 0,
     caseSensitive: void 0,
     module: route13
+  },
+  "routes/app": {
+    id: "routes/app",
+    parentId: "root",
+    path: "app",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route14
   }
 };
 var entry = { module: entry_worker_exports };

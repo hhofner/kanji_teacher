@@ -3,9 +3,11 @@ export default function About() {
     <div className="space-y-6 pb-8">
       <h1 className="text-3xl">About: How It Works</h1>
       <p>
-        Oh My Kanji is a simple application meant to encourage you to write Kanji characters more. It is meant
-        to be used as a companion application to a book or application that has a structured set of Kanjis. Oh My Kanji
-        expects the user to select a set of Kanji characters they will study for the week.
+        Oh My Kanji is a simple application meant to encourage you to write
+        Kanji characters more. It is meant to be used as a companion application
+        to a book or application that has a structured set of Kanjis. Oh My
+        Kanji expects the user to select a set of Kanji characters they will
+        study for the week.
       </p>
       <p>
         Additionally, Oh My Kanji will provide a set of other features that
@@ -25,8 +27,19 @@ export default function About() {
       </ul>
       <p>
         If you're interested in this project and would like to see it developed
-        further (ie, as a native app, an API, or anything else), then consider <a className="font-bold" href="https://www.buymeacoffee.com/hhofner">donating</a>,
-        sending me a message on <a className="font-bold" href="https://twitter.com/hofner_pls">X</a> or <a className="font-bold" href="https://mozilla.social/@hans">Mastodon</a>.
+        further (ie, as a native app, an API, or anything else), then consider{" "}
+        <a className="font-bold" href="https://www.buymeacoffee.com/hhofner">
+          donating
+        </a>
+        , sending me a message on{" "}
+        <a className="font-bold" href="https://twitter.com/hofner_pls">
+          X
+        </a>{" "}
+        or{" "}
+        <a className="font-bold" href="https://mozilla.social/@hans">
+          Mastodon
+        </a>
+        .
       </p>
     </div>
   );

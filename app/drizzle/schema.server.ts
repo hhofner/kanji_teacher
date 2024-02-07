@@ -44,4 +44,3 @@ export const words = sqliteTable("words", {
   gloss: text("gloss"),
   position: text("position"),
 });
-

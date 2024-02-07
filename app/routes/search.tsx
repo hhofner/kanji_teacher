@@ -134,21 +134,26 @@ export default function Search() {
         </div>
       </Form>
       <div>
-        <fetcher.Form
-          method="post"
-          action="/api/kanji/add"
-        >
+        <fetcher.Form method="post" action="/api/kanji/add">
           {actionData?.resultList?.map((kanji, idx) => (
             <div
               className="flex justify-between items-center"
               key={kanji.kanji + idx}
-             >
+            >
               <div className="flex flex-col gap-1">
                 <p className="text-3xl">{kanji.kanji}</p>
                 <small>{kanji.meanings && kanji.meanings[0]}</small>
               </div>
-              <Button value={kanji.kanji} name="kanji" onClick={() => addToTemp(kanji.kanji)}>
-                {tempAddedKanji.includes(kanji.kanji) ? <span>Added</span> : <span>Add</span> }
+              <Button
+                value={kanji.kanji}
+                name="kanji"
+                onClick={() => addToTemp(kanji.kanji)}
+              >
+                {tempAddedKanji.includes(kanji.kanji) ? (
+                  <span>Added</span>
+                ) : (
+                  <span>Add</span>
+                )}
               </Button>
             </div>
           ))}

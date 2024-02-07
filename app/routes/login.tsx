@@ -79,9 +79,7 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-8">
-            <Button className="w-full">
-              Log in
-            </Button>
+            <Button className="w-full">Log in</Button>
           </div>
 
           <p className="mt-4 font-medium text-red-500">{actionData?.error}</p>
