@@ -54,7 +54,7 @@ export default function App() {
       >
         <div className="p-4 md:p-8 rounded-lg md:max-w-3xl mx-auto  h-full flex flex-col">
           <header className="flex justify-between mb-12">
-            <Link to="/">
+            <Link to={location.pathname === "/" ? "/" : "/app"}>
               <h1 className="text-2xl font-bold md:mb-8">
                 Oh My <span className="text-gray-400 italic">Kanji</span>
               </h1>
