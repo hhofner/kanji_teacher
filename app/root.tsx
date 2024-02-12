@@ -59,7 +59,7 @@ export default function App() {
                 Oh My <span className="text-gray-400 italic">Kanji</span>
               </h1>
             </Link>
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-center">
               <Link to="/about">About</Link>
               <Username isLoggedIn={data.isLoggedIn} />
             </div>
