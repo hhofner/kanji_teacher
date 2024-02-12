@@ -125,8 +125,10 @@ export default function Study() {
   const settingsFetcher = useFetcher<typeof settingSetAction>();
 
   const noKanjisExist = kanjis.length === 0;
-  const kanjiKunReadingsExist = kanjis.length > 0 && kanjis[currentKanji].kunyomi !== "";
-  const kanjiOnReadingsExist = kanjis.length > 0 && kanjis[currentKanji].onyomi !== "";
+  const kanjiKunReadingsExist =
+    kanjis.length > 0 && kanjis[currentKanji].kunyomi !== "";
+  const kanjiOnReadingsExist =
+    kanjis.length > 0 && kanjis[currentKanji].onyomi !== "";
 
   const lazy = useMemo(
     () =>
@@ -676,14 +678,19 @@ export default function Study() {
       <DrawerContent className="px-4">
         <DrawerHeader>
           <DrawerTitle>
-            {noKanjisExist ? <h2>Select some Kanjis to study </h2> : <h2 className="text-3xl">
-              {selectedInfo} readings for {kanjis[currentKanji].character}
-            </h2> }
+            {noKanjisExist ? (
+              <h2>Select some Kanjis to study </h2>
+            ) : (
+              <h2 className="text-3xl">
+                {selectedInfo} readings for {kanjis[currentKanji].character}
+              </h2>
+            )}
           </DrawerTitle>
         </DrawerHeader>
         <Separator />
         <ul className="p-4 pb-16">
-          {!noKanjisExist && kanjiWords[currentKanji] &&
+          {!noKanjisExist &&
+            kanjiWords[currentKanji] &&
             kanjiWords[currentKanji][
               selectedInfo === "Kunyomi" ? "kunReadings" : "onReadings"
             ].map((kanjiWord) => {

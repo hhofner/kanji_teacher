@@ -74,7 +74,7 @@ module.exports = {
     },
     height: {
       webkit: "100dvh",
-      full: "100%"
+      full: "100%",
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -4,33 +4,48 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __esm = (fn, res) => function __init() {
-  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
-};
-var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
+var __esm = (fn, res) =>
+  function __init() {
+    return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])((fn = 0))), res;
+  };
+var __commonJS = (cb, mod) =>
+  function __require() {
+    return (
+      mod ||
+        (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod),
+      mod.exports
+    );
+  };
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
+  if ((from && typeof from === "object") || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
       if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+        __defProp(to, key, {
+          get: () => from[key],
+          enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable,
+        });
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __toESM = (mod, isNodeMode, target) => (
+  (target = mod != null ? __create(__getProtoOf(mod)) : {}),
+  __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule
+      ? __defProp(target, "default", { value: mod, enumerable: true })
+      : target,
+    mod,
+  )
+);
+var __toCommonJS = (mod) =>
+  __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // node_modules/base64-js/index.js
 var require_base64_js = __commonJS({
@@ -42,7 +57,8 @@ var require_base64_js = __commonJS({
     var lookup = [];
     var revLookup = [];
     var Arr = typeof Uint8Array !== "undefined" ? Uint8Array : Array;
-    var code = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var code =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     for (i = 0, len = code.length; i < len; ++i) {
       lookup[i] = code[i];
       revLookup[code.charCodeAt(i)] = i;
@@ -57,19 +73,18 @@ var require_base64_js = __commonJS({
         throw new Error("Invalid string. Length must be a multiple of 4");
       }
       var validLen = b64.indexOf("=");
-      if (validLen === -1)
-        validLen = len2;
-      var placeHoldersLen = validLen === len2 ? 0 : 4 - validLen % 4;
+      if (validLen === -1) validLen = len2;
+      var placeHoldersLen = validLen === len2 ? 0 : 4 - (validLen % 4);
       return [validLen, placeHoldersLen];
     }
     function byteLength(b64) {
       var lens = getLens(b64);
       var validLen = lens[0];
       var placeHoldersLen = lens[1];
-      return (validLen + placeHoldersLen) * 3 / 4 - placeHoldersLen;
+      return ((validLen + placeHoldersLen) * 3) / 4 - placeHoldersLen;
     }
     function _byteLength(b64, validLen, placeHoldersLen) {
-      return (validLen + placeHoldersLen) * 3 / 4 - placeHoldersLen;
+      return ((validLen + placeHoldersLen) * 3) / 4 - placeHoldersLen;
     }
     function toByteArray(b64) {
       var tmp;
@@ -81,30 +96,47 @@ var require_base64_js = __commonJS({
       var len2 = placeHoldersLen > 0 ? validLen - 4 : validLen;
       var i2;
       for (i2 = 0; i2 < len2; i2 += 4) {
-        tmp = revLookup[b64.charCodeAt(i2)] << 18 | revLookup[b64.charCodeAt(i2 + 1)] << 12 | revLookup[b64.charCodeAt(i2 + 2)] << 6 | revLookup[b64.charCodeAt(i2 + 3)];
-        arr[curByte++] = tmp >> 16 & 255;
-        arr[curByte++] = tmp >> 8 & 255;
+        tmp =
+          (revLookup[b64.charCodeAt(i2)] << 18) |
+          (revLookup[b64.charCodeAt(i2 + 1)] << 12) |
+          (revLookup[b64.charCodeAt(i2 + 2)] << 6) |
+          revLookup[b64.charCodeAt(i2 + 3)];
+        arr[curByte++] = (tmp >> 16) & 255;
+        arr[curByte++] = (tmp >> 8) & 255;
         arr[curByte++] = tmp & 255;
       }
       if (placeHoldersLen === 2) {
-        tmp = revLookup[b64.charCodeAt(i2)] << 2 | revLookup[b64.charCodeAt(i2 + 1)] >> 4;
+        tmp =
+          (revLookup[b64.charCodeAt(i2)] << 2) |
+          (revLookup[b64.charCodeAt(i2 + 1)] >> 4);
         arr[curByte++] = tmp & 255;
       }
       if (placeHoldersLen === 1) {
-        tmp = revLookup[b64.charCodeAt(i2)] << 10 | revLookup[b64.charCodeAt(i2 + 1)] << 4 | revLookup[b64.charCodeAt(i2 + 2)] >> 2;
-        arr[curByte++] = tmp >> 8 & 255;
+        tmp =
+          (revLookup[b64.charCodeAt(i2)] << 10) |
+          (revLookup[b64.charCodeAt(i2 + 1)] << 4) |
+          (revLookup[b64.charCodeAt(i2 + 2)] >> 2);
+        arr[curByte++] = (tmp >> 8) & 255;
         arr[curByte++] = tmp & 255;
       }
       return arr;
     }
     function tripletToBase64(num) {
-      return lookup[num >> 18 & 63] + lookup[num >> 12 & 63] + lookup[num >> 6 & 63] + lookup[num & 63];
+      return (
+        lookup[(num >> 18) & 63] +
+        lookup[(num >> 12) & 63] +
+        lookup[(num >> 6) & 63] +
+        lookup[num & 63]
+      );
     }
     function encodeChunk(uint8, start, end) {
       var tmp;
       var output = [];
       for (var i2 = start; i2 < end; i2 += 3) {
-        tmp = (uint8[i2] << 16 & 16711680) + (uint8[i2 + 1] << 8 & 65280) + (uint8[i2 + 2] & 255);
+        tmp =
+          ((uint8[i2] << 16) & 16711680) +
+          ((uint8[i2 + 1] << 8) & 65280) +
+          (uint8[i2 + 2] & 255);
         output.push(tripletToBase64(tmp));
       }
       return output.join("");
@@ -115,29 +147,40 @@ var require_base64_js = __commonJS({
       var extraBytes = len2 % 3;
       var parts = [];
       var maxChunkLength = 16383;
-      for (var i2 = 0, len22 = len2 - extraBytes; i2 < len22; i2 += maxChunkLength) {
-        parts.push(encodeChunk(uint8, i2, i2 + maxChunkLength > len22 ? len22 : i2 + maxChunkLength));
+      for (
+        var i2 = 0, len22 = len2 - extraBytes;
+        i2 < len22;
+        i2 += maxChunkLength
+      ) {
+        parts.push(
+          encodeChunk(
+            uint8,
+            i2,
+            i2 + maxChunkLength > len22 ? len22 : i2 + maxChunkLength,
+          ),
+        );
       }
       if (extraBytes === 1) {
         tmp = uint8[len2 - 1];
-        parts.push(
-          lookup[tmp >> 2] + lookup[tmp << 4 & 63] + "=="
-        );
+        parts.push(lookup[tmp >> 2] + lookup[(tmp << 4) & 63] + "==");
       } else if (extraBytes === 2) {
         tmp = (uint8[len2 - 2] << 8) + uint8[len2 - 1];
         parts.push(
-          lookup[tmp >> 10] + lookup[tmp >> 4 & 63] + lookup[tmp << 2 & 63] + "="
+          lookup[tmp >> 10] +
+            lookup[(tmp >> 4) & 63] +
+            lookup[(tmp << 2) & 63] +
+            "=",
         );
       }
       return parts.join("");
     }
-  }
+  },
 });
 
 // node_modules/ieee754/index.js
 var require_ieee754 = __commonJS({
   "node_modules/ieee754/index.js"(exports) {
-    exports.read = function(buffer, offset, isLE, mLen, nBytes) {
+    exports.read = function (buffer, offset, isLE, mLen, nBytes) {
       var e, m;
       var eLen = nBytes * 8 - mLen - 1;
       var eMax = (1 << eLen) - 1;
@@ -147,16 +190,14 @@ var require_ieee754 = __commonJS({
       var d = isLE ? -1 : 1;
       var s = buffer[offset + i];
       i += d;
-      e = s & (1 << -nBits) - 1;
+      e = s & ((1 << -nBits) - 1);
       s >>= -nBits;
       nBits += eLen;
-      for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {
-      }
-      m = e & (1 << -nBits) - 1;
+      for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+      m = e & ((1 << -nBits) - 1);
       e >>= -nBits;
       nBits += mLen;
-      for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {
-      }
+      for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
       if (e === 0) {
         e = 1 - eBias;
       } else if (e === eMax) {
@@ -167,7 +208,7 @@ var require_ieee754 = __commonJS({
       }
       return (s ? -1 : 1) * m * Math.pow(2, e - mLen);
     };
-    exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
+    exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
       var e, m, c;
       var eLen = nBytes * 8 - mLen - 1;
       var eMax = (1 << eLen) - 1;
@@ -175,7 +216,7 @@ var require_ieee754 = __commonJS({
       var rt = mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0;
       var i = isLE ? 0 : nBytes - 1;
       var d = isLE ? 1 : -1;
-      var s = value < 0 || value === 0 && 1 / value < 0 ? 1 : 0;
+      var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0;
       value = Math.abs(value);
       if (isNaN(value) || value === Infinity) {
         m = isNaN(value) ? 1 : 0;
@@ -206,15 +247,21 @@ var require_ieee754 = __commonJS({
           e = 0;
         }
       }
-      for (; mLen >= 8; buffer[offset + i] = m & 255, i += d, m /= 256, mLen -= 8) {
-      }
-      e = e << mLen | m;
+      for (
+        ;
+        mLen >= 8;
+        buffer[offset + i] = m & 255, i += d, m /= 256, mLen -= 8
+      ) {}
+      e = (e << mLen) | m;
       eLen += mLen;
-      for (; eLen > 0; buffer[offset + i] = e & 255, i += d, e /= 256, eLen -= 8) {
-      }
+      for (
+        ;
+        eLen > 0;
+        buffer[offset + i] = e & 255, i += d, e /= 256, eLen -= 8
+      ) {}
       buffer[offset + i - d] |= s * 128;
     };
-  }
+  },
 });
 
 // node_modules/@remix-pwa/cache/node_modules/buffer/index.js
@@ -223,24 +270,33 @@ var require_buffer = __commonJS({
     "use strict";
     var base64 = require_base64_js();
     var ieee754 = require_ieee754();
-    var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
+    var customInspectSymbol =
+      typeof Symbol === "function" && typeof Symbol["for"] === "function"
+        ? Symbol["for"]("nodejs.util.inspect.custom")
+        : null;
     exports.Buffer = Buffer3;
     exports.SlowBuffer = SlowBuffer;
     exports.INSPECT_MAX_BYTES = 50;
     var K_MAX_LENGTH = 2147483647;
     exports.kMaxLength = K_MAX_LENGTH;
     Buffer3.TYPED_ARRAY_SUPPORT = typedArraySupport();
-    if (!Buffer3.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
+    if (
+      !Buffer3.TYPED_ARRAY_SUPPORT &&
+      typeof console !== "undefined" &&
+      typeof console.error === "function"
+    ) {
       console.error(
-        "This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support."
+        "This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support.",
       );
     }
     function typedArraySupport() {
       try {
         const arr = new Uint8Array(1);
-        const proto = { foo: function() {
-          return 42;
-        } };
+        const proto = {
+          foo: function () {
+            return 42;
+          },
+        };
         Object.setPrototypeOf(proto, Uint8Array.prototype);
         Object.setPrototypeOf(arr, proto);
         return arr.foo() === 42;
@@ -250,23 +306,23 @@ var require_buffer = __commonJS({
     }
     Object.defineProperty(Buffer3.prototype, "parent", {
       enumerable: true,
-      get: function() {
-        if (!Buffer3.isBuffer(this))
-          return void 0;
+      get: function () {
+        if (!Buffer3.isBuffer(this)) return void 0;
         return this.buffer;
-      }
+      },
     });
     Object.defineProperty(Buffer3.prototype, "offset", {
       enumerable: true,
-      get: function() {
-        if (!Buffer3.isBuffer(this))
-          return void 0;
+      get: function () {
+        if (!Buffer3.isBuffer(this)) return void 0;
         return this.byteOffset;
-      }
+      },
     });
     function createBuffer(length) {
       if (length > K_MAX_LENGTH) {
-        throw new RangeError('The value "' + length + '" is invalid for option "size"');
+        throw new RangeError(
+          'The value "' + length + '" is invalid for option "size"',
+        );
       }
       const buf = new Uint8Array(length);
       Object.setPrototypeOf(buf, Buffer3.prototype);
@@ -276,7 +332,7 @@ var require_buffer = __commonJS({
       if (typeof arg === "number") {
         if (typeof encodingOrOffset === "string") {
           throw new TypeError(
-            'The "string" argument must be of type string. Received type number'
+            'The "string" argument must be of type string. Received type number',
           );
         }
         return allocUnsafe(arg);
@@ -293,18 +349,26 @@ var require_buffer = __commonJS({
       }
       if (value == null) {
         throw new TypeError(
-          "The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof value
+          "The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " +
+            typeof value,
         );
       }
-      if (isInstance(value, ArrayBuffer) || value && isInstance(value.buffer, ArrayBuffer)) {
+      if (
+        isInstance(value, ArrayBuffer) ||
+        (value && isInstance(value.buffer, ArrayBuffer))
+      ) {
         return fromArrayBuffer(value, encodingOrOffset, length);
       }
-      if (typeof SharedArrayBuffer !== "undefined" && (isInstance(value, SharedArrayBuffer) || value && isInstance(value.buffer, SharedArrayBuffer))) {
+      if (
+        typeof SharedArrayBuffer !== "undefined" &&
+        (isInstance(value, SharedArrayBuffer) ||
+          (value && isInstance(value.buffer, SharedArrayBuffer)))
+      ) {
         return fromArrayBuffer(value, encodingOrOffset, length);
       }
       if (typeof value === "number") {
         throw new TypeError(
-          'The "value" argument must not be of type number. Received type number'
+          'The "value" argument must not be of type number. Received type number',
         );
       }
       const valueOf = value.valueOf && value.valueOf();
@@ -312,16 +376,24 @@ var require_buffer = __commonJS({
         return Buffer3.from(valueOf, encodingOrOffset, length);
       }
       const b2 = fromObject(value);
-      if (b2)
-        return b2;
-      if (typeof Symbol !== "undefined" && Symbol.toPrimitive != null && typeof value[Symbol.toPrimitive] === "function") {
-        return Buffer3.from(value[Symbol.toPrimitive]("string"), encodingOrOffset, length);
+      if (b2) return b2;
+      if (
+        typeof Symbol !== "undefined" &&
+        Symbol.toPrimitive != null &&
+        typeof value[Symbol.toPrimitive] === "function"
+      ) {
+        return Buffer3.from(
+          value[Symbol.toPrimitive]("string"),
+          encodingOrOffset,
+          length,
+        );
       }
       throw new TypeError(
-        "The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof value
+        "The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " +
+          typeof value,
       );
     }
-    Buffer3.from = function(value, encodingOrOffset, length) {
+    Buffer3.from = function (value, encodingOrOffset, length) {
       return from(value, encodingOrOffset, length);
     };
     Object.setPrototypeOf(Buffer3.prototype, Uint8Array.prototype);
@@ -330,7 +402,9 @@ var require_buffer = __commonJS({
       if (typeof size !== "number") {
         throw new TypeError('"size" argument must be of type number');
       } else if (size < 0) {
-        throw new RangeError('The value "' + size + '" is invalid for option "size"');
+        throw new RangeError(
+          'The value "' + size + '" is invalid for option "size"',
+        );
       }
     }
     function alloc(size, fill, encoding) {
@@ -339,21 +413,23 @@ var require_buffer = __commonJS({
         return createBuffer(size);
       }
       if (fill !== void 0) {
-        return typeof encoding === "string" ? createBuffer(size).fill(fill, encoding) : createBuffer(size).fill(fill);
+        return typeof encoding === "string"
+          ? createBuffer(size).fill(fill, encoding)
+          : createBuffer(size).fill(fill);
       }
       return createBuffer(size);
     }
-    Buffer3.alloc = function(size, fill, encoding) {
+    Buffer3.alloc = function (size, fill, encoding) {
       return alloc(size, fill, encoding);
     };
     function allocUnsafe(size) {
       assertSize(size);
       return createBuffer(size < 0 ? 0 : checked(size) | 0);
     }
-    Buffer3.allocUnsafe = function(size) {
+    Buffer3.allocUnsafe = function (size) {
       return allocUnsafe(size);
     };
-    Buffer3.allocUnsafeSlow = function(size) {
+    Buffer3.allocUnsafeSlow = function (size) {
       return allocUnsafe(size);
     };
     function fromString(string, encoding) {
@@ -426,7 +502,11 @@ var require_buffer = __commonJS({
     }
     function checked(length) {
       if (length >= K_MAX_LENGTH) {
-        throw new RangeError("Attempt to allocate Buffer larger than maximum size: 0x" + K_MAX_LENGTH.toString(16) + " bytes");
+        throw new RangeError(
+          "Attempt to allocate Buffer larger than maximum size: 0x" +
+            K_MAX_LENGTH.toString(16) +
+            " bytes",
+        );
       }
       return length | 0;
     }
@@ -446,11 +526,10 @@ var require_buffer = __commonJS({
         b2 = Buffer3.from(b2, b2.offset, b2.byteLength);
       if (!Buffer3.isBuffer(a) || !Buffer3.isBuffer(b2)) {
         throw new TypeError(
-          'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
+          'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array',
         );
       }
-      if (a === b2)
-        return 0;
+      if (a === b2) return 0;
       let x = a.length;
       let y2 = b2.length;
       for (let i = 0, len = Math.min(x, y2); i < len; ++i) {
@@ -460,10 +539,8 @@ var require_buffer = __commonJS({
           break;
         }
       }
-      if (x < y2)
-        return -1;
-      if (y2 < x)
-        return 1;
+      if (x < y2) return -1;
+      if (y2 < x) return 1;
       return 0;
     };
     Buffer3.isEncoding = function isEncoding(encoding) {
@@ -504,15 +581,10 @@ var require_buffer = __commonJS({
         let buf = list[i];
         if (isInstance(buf, Uint8Array)) {
           if (pos + buf.length > buffer.length) {
-            if (!Buffer3.isBuffer(buf))
-              buf = Buffer3.from(buf);
+            if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
             buf.copy(buffer, pos);
           } else {
-            Uint8Array.prototype.set.call(
-              buffer,
-              buf,
-              pos
-            );
+            Uint8Array.prototype.set.call(buffer, buf, pos);
           }
         } else if (!Buffer3.isBuffer(buf)) {
           throw new TypeError('"list" argument must be an Array of Buffers');
@@ -532,15 +604,15 @@ var require_buffer = __commonJS({
       }
       if (typeof string !== "string") {
         throw new TypeError(
-          'The "string" argument must be one of type string, Buffer, or ArrayBuffer. Received type ' + typeof string
+          'The "string" argument must be one of type string, Buffer, or ArrayBuffer. Received type ' +
+            typeof string,
         );
       }
       const len = string.length;
       const mustMatch = arguments.length > 2 && arguments[2] === true;
-      if (!mustMatch && len === 0)
-        return 0;
+      if (!mustMatch && len === 0) return 0;
       let loweredCase = false;
-      for (; ; ) {
+      for (;;) {
         switch (encoding) {
           case "ascii":
           case "latin1":
@@ -587,8 +659,7 @@ var require_buffer = __commonJS({
       if (end <= start) {
         return "";
       }
-      if (!encoding)
-        encoding = "utf8";
+      if (!encoding) encoding = "utf8";
       while (true) {
         switch (encoding) {
           case "hex":
@@ -658,38 +729,43 @@ var require_buffer = __commonJS({
     };
     Buffer3.prototype.toString = function toString() {
       const length = this.length;
-      if (length === 0)
-        return "";
-      if (arguments.length === 0)
-        return utf8Slice(this, 0, length);
+      if (length === 0) return "";
+      if (arguments.length === 0) return utf8Slice(this, 0, length);
       return slowToString.apply(this, arguments);
     };
     Buffer3.prototype.toLocaleString = Buffer3.prototype.toString;
     Buffer3.prototype.equals = function equals(b2) {
       if (!Buffer3.isBuffer(b2))
         throw new TypeError("Argument must be a Buffer");
-      if (this === b2)
-        return true;
+      if (this === b2) return true;
       return Buffer3.compare(this, b2) === 0;
     };
     Buffer3.prototype.inspect = function inspect() {
       let str = "";
       const max = exports.INSPECT_MAX_BYTES;
-      str = this.toString("hex", 0, max).replace(/(.{2})/g, "$1 ").trim();
-      if (this.length > max)
-        str += " ... ";
+      str = this.toString("hex", 0, max)
+        .replace(/(.{2})/g, "$1 ")
+        .trim();
+      if (this.length > max) str += " ... ";
       return "<Buffer " + str + ">";
     };
     if (customInspectSymbol) {
       Buffer3.prototype[customInspectSymbol] = Buffer3.prototype.inspect;
     }
-    Buffer3.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
+    Buffer3.prototype.compare = function compare(
+      target,
+      start,
+      end,
+      thisStart,
+      thisEnd,
+    ) {
       if (isInstance(target, Uint8Array)) {
         target = Buffer3.from(target, target.offset, target.byteLength);
       }
       if (!Buffer3.isBuffer(target)) {
         throw new TypeError(
-          'The "target" argument must be one of type Buffer or Uint8Array. Received type ' + typeof target
+          'The "target" argument must be one of type Buffer or Uint8Array. Received type ' +
+            typeof target,
         );
       }
       if (start === void 0) {
@@ -704,7 +780,12 @@ var require_buffer = __commonJS({
       if (thisEnd === void 0) {
         thisEnd = this.length;
       }
-      if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
+      if (
+        start < 0 ||
+        end > target.length ||
+        thisStart < 0 ||
+        thisEnd > this.length
+      ) {
         throw new RangeError("out of range index");
       }
       if (thisStart >= thisEnd && start >= end) {
@@ -720,8 +801,7 @@ var require_buffer = __commonJS({
       end >>>= 0;
       thisStart >>>= 0;
       thisEnd >>>= 0;
-      if (this === target)
-        return 0;
+      if (this === target) return 0;
       let x = thisEnd - thisStart;
       let y2 = end - start;
       const len = Math.min(x, y2);
@@ -734,15 +814,12 @@ var require_buffer = __commonJS({
           break;
         }
       }
-      if (x < y2)
-        return -1;
-      if (y2 < x)
-        return 1;
+      if (x < y2) return -1;
+      if (y2 < x) return 1;
       return 0;
     };
     function bidirectionalIndexOf(buffer, val, byteOffset, encoding, dir) {
-      if (buffer.length === 0)
-        return -1;
+      if (buffer.length === 0) return -1;
       if (typeof byteOffset === "string") {
         encoding = byteOffset;
         byteOffset = 0;
@@ -755,18 +832,13 @@ var require_buffer = __commonJS({
       if (numberIsNaN(byteOffset)) {
         byteOffset = dir ? 0 : buffer.length - 1;
       }
-      if (byteOffset < 0)
-        byteOffset = buffer.length + byteOffset;
+      if (byteOffset < 0) byteOffset = buffer.length + byteOffset;
       if (byteOffset >= buffer.length) {
-        if (dir)
-          return -1;
-        else
-          byteOffset = buffer.length - 1;
+        if (dir) return -1;
+        else byteOffset = buffer.length - 1;
       } else if (byteOffset < 0) {
-        if (dir)
-          byteOffset = 0;
-        else
-          return -1;
+        if (dir) byteOffset = 0;
+        else return -1;
       }
       if (typeof val === "string") {
         val = Buffer3.from(val, encoding);
@@ -782,7 +854,11 @@ var require_buffer = __commonJS({
           if (dir) {
             return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset);
           } else {
-            return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset);
+            return Uint8Array.prototype.lastIndexOf.call(
+              buffer,
+              val,
+              byteOffset,
+            );
           }
         }
         return arrayIndexOf(buffer, [val], byteOffset, encoding, dir);
@@ -795,7 +871,12 @@ var require_buffer = __commonJS({
       let valLength = val.length;
       if (encoding !== void 0) {
         encoding = String(encoding).toLowerCase();
-        if (encoding === "ucs2" || encoding === "ucs-2" || encoding === "utf16le" || encoding === "utf-16le") {
+        if (
+          encoding === "ucs2" ||
+          encoding === "ucs-2" ||
+          encoding === "utf16le" ||
+          encoding === "utf-16le"
+        ) {
           if (arr.length < 2 || val.length < 2) {
             return -1;
           }
@@ -816,14 +897,13 @@ var require_buffer = __commonJS({
       if (dir) {
         let foundIndex = -1;
         for (i = byteOffset; i < arrLength; i++) {
-          if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
-            if (foundIndex === -1)
-              foundIndex = i;
-            if (i - foundIndex + 1 === valLength)
-              return foundIndex * indexSize;
+          if (
+            read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)
+          ) {
+            if (foundIndex === -1) foundIndex = i;
+            if (i - foundIndex + 1 === valLength) return foundIndex * indexSize;
           } else {
-            if (foundIndex !== -1)
-              i -= i - foundIndex;
+            if (foundIndex !== -1) i -= i - foundIndex;
             foundIndex = -1;
           }
         }
@@ -838,8 +918,7 @@ var require_buffer = __commonJS({
               break;
             }
           }
-          if (found)
-            return i;
+          if (found) return i;
         }
       }
       return -1;
@@ -850,7 +929,11 @@ var require_buffer = __commonJS({
     Buffer3.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
       return bidirectionalIndexOf(this, val, byteOffset, encoding, true);
     };
-    Buffer3.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
+    Buffer3.prototype.lastIndexOf = function lastIndexOf(
+      val,
+      byteOffset,
+      encoding,
+    ) {
       return bidirectionalIndexOf(this, val, byteOffset, encoding, false);
     };
     function hexWrite(buf, string, offset, length) {
@@ -871,14 +954,18 @@ var require_buffer = __commonJS({
       let i;
       for (i = 0; i < length; ++i) {
         const parsed = parseInt(string.substr(i * 2, 2), 16);
-        if (numberIsNaN(parsed))
-          return i;
+        if (numberIsNaN(parsed)) return i;
         buf[offset + i] = parsed;
       }
       return i;
     }
     function utf8Write(buf, string, offset, length) {
-      return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length);
+      return blitBuffer(
+        utf8ToBytes(string, buf.length - offset),
+        buf,
+        offset,
+        length,
+      );
     }
     function asciiWrite(buf, string, offset, length) {
       return blitBuffer(asciiToBytes(string), buf, offset, length);
@@ -887,7 +974,12 @@ var require_buffer = __commonJS({
       return blitBuffer(base64ToBytes(string), buf, offset, length);
     }
     function ucs2Write(buf, string, offset, length) {
-      return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length);
+      return blitBuffer(
+        utf16leToBytes(string, buf.length - offset),
+        buf,
+        offset,
+        length,
+      );
     }
     Buffer3.prototype.write = function write(string, offset, length, encoding) {
       if (offset === void 0) {
@@ -902,27 +994,27 @@ var require_buffer = __commonJS({
         offset = offset >>> 0;
         if (isFinite(length)) {
           length = length >>> 0;
-          if (encoding === void 0)
-            encoding = "utf8";
+          if (encoding === void 0) encoding = "utf8";
         } else {
           encoding = length;
           length = void 0;
         }
       } else {
         throw new Error(
-          "Buffer.write(string, encoding, offset[, length]) is no longer supported"
+          "Buffer.write(string, encoding, offset[, length]) is no longer supported",
         );
       }
       const remaining = this.length - offset;
-      if (length === void 0 || length > remaining)
-        length = remaining;
-      if (string.length > 0 && (length < 0 || offset < 0) || offset > this.length) {
+      if (length === void 0 || length > remaining) length = remaining;
+      if (
+        (string.length > 0 && (length < 0 || offset < 0)) ||
+        offset > this.length
+      ) {
         throw new RangeError("Attempt to write outside buffer bounds");
       }
-      if (!encoding)
-        encoding = "utf8";
+      if (!encoding) encoding = "utf8";
       let loweredCase = false;
-      for (; ; ) {
+      for (;;) {
         switch (encoding) {
           case "hex":
             return hexWrite(this, string, offset, length);
@@ -951,7 +1043,7 @@ var require_buffer = __commonJS({
     Buffer3.prototype.toJSON = function toJSON2() {
       return {
         type: "Buffer",
-        data: Array.prototype.slice.call(this._arr || this, 0)
+        data: Array.prototype.slice.call(this._arr || this, 0),
       };
     };
     function base64Slice(buf, start, end) {
@@ -968,7 +1060,8 @@ var require_buffer = __commonJS({
       while (i < end) {
         const firstByte = buf[i];
         let codePoint = null;
-        let bytesPerSequence = firstByte > 239 ? 4 : firstByte > 223 ? 3 : firstByte > 191 ? 2 : 1;
+        let bytesPerSequence =
+          firstByte > 239 ? 4 : firstByte > 223 ? 3 : firstByte > 191 ? 2 : 1;
         if (i + bytesPerSequence <= end) {
           let secondByte, thirdByte, fourthByte, tempCodePoint;
           switch (bytesPerSequence) {
@@ -980,7 +1073,7 @@ var require_buffer = __commonJS({
             case 2:
               secondByte = buf[i + 1];
               if ((secondByte & 192) === 128) {
-                tempCodePoint = (firstByte & 31) << 6 | secondByte & 63;
+                tempCodePoint = ((firstByte & 31) << 6) | (secondByte & 63);
                 if (tempCodePoint > 127) {
                   codePoint = tempCodePoint;
                 }
@@ -990,8 +1083,14 @@ var require_buffer = __commonJS({
               secondByte = buf[i + 1];
               thirdByte = buf[i + 2];
               if ((secondByte & 192) === 128 && (thirdByte & 192) === 128) {
-                tempCodePoint = (firstByte & 15) << 12 | (secondByte & 63) << 6 | thirdByte & 63;
-                if (tempCodePoint > 2047 && (tempCodePoint < 55296 || tempCodePoint > 57343)) {
+                tempCodePoint =
+                  ((firstByte & 15) << 12) |
+                  ((secondByte & 63) << 6) |
+                  (thirdByte & 63);
+                if (
+                  tempCodePoint > 2047 &&
+                  (tempCodePoint < 55296 || tempCodePoint > 57343)
+                ) {
                   codePoint = tempCodePoint;
                 }
               }
@@ -1000,8 +1099,16 @@ var require_buffer = __commonJS({
               secondByte = buf[i + 1];
               thirdByte = buf[i + 2];
               fourthByte = buf[i + 3];
-              if ((secondByte & 192) === 128 && (thirdByte & 192) === 128 && (fourthByte & 192) === 128) {
-                tempCodePoint = (firstByte & 15) << 18 | (secondByte & 63) << 12 | (thirdByte & 63) << 6 | fourthByte & 63;
+              if (
+                (secondByte & 192) === 128 &&
+                (thirdByte & 192) === 128 &&
+                (fourthByte & 192) === 128
+              ) {
+                tempCodePoint =
+                  ((firstByte & 15) << 18) |
+                  ((secondByte & 63) << 12) |
+                  ((thirdByte & 63) << 6) |
+                  (fourthByte & 63);
                 if (tempCodePoint > 65535 && tempCodePoint < 1114112) {
                   codePoint = tempCodePoint;
                 }
@@ -1013,8 +1120,8 @@ var require_buffer = __commonJS({
           bytesPerSequence = 1;
         } else if (codePoint > 65535) {
           codePoint -= 65536;
-          res.push(codePoint >>> 10 & 1023 | 55296);
-          codePoint = 56320 | codePoint & 1023;
+          res.push(((codePoint >>> 10) & 1023) | 55296);
+          codePoint = 56320 | (codePoint & 1023);
         }
         res.push(codePoint);
         i += bytesPerSequence;
@@ -1032,7 +1139,7 @@ var require_buffer = __commonJS({
       while (i < len) {
         res += String.fromCharCode.apply(
           String,
-          codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
+          codePoints.slice(i, (i += MAX_ARGUMENTS_LENGTH)),
         );
       }
       return res;
@@ -1055,10 +1162,8 @@ var require_buffer = __commonJS({
     }
     function hexSlice(buf, start, end) {
       const len = buf.length;
-      if (!start || start < 0)
-        start = 0;
-      if (!end || end < 0 || end > len)
-        end = len;
+      if (!start || start < 0) start = 0;
+      if (!end || end < 0 || end > len) end = len;
       let out = "";
       for (let i = start; i < end; ++i) {
         out += hexSliceLookupTable[buf[i]];
@@ -1079,20 +1184,17 @@ var require_buffer = __commonJS({
       end = end === void 0 ? len : ~~end;
       if (start < 0) {
         start += len;
-        if (start < 0)
-          start = 0;
+        if (start < 0) start = 0;
       } else if (start > len) {
         start = len;
       }
       if (end < 0) {
         end += len;
-        if (end < 0)
-          end = 0;
+        if (end < 0) end = 0;
       } else if (end > len) {
         end = len;
       }
-      if (end < start)
-        end = start;
+      if (end < start) end = start;
       const newBuf = this.subarray(start, end);
       Object.setPrototypeOf(newBuf, Buffer3.prototype);
       return newBuf;
@@ -1103,91 +1205,123 @@ var require_buffer = __commonJS({
       if (offset + ext > length)
         throw new RangeError("Trying to access beyond buffer length");
     }
-    Buffer3.prototype.readUintLE = Buffer3.prototype.readUIntLE = function readUIntLE(offset, byteLength2, noAssert) {
+    Buffer3.prototype.readUintLE = Buffer3.prototype.readUIntLE =
+      function readUIntLE(offset, byteLength2, noAssert) {
+        offset = offset >>> 0;
+        byteLength2 = byteLength2 >>> 0;
+        if (!noAssert) checkOffset(offset, byteLength2, this.length);
+        let val = this[offset];
+        let mul = 1;
+        let i = 0;
+        while (++i < byteLength2 && (mul *= 256)) {
+          val += this[offset + i] * mul;
+        }
+        return val;
+      };
+    Buffer3.prototype.readUintBE = Buffer3.prototype.readUIntBE =
+      function readUIntBE(offset, byteLength2, noAssert) {
+        offset = offset >>> 0;
+        byteLength2 = byteLength2 >>> 0;
+        if (!noAssert) {
+          checkOffset(offset, byteLength2, this.length);
+        }
+        let val = this[offset + --byteLength2];
+        let mul = 1;
+        while (byteLength2 > 0 && (mul *= 256)) {
+          val += this[offset + --byteLength2] * mul;
+        }
+        return val;
+      };
+    Buffer3.prototype.readUint8 = Buffer3.prototype.readUInt8 =
+      function readUInt8(offset, noAssert) {
+        offset = offset >>> 0;
+        if (!noAssert) checkOffset(offset, 1, this.length);
+        return this[offset];
+      };
+    Buffer3.prototype.readUint16LE = Buffer3.prototype.readUInt16LE =
+      function readUInt16LE(offset, noAssert) {
+        offset = offset >>> 0;
+        if (!noAssert) checkOffset(offset, 2, this.length);
+        return this[offset] | (this[offset + 1] << 8);
+      };
+    Buffer3.prototype.readUint16BE = Buffer3.prototype.readUInt16BE =
+      function readUInt16BE(offset, noAssert) {
+        offset = offset >>> 0;
+        if (!noAssert) checkOffset(offset, 2, this.length);
+        return (this[offset] << 8) | this[offset + 1];
+      };
+    Buffer3.prototype.readUint32LE = Buffer3.prototype.readUInt32LE =
+      function readUInt32LE(offset, noAssert) {
+        offset = offset >>> 0;
+        if (!noAssert) checkOffset(offset, 4, this.length);
+        return (
+          (this[offset] | (this[offset + 1] << 8) | (this[offset + 2] << 16)) +
+          this[offset + 3] * 16777216
+        );
+      };
+    Buffer3.prototype.readUint32BE = Buffer3.prototype.readUInt32BE =
+      function readUInt32BE(offset, noAssert) {
+        offset = offset >>> 0;
+        if (!noAssert) checkOffset(offset, 4, this.length);
+        return (
+          this[offset] * 16777216 +
+          ((this[offset + 1] << 16) |
+            (this[offset + 2] << 8) |
+            this[offset + 3])
+        );
+      };
+    Buffer3.prototype.readBigUInt64LE = defineBigIntMethod(
+      function readBigUInt64LE(offset) {
+        offset = offset >>> 0;
+        validateNumber(offset, "offset");
+        const first = this[offset];
+        const last = this[offset + 7];
+        if (first === void 0 || last === void 0) {
+          boundsError(offset, this.length - 8);
+        }
+        const lo =
+          first +
+          this[++offset] * 2 ** 8 +
+          this[++offset] * 2 ** 16 +
+          this[++offset] * 2 ** 24;
+        const hi =
+          this[++offset] +
+          this[++offset] * 2 ** 8 +
+          this[++offset] * 2 ** 16 +
+          last * 2 ** 24;
+        return BigInt(lo) + (BigInt(hi) << BigInt(32));
+      },
+    );
+    Buffer3.prototype.readBigUInt64BE = defineBigIntMethod(
+      function readBigUInt64BE(offset) {
+        offset = offset >>> 0;
+        validateNumber(offset, "offset");
+        const first = this[offset];
+        const last = this[offset + 7];
+        if (first === void 0 || last === void 0) {
+          boundsError(offset, this.length - 8);
+        }
+        const hi =
+          first * 2 ** 24 +
+          this[++offset] * 2 ** 16 +
+          this[++offset] * 2 ** 8 +
+          this[++offset];
+        const lo =
+          this[++offset] * 2 ** 24 +
+          this[++offset] * 2 ** 16 +
+          this[++offset] * 2 ** 8 +
+          last;
+        return (BigInt(hi) << BigInt(32)) + BigInt(lo);
+      },
+    );
+    Buffer3.prototype.readIntLE = function readIntLE(
+      offset,
+      byteLength2,
+      noAssert,
+    ) {
       offset = offset >>> 0;
       byteLength2 = byteLength2 >>> 0;
-      if (!noAssert)
-        checkOffset(offset, byteLength2, this.length);
-      let val = this[offset];
-      let mul = 1;
-      let i = 0;
-      while (++i < byteLength2 && (mul *= 256)) {
-        val += this[offset + i] * mul;
-      }
-      return val;
-    };
-    Buffer3.prototype.readUintBE = Buffer3.prototype.readUIntBE = function readUIntBE(offset, byteLength2, noAssert) {
-      offset = offset >>> 0;
-      byteLength2 = byteLength2 >>> 0;
-      if (!noAssert) {
-        checkOffset(offset, byteLength2, this.length);
-      }
-      let val = this[offset + --byteLength2];
-      let mul = 1;
-      while (byteLength2 > 0 && (mul *= 256)) {
-        val += this[offset + --byteLength2] * mul;
-      }
-      return val;
-    };
-    Buffer3.prototype.readUint8 = Buffer3.prototype.readUInt8 = function readUInt8(offset, noAssert) {
-      offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 1, this.length);
-      return this[offset];
-    };
-    Buffer3.prototype.readUint16LE = Buffer3.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
-      offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 2, this.length);
-      return this[offset] | this[offset + 1] << 8;
-    };
-    Buffer3.prototype.readUint16BE = Buffer3.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
-      offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 2, this.length);
-      return this[offset] << 8 | this[offset + 1];
-    };
-    Buffer3.prototype.readUint32LE = Buffer3.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
-      offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 4, this.length);
-      return (this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16) + this[offset + 3] * 16777216;
-    };
-    Buffer3.prototype.readUint32BE = Buffer3.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
-      offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 4, this.length);
-      return this[offset] * 16777216 + (this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3]);
-    };
-    Buffer3.prototype.readBigUInt64LE = defineBigIntMethod(function readBigUInt64LE(offset) {
-      offset = offset >>> 0;
-      validateNumber(offset, "offset");
-      const first = this[offset];
-      const last = this[offset + 7];
-      if (first === void 0 || last === void 0) {
-        boundsError(offset, this.length - 8);
-      }
-      const lo = first + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 24;
-      const hi = this[++offset] + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + last * 2 ** 24;
-      return BigInt(lo) + (BigInt(hi) << BigInt(32));
-    });
-    Buffer3.prototype.readBigUInt64BE = defineBigIntMethod(function readBigUInt64BE(offset) {
-      offset = offset >>> 0;
-      validateNumber(offset, "offset");
-      const first = this[offset];
-      const last = this[offset + 7];
-      if (first === void 0 || last === void 0) {
-        boundsError(offset, this.length - 8);
-      }
-      const hi = first * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + this[++offset];
-      const lo = this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last;
-      return (BigInt(hi) << BigInt(32)) + BigInt(lo);
-    });
-    Buffer3.prototype.readIntLE = function readIntLE(offset, byteLength2, noAssert) {
-      offset = offset >>> 0;
-      byteLength2 = byteLength2 >>> 0;
-      if (!noAssert)
-        checkOffset(offset, byteLength2, this.length);
+      if (!noAssert) checkOffset(offset, byteLength2, this.length);
       let val = this[offset];
       let mul = 1;
       let i = 0;
@@ -1195,15 +1329,17 @@ var require_buffer = __commonJS({
         val += this[offset + i] * mul;
       }
       mul *= 128;
-      if (val >= mul)
-        val -= Math.pow(2, 8 * byteLength2);
+      if (val >= mul) val -= Math.pow(2, 8 * byteLength2);
       return val;
     };
-    Buffer3.prototype.readIntBE = function readIntBE(offset, byteLength2, noAssert) {
+    Buffer3.prototype.readIntBE = function readIntBE(
+      offset,
+      byteLength2,
+      noAssert,
+    ) {
       offset = offset >>> 0;
       byteLength2 = byteLength2 >>> 0;
-      if (!noAssert)
-        checkOffset(offset, byteLength2, this.length);
+      if (!noAssert) checkOffset(offset, byteLength2, this.length);
       let i = byteLength2;
       let mul = 1;
       let val = this[offset + --i];
@@ -1211,89 +1347,115 @@ var require_buffer = __commonJS({
         val += this[offset + --i] * mul;
       }
       mul *= 128;
-      if (val >= mul)
-        val -= Math.pow(2, 8 * byteLength2);
+      if (val >= mul) val -= Math.pow(2, 8 * byteLength2);
       return val;
     };
     Buffer3.prototype.readInt8 = function readInt8(offset, noAssert) {
       offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 1, this.length);
-      if (!(this[offset] & 128))
-        return this[offset];
+      if (!noAssert) checkOffset(offset, 1, this.length);
+      if (!(this[offset] & 128)) return this[offset];
       return (255 - this[offset] + 1) * -1;
     };
     Buffer3.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
       offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 2, this.length);
-      const val = this[offset] | this[offset + 1] << 8;
+      if (!noAssert) checkOffset(offset, 2, this.length);
+      const val = this[offset] | (this[offset + 1] << 8);
       return val & 32768 ? val | 4294901760 : val;
     };
     Buffer3.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
       offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 2, this.length);
-      const val = this[offset + 1] | this[offset] << 8;
+      if (!noAssert) checkOffset(offset, 2, this.length);
+      const val = this[offset + 1] | (this[offset] << 8);
       return val & 32768 ? val | 4294901760 : val;
     };
     Buffer3.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
       offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 4, this.length);
-      return this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16 | this[offset + 3] << 24;
+      if (!noAssert) checkOffset(offset, 4, this.length);
+      return (
+        this[offset] |
+        (this[offset + 1] << 8) |
+        (this[offset + 2] << 16) |
+        (this[offset + 3] << 24)
+      );
     };
     Buffer3.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
       offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 4, this.length);
-      return this[offset] << 24 | this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3];
+      if (!noAssert) checkOffset(offset, 4, this.length);
+      return (
+        (this[offset] << 24) |
+        (this[offset + 1] << 16) |
+        (this[offset + 2] << 8) |
+        this[offset + 3]
+      );
     };
-    Buffer3.prototype.readBigInt64LE = defineBigIntMethod(function readBigInt64LE(offset) {
-      offset = offset >>> 0;
-      validateNumber(offset, "offset");
-      const first = this[offset];
-      const last = this[offset + 7];
-      if (first === void 0 || last === void 0) {
-        boundsError(offset, this.length - 8);
-      }
-      const val = this[offset + 4] + this[offset + 5] * 2 ** 8 + this[offset + 6] * 2 ** 16 + (last << 24);
-      return (BigInt(val) << BigInt(32)) + BigInt(first + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 24);
-    });
-    Buffer3.prototype.readBigInt64BE = defineBigIntMethod(function readBigInt64BE(offset) {
-      offset = offset >>> 0;
-      validateNumber(offset, "offset");
-      const first = this[offset];
-      const last = this[offset + 7];
-      if (first === void 0 || last === void 0) {
-        boundsError(offset, this.length - 8);
-      }
-      const val = (first << 24) + // Overflow
-      this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + this[++offset];
-      return (BigInt(val) << BigInt(32)) + BigInt(this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last);
-    });
+    Buffer3.prototype.readBigInt64LE = defineBigIntMethod(
+      function readBigInt64LE(offset) {
+        offset = offset >>> 0;
+        validateNumber(offset, "offset");
+        const first = this[offset];
+        const last = this[offset + 7];
+        if (first === void 0 || last === void 0) {
+          boundsError(offset, this.length - 8);
+        }
+        const val =
+          this[offset + 4] +
+          this[offset + 5] * 2 ** 8 +
+          this[offset + 6] * 2 ** 16 +
+          (last << 24);
+        return (
+          (BigInt(val) << BigInt(32)) +
+          BigInt(
+            first +
+              this[++offset] * 2 ** 8 +
+              this[++offset] * 2 ** 16 +
+              this[++offset] * 2 ** 24,
+          )
+        );
+      },
+    );
+    Buffer3.prototype.readBigInt64BE = defineBigIntMethod(
+      function readBigInt64BE(offset) {
+        offset = offset >>> 0;
+        validateNumber(offset, "offset");
+        const first = this[offset];
+        const last = this[offset + 7];
+        if (first === void 0 || last === void 0) {
+          boundsError(offset, this.length - 8);
+        }
+        const val =
+          (first << 24) + // Overflow
+          this[++offset] * 2 ** 16 +
+          this[++offset] * 2 ** 8 +
+          this[++offset];
+        return (
+          (BigInt(val) << BigInt(32)) +
+          BigInt(
+            this[++offset] * 2 ** 24 +
+              this[++offset] * 2 ** 16 +
+              this[++offset] * 2 ** 8 +
+              last,
+          )
+        );
+      },
+    );
     Buffer3.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
       offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 4, this.length);
+      if (!noAssert) checkOffset(offset, 4, this.length);
       return ieee754.read(this, offset, true, 23, 4);
     };
     Buffer3.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
       offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 4, this.length);
+      if (!noAssert) checkOffset(offset, 4, this.length);
       return ieee754.read(this, offset, false, 23, 4);
     };
     Buffer3.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
       offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 8, this.length);
+      if (!noAssert) checkOffset(offset, 8, this.length);
       return ieee754.read(this, offset, true, 52, 8);
     };
     Buffer3.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
       offset = offset >>> 0;
-      if (!noAssert)
-        checkOffset(offset, 8, this.length);
+      if (!noAssert) checkOffset(offset, 8, this.length);
       return ieee754.read(this, offset, false, 52, 8);
     };
     function checkInt(buf, value, offset, ext, max, min) {
@@ -1301,89 +1463,90 @@ var require_buffer = __commonJS({
         throw new TypeError('"buffer" argument must be a Buffer instance');
       if (value > max || value < min)
         throw new RangeError('"value" argument is out of bounds');
-      if (offset + ext > buf.length)
-        throw new RangeError("Index out of range");
+      if (offset + ext > buf.length) throw new RangeError("Index out of range");
     }
-    Buffer3.prototype.writeUintLE = Buffer3.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength2, noAssert) {
-      value = +value;
-      offset = offset >>> 0;
-      byteLength2 = byteLength2 >>> 0;
-      if (!noAssert) {
-        const maxBytes = Math.pow(2, 8 * byteLength2) - 1;
-        checkInt(this, value, offset, byteLength2, maxBytes, 0);
-      }
-      let mul = 1;
-      let i = 0;
-      this[offset] = value & 255;
-      while (++i < byteLength2 && (mul *= 256)) {
-        this[offset + i] = value / mul & 255;
-      }
-      return offset + byteLength2;
-    };
-    Buffer3.prototype.writeUintBE = Buffer3.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength2, noAssert) {
-      value = +value;
-      offset = offset >>> 0;
-      byteLength2 = byteLength2 >>> 0;
-      if (!noAssert) {
-        const maxBytes = Math.pow(2, 8 * byteLength2) - 1;
-        checkInt(this, value, offset, byteLength2, maxBytes, 0);
-      }
-      let i = byteLength2 - 1;
-      let mul = 1;
-      this[offset + i] = value & 255;
-      while (--i >= 0 && (mul *= 256)) {
-        this[offset + i] = value / mul & 255;
-      }
-      return offset + byteLength2;
-    };
-    Buffer3.prototype.writeUint8 = Buffer3.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
-      value = +value;
-      offset = offset >>> 0;
-      if (!noAssert)
-        checkInt(this, value, offset, 1, 255, 0);
-      this[offset] = value & 255;
-      return offset + 1;
-    };
-    Buffer3.prototype.writeUint16LE = Buffer3.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
-      value = +value;
-      offset = offset >>> 0;
-      if (!noAssert)
-        checkInt(this, value, offset, 2, 65535, 0);
-      this[offset] = value & 255;
-      this[offset + 1] = value >>> 8;
-      return offset + 2;
-    };
-    Buffer3.prototype.writeUint16BE = Buffer3.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
-      value = +value;
-      offset = offset >>> 0;
-      if (!noAssert)
-        checkInt(this, value, offset, 2, 65535, 0);
-      this[offset] = value >>> 8;
-      this[offset + 1] = value & 255;
-      return offset + 2;
-    };
-    Buffer3.prototype.writeUint32LE = Buffer3.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
-      value = +value;
-      offset = offset >>> 0;
-      if (!noAssert)
-        checkInt(this, value, offset, 4, 4294967295, 0);
-      this[offset + 3] = value >>> 24;
-      this[offset + 2] = value >>> 16;
-      this[offset + 1] = value >>> 8;
-      this[offset] = value & 255;
-      return offset + 4;
-    };
-    Buffer3.prototype.writeUint32BE = Buffer3.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
-      value = +value;
-      offset = offset >>> 0;
-      if (!noAssert)
-        checkInt(this, value, offset, 4, 4294967295, 0);
-      this[offset] = value >>> 24;
-      this[offset + 1] = value >>> 16;
-      this[offset + 2] = value >>> 8;
-      this[offset + 3] = value & 255;
-      return offset + 4;
-    };
+    Buffer3.prototype.writeUintLE = Buffer3.prototype.writeUIntLE =
+      function writeUIntLE(value, offset, byteLength2, noAssert) {
+        value = +value;
+        offset = offset >>> 0;
+        byteLength2 = byteLength2 >>> 0;
+        if (!noAssert) {
+          const maxBytes = Math.pow(2, 8 * byteLength2) - 1;
+          checkInt(this, value, offset, byteLength2, maxBytes, 0);
+        }
+        let mul = 1;
+        let i = 0;
+        this[offset] = value & 255;
+        while (++i < byteLength2 && (mul *= 256)) {
+          this[offset + i] = (value / mul) & 255;
+        }
+        return offset + byteLength2;
+      };
+    Buffer3.prototype.writeUintBE = Buffer3.prototype.writeUIntBE =
+      function writeUIntBE(value, offset, byteLength2, noAssert) {
+        value = +value;
+        offset = offset >>> 0;
+        byteLength2 = byteLength2 >>> 0;
+        if (!noAssert) {
+          const maxBytes = Math.pow(2, 8 * byteLength2) - 1;
+          checkInt(this, value, offset, byteLength2, maxBytes, 0);
+        }
+        let i = byteLength2 - 1;
+        let mul = 1;
+        this[offset + i] = value & 255;
+        while (--i >= 0 && (mul *= 256)) {
+          this[offset + i] = (value / mul) & 255;
+        }
+        return offset + byteLength2;
+      };
+    Buffer3.prototype.writeUint8 = Buffer3.prototype.writeUInt8 =
+      function writeUInt8(value, offset, noAssert) {
+        value = +value;
+        offset = offset >>> 0;
+        if (!noAssert) checkInt(this, value, offset, 1, 255, 0);
+        this[offset] = value & 255;
+        return offset + 1;
+      };
+    Buffer3.prototype.writeUint16LE = Buffer3.prototype.writeUInt16LE =
+      function writeUInt16LE(value, offset, noAssert) {
+        value = +value;
+        offset = offset >>> 0;
+        if (!noAssert) checkInt(this, value, offset, 2, 65535, 0);
+        this[offset] = value & 255;
+        this[offset + 1] = value >>> 8;
+        return offset + 2;
+      };
+    Buffer3.prototype.writeUint16BE = Buffer3.prototype.writeUInt16BE =
+      function writeUInt16BE(value, offset, noAssert) {
+        value = +value;
+        offset = offset >>> 0;
+        if (!noAssert) checkInt(this, value, offset, 2, 65535, 0);
+        this[offset] = value >>> 8;
+        this[offset + 1] = value & 255;
+        return offset + 2;
+      };
+    Buffer3.prototype.writeUint32LE = Buffer3.prototype.writeUInt32LE =
+      function writeUInt32LE(value, offset, noAssert) {
+        value = +value;
+        offset = offset >>> 0;
+        if (!noAssert) checkInt(this, value, offset, 4, 4294967295, 0);
+        this[offset + 3] = value >>> 24;
+        this[offset + 2] = value >>> 16;
+        this[offset + 1] = value >>> 8;
+        this[offset] = value & 255;
+        return offset + 4;
+      };
+    Buffer3.prototype.writeUint32BE = Buffer3.prototype.writeUInt32BE =
+      function writeUInt32BE(value, offset, noAssert) {
+        value = +value;
+        offset = offset >>> 0;
+        if (!noAssert) checkInt(this, value, offset, 4, 4294967295, 0);
+        this[offset] = value >>> 24;
+        this[offset + 1] = value >>> 16;
+        this[offset + 2] = value >>> 8;
+        this[offset + 3] = value & 255;
+        return offset + 4;
+      };
     function wrtBigUInt64LE(buf, value, offset, min, max) {
       checkIntBI(value, min, max, buf, offset, 7);
       let lo = Number(value & BigInt(4294967295));
@@ -1394,7 +1557,7 @@ var require_buffer = __commonJS({
       buf[offset++] = lo;
       lo = lo >> 8;
       buf[offset++] = lo;
-      let hi = Number(value >> BigInt(32) & BigInt(4294967295));
+      let hi = Number((value >> BigInt(32)) & BigInt(4294967295));
       buf[offset++] = hi;
       hi = hi >> 8;
       buf[offset++] = hi;
@@ -1414,7 +1577,7 @@ var require_buffer = __commonJS({
       buf[offset + 5] = lo;
       lo = lo >> 8;
       buf[offset + 4] = lo;
-      let hi = Number(value >> BigInt(32) & BigInt(4294967295));
+      let hi = Number((value >> BigInt(32)) & BigInt(4294967295));
       buf[offset + 3] = hi;
       hi = hi >> 8;
       buf[offset + 2] = hi;
@@ -1424,13 +1587,34 @@ var require_buffer = __commonJS({
       buf[offset] = hi;
       return offset + 8;
     }
-    Buffer3.prototype.writeBigUInt64LE = defineBigIntMethod(function writeBigUInt64LE(value, offset = 0) {
-      return wrtBigUInt64LE(this, value, offset, BigInt(0), BigInt("0xffffffffffffffff"));
-    });
-    Buffer3.prototype.writeBigUInt64BE = defineBigIntMethod(function writeBigUInt64BE(value, offset = 0) {
-      return wrtBigUInt64BE(this, value, offset, BigInt(0), BigInt("0xffffffffffffffff"));
-    });
-    Buffer3.prototype.writeIntLE = function writeIntLE(value, offset, byteLength2, noAssert) {
+    Buffer3.prototype.writeBigUInt64LE = defineBigIntMethod(
+      function writeBigUInt64LE(value, offset = 0) {
+        return wrtBigUInt64LE(
+          this,
+          value,
+          offset,
+          BigInt(0),
+          BigInt("0xffffffffffffffff"),
+        );
+      },
+    );
+    Buffer3.prototype.writeBigUInt64BE = defineBigIntMethod(
+      function writeBigUInt64BE(value, offset = 0) {
+        return wrtBigUInt64BE(
+          this,
+          value,
+          offset,
+          BigInt(0),
+          BigInt("0xffffffffffffffff"),
+        );
+      },
+    );
+    Buffer3.prototype.writeIntLE = function writeIntLE(
+      value,
+      offset,
+      byteLength2,
+      noAssert,
+    ) {
       value = +value;
       offset = offset >>> 0;
       if (!noAssert) {
@@ -1445,11 +1629,16 @@ var require_buffer = __commonJS({
         if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
           sub = 1;
         }
-        this[offset + i] = (value / mul >> 0) - sub & 255;
+        this[offset + i] = (((value / mul) >> 0) - sub) & 255;
       }
       return offset + byteLength2;
     };
-    Buffer3.prototype.writeIntBE = function writeIntBE(value, offset, byteLength2, noAssert) {
+    Buffer3.prototype.writeIntBE = function writeIntBE(
+      value,
+      offset,
+      byteLength2,
+      noAssert,
+    ) {
       value = +value;
       offset = offset >>> 0;
       if (!noAssert) {
@@ -1464,141 +1653,188 @@ var require_buffer = __commonJS({
         if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
           sub = 1;
         }
-        this[offset + i] = (value / mul >> 0) - sub & 255;
+        this[offset + i] = (((value / mul) >> 0) - sub) & 255;
       }
       return offset + byteLength2;
     };
     Buffer3.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
       value = +value;
       offset = offset >>> 0;
-      if (!noAssert)
-        checkInt(this, value, offset, 1, 127, -128);
-      if (value < 0)
-        value = 255 + value + 1;
+      if (!noAssert) checkInt(this, value, offset, 1, 127, -128);
+      if (value < 0) value = 255 + value + 1;
       this[offset] = value & 255;
       return offset + 1;
     };
-    Buffer3.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
+    Buffer3.prototype.writeInt16LE = function writeInt16LE(
+      value,
+      offset,
+      noAssert,
+    ) {
       value = +value;
       offset = offset >>> 0;
-      if (!noAssert)
-        checkInt(this, value, offset, 2, 32767, -32768);
+      if (!noAssert) checkInt(this, value, offset, 2, 32767, -32768);
       this[offset] = value & 255;
       this[offset + 1] = value >>> 8;
       return offset + 2;
     };
-    Buffer3.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
+    Buffer3.prototype.writeInt16BE = function writeInt16BE(
+      value,
+      offset,
+      noAssert,
+    ) {
       value = +value;
       offset = offset >>> 0;
-      if (!noAssert)
-        checkInt(this, value, offset, 2, 32767, -32768);
+      if (!noAssert) checkInt(this, value, offset, 2, 32767, -32768);
       this[offset] = value >>> 8;
       this[offset + 1] = value & 255;
       return offset + 2;
     };
-    Buffer3.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
+    Buffer3.prototype.writeInt32LE = function writeInt32LE(
+      value,
+      offset,
+      noAssert,
+    ) {
       value = +value;
       offset = offset >>> 0;
-      if (!noAssert)
-        checkInt(this, value, offset, 4, 2147483647, -2147483648);
+      if (!noAssert) checkInt(this, value, offset, 4, 2147483647, -2147483648);
       this[offset] = value & 255;
       this[offset + 1] = value >>> 8;
       this[offset + 2] = value >>> 16;
       this[offset + 3] = value >>> 24;
       return offset + 4;
     };
-    Buffer3.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
+    Buffer3.prototype.writeInt32BE = function writeInt32BE(
+      value,
+      offset,
+      noAssert,
+    ) {
       value = +value;
       offset = offset >>> 0;
-      if (!noAssert)
-        checkInt(this, value, offset, 4, 2147483647, -2147483648);
-      if (value < 0)
-        value = 4294967295 + value + 1;
+      if (!noAssert) checkInt(this, value, offset, 4, 2147483647, -2147483648);
+      if (value < 0) value = 4294967295 + value + 1;
       this[offset] = value >>> 24;
       this[offset + 1] = value >>> 16;
       this[offset + 2] = value >>> 8;
       this[offset + 3] = value & 255;
       return offset + 4;
     };
-    Buffer3.prototype.writeBigInt64LE = defineBigIntMethod(function writeBigInt64LE(value, offset = 0) {
-      return wrtBigUInt64LE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
-    });
-    Buffer3.prototype.writeBigInt64BE = defineBigIntMethod(function writeBigInt64BE(value, offset = 0) {
-      return wrtBigUInt64BE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
-    });
+    Buffer3.prototype.writeBigInt64LE = defineBigIntMethod(
+      function writeBigInt64LE(value, offset = 0) {
+        return wrtBigUInt64LE(
+          this,
+          value,
+          offset,
+          -BigInt("0x8000000000000000"),
+          BigInt("0x7fffffffffffffff"),
+        );
+      },
+    );
+    Buffer3.prototype.writeBigInt64BE = defineBigIntMethod(
+      function writeBigInt64BE(value, offset = 0) {
+        return wrtBigUInt64BE(
+          this,
+          value,
+          offset,
+          -BigInt("0x8000000000000000"),
+          BigInt("0x7fffffffffffffff"),
+        );
+      },
+    );
     function checkIEEE754(buf, value, offset, ext, max, min) {
-      if (offset + ext > buf.length)
-        throw new RangeError("Index out of range");
-      if (offset < 0)
-        throw new RangeError("Index out of range");
+      if (offset + ext > buf.length) throw new RangeError("Index out of range");
+      if (offset < 0) throw new RangeError("Index out of range");
     }
     function writeFloat(buf, value, offset, littleEndian, noAssert) {
       value = +value;
       offset = offset >>> 0;
       if (!noAssert) {
-        checkIEEE754(buf, value, offset, 4, 34028234663852886e22, -34028234663852886e22);
+        checkIEEE754(
+          buf,
+          value,
+          offset,
+          4,
+          34028234663852886e22,
+          -34028234663852886e22,
+        );
       }
       ieee754.write(buf, value, offset, littleEndian, 23, 4);
       return offset + 4;
     }
-    Buffer3.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
+    Buffer3.prototype.writeFloatLE = function writeFloatLE(
+      value,
+      offset,
+      noAssert,
+    ) {
       return writeFloat(this, value, offset, true, noAssert);
     };
-    Buffer3.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
+    Buffer3.prototype.writeFloatBE = function writeFloatBE(
+      value,
+      offset,
+      noAssert,
+    ) {
       return writeFloat(this, value, offset, false, noAssert);
     };
     function writeDouble(buf, value, offset, littleEndian, noAssert) {
       value = +value;
       offset = offset >>> 0;
       if (!noAssert) {
-        checkIEEE754(buf, value, offset, 8, 17976931348623157e292, -17976931348623157e292);
+        checkIEEE754(
+          buf,
+          value,
+          offset,
+          8,
+          17976931348623157e292,
+          -17976931348623157e292,
+        );
       }
       ieee754.write(buf, value, offset, littleEndian, 52, 8);
       return offset + 8;
     }
-    Buffer3.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
+    Buffer3.prototype.writeDoubleLE = function writeDoubleLE(
+      value,
+      offset,
+      noAssert,
+    ) {
       return writeDouble(this, value, offset, true, noAssert);
     };
-    Buffer3.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
+    Buffer3.prototype.writeDoubleBE = function writeDoubleBE(
+      value,
+      offset,
+      noAssert,
+    ) {
       return writeDouble(this, value, offset, false, noAssert);
     };
     Buffer3.prototype.copy = function copy(target, targetStart, start, end) {
       if (!Buffer3.isBuffer(target))
         throw new TypeError("argument should be a Buffer");
-      if (!start)
-        start = 0;
-      if (!end && end !== 0)
-        end = this.length;
-      if (targetStart >= target.length)
-        targetStart = target.length;
-      if (!targetStart)
-        targetStart = 0;
-      if (end > 0 && end < start)
-        end = start;
-      if (end === start)
-        return 0;
-      if (target.length === 0 || this.length === 0)
-        return 0;
+      if (!start) start = 0;
+      if (!end && end !== 0) end = this.length;
+      if (targetStart >= target.length) targetStart = target.length;
+      if (!targetStart) targetStart = 0;
+      if (end > 0 && end < start) end = start;
+      if (end === start) return 0;
+      if (target.length === 0 || this.length === 0) return 0;
       if (targetStart < 0) {
         throw new RangeError("targetStart out of bounds");
       }
       if (start < 0 || start >= this.length)
         throw new RangeError("Index out of range");
-      if (end < 0)
-        throw new RangeError("sourceEnd out of bounds");
-      if (end > this.length)
-        end = this.length;
+      if (end < 0) throw new RangeError("sourceEnd out of bounds");
+      if (end > this.length) end = this.length;
       if (target.length - targetStart < end - start) {
         end = target.length - targetStart + start;
       }
       const len = end - start;
-      if (this === target && typeof Uint8Array.prototype.copyWithin === "function") {
+      if (
+        this === target &&
+        typeof Uint8Array.prototype.copyWithin === "function"
+      ) {
         this.copyWithin(targetStart, start, end);
       } else {
         Uint8Array.prototype.set.call(
           target,
           this.subarray(start, end),
-          targetStart
+          targetStart,
         );
       }
       return len;
@@ -1621,7 +1857,7 @@ var require_buffer = __commonJS({
         }
         if (val.length === 1) {
           const code = val.charCodeAt(0);
-          if (encoding === "utf8" && code < 128 || encoding === "latin1") {
+          if ((encoding === "utf8" && code < 128) || encoding === "latin1") {
             val = code;
           }
         }
@@ -1638,8 +1874,7 @@ var require_buffer = __commonJS({
       }
       start = start >>> 0;
       end = end === void 0 ? this.length : end >>> 0;
-      if (!val)
-        val = 0;
+      if (!val) val = 0;
       let i;
       if (typeof val === "number") {
         for (i = start; i < end; ++i) {
@@ -1649,7 +1884,9 @@ var require_buffer = __commonJS({
         const bytes = Buffer3.isBuffer(val) ? val : Buffer3.from(val, encoding);
         const len = bytes.length;
         if (len === 0) {
-          throw new TypeError('The value "' + val + '" is invalid for argument "value"');
+          throw new TypeError(
+            'The value "' + val + '" is invalid for argument "value"',
+          );
         }
         for (i = 0; i < end - start; ++i) {
           this[i + start] = bytes[i % len];
@@ -1665,7 +1902,7 @@ var require_buffer = __commonJS({
           Object.defineProperty(this, "message", {
             value: getMessage.apply(this, arguments),
             writable: true,
-            configurable: true
+            configurable: true,
           });
           this.name = `${this.name} [${sym}]`;
           this.stack;
@@ -1679,7 +1916,7 @@ var require_buffer = __commonJS({
             configurable: true,
             enumerable: true,
             value,
-            writable: true
+            writable: true,
           });
         }
         toString() {
@@ -1689,31 +1926,34 @@ var require_buffer = __commonJS({
     }
     E(
       "ERR_BUFFER_OUT_OF_BOUNDS",
-      function(name) {
+      function (name) {
         if (name) {
           return `${name} is outside of buffer bounds`;
         }
         return "Attempt to access memory outside buffer bounds";
       },
-      RangeError
+      RangeError,
     );
     E(
       "ERR_INVALID_ARG_TYPE",
-      function(name, actual) {
+      function (name, actual) {
         return `The "${name}" argument must be of type number. Received type ${typeof actual}`;
       },
-      TypeError
+      TypeError,
     );
     E(
       "ERR_OUT_OF_RANGE",
-      function(str, range, input) {
+      function (str, range, input) {
         let msg = `The value of "${str}" is out of range.`;
         let received = input;
         if (Number.isInteger(input) && Math.abs(input) > 2 ** 32) {
           received = addNumericalSeparator(String(input));
         } else if (typeof input === "bigint") {
           received = String(input);
-          if (input > BigInt(2) ** BigInt(32) || input < -(BigInt(2) ** BigInt(32))) {
+          if (
+            input > BigInt(2) ** BigInt(32) ||
+            input < -(BigInt(2) ** BigInt(32))
+          ) {
             received = addNumericalSeparator(received);
           }
           received += "n";
@@ -1721,7 +1961,7 @@ var require_buffer = __commonJS({
         msg += ` It must be ${range}. Received ${received}`;
         return msg;
       },
-      RangeError
+      RangeError,
     );
     function addNumericalSeparator(val) {
       let res = "";
@@ -1746,7 +1986,9 @@ var require_buffer = __commonJS({
           if (min === 0 || min === BigInt(0)) {
             range = `>= 0${n} and < 2${n} ** ${(byteLength2 + 1) * 8}${n}`;
           } else {
-            range = `>= -(2${n} ** ${(byteLength2 + 1) * 8 - 1}${n}) and < 2 ** ${(byteLength2 + 1) * 8 - 1}${n}`;
+            range = `>= -(2${n} ** ${
+              (byteLength2 + 1) * 8 - 1
+            }${n}) and < 2 ** ${(byteLength2 + 1) * 8 - 1}${n}`;
           }
         } else {
           range = `>= ${min}${n} and <= ${max}${n}`;
@@ -1763,7 +2005,11 @@ var require_buffer = __commonJS({
     function boundsError(value, length, type) {
       if (Math.floor(value) !== value) {
         validateNumber(value, type);
-        throw new errors.ERR_OUT_OF_RANGE(type || "offset", "an integer", value);
+        throw new errors.ERR_OUT_OF_RANGE(
+          type || "offset",
+          "an integer",
+          value,
+        );
       }
       if (length < 0) {
         throw new errors.ERR_BUFFER_OUT_OF_BOUNDS();
@@ -1771,15 +2017,14 @@ var require_buffer = __commonJS({
       throw new errors.ERR_OUT_OF_RANGE(
         type || "offset",
         `>= ${type ? 1 : 0} and <= ${length}`,
-        value
+        value,
       );
     }
     var INVALID_BASE64_RE = /[^+/0-9A-Za-z-_]/g;
     function base64clean(str) {
       str = str.split("=")[0];
       str = str.trim().replace(INVALID_BASE64_RE, "");
-      if (str.length < 2)
-        return "";
+      if (str.length < 2) return "";
       while (str.length % 4 !== 0) {
         str = str + "=";
       }
@@ -1796,56 +2041,46 @@ var require_buffer = __commonJS({
         if (codePoint > 55295 && codePoint < 57344) {
           if (!leadSurrogate) {
             if (codePoint > 56319) {
-              if ((units -= 3) > -1)
-                bytes.push(239, 191, 189);
+              if ((units -= 3) > -1) bytes.push(239, 191, 189);
               continue;
             } else if (i + 1 === length) {
-              if ((units -= 3) > -1)
-                bytes.push(239, 191, 189);
+              if ((units -= 3) > -1) bytes.push(239, 191, 189);
               continue;
             }
             leadSurrogate = codePoint;
             continue;
           }
           if (codePoint < 56320) {
-            if ((units -= 3) > -1)
-              bytes.push(239, 191, 189);
+            if ((units -= 3) > -1) bytes.push(239, 191, 189);
             leadSurrogate = codePoint;
             continue;
           }
-          codePoint = (leadSurrogate - 55296 << 10 | codePoint - 56320) + 65536;
+          codePoint =
+            (((leadSurrogate - 55296) << 10) | (codePoint - 56320)) + 65536;
         } else if (leadSurrogate) {
-          if ((units -= 3) > -1)
-            bytes.push(239, 191, 189);
+          if ((units -= 3) > -1) bytes.push(239, 191, 189);
         }
         leadSurrogate = null;
         if (codePoint < 128) {
-          if ((units -= 1) < 0)
-            break;
+          if ((units -= 1) < 0) break;
           bytes.push(codePoint);
         } else if (codePoint < 2048) {
-          if ((units -= 2) < 0)
-            break;
-          bytes.push(
-            codePoint >> 6 | 192,
-            codePoint & 63 | 128
-          );
+          if ((units -= 2) < 0) break;
+          bytes.push((codePoint >> 6) | 192, (codePoint & 63) | 128);
         } else if (codePoint < 65536) {
-          if ((units -= 3) < 0)
-            break;
+          if ((units -= 3) < 0) break;
           bytes.push(
-            codePoint >> 12 | 224,
-            codePoint >> 6 & 63 | 128,
-            codePoint & 63 | 128
+            (codePoint >> 12) | 224,
+            ((codePoint >> 6) & 63) | 128,
+            (codePoint & 63) | 128,
           );
         } else if (codePoint < 1114112) {
-          if ((units -= 4) < 0)
-            break;
+          if ((units -= 4) < 0) break;
           bytes.push(
-            codePoint >> 18 | 240,
-            codePoint >> 12 & 63 | 128,
-            codePoint >> 6 & 63 | 128,
-            codePoint & 63 | 128
+            (codePoint >> 18) | 240,
+            ((codePoint >> 12) & 63) | 128,
+            ((codePoint >> 6) & 63) | 128,
+            (codePoint & 63) | 128,
           );
         } else {
           throw new Error("Invalid code point");
@@ -1864,8 +2099,7 @@ var require_buffer = __commonJS({
       let c, hi, lo;
       const byteArray = [];
       for (let i = 0; i < str.length; ++i) {
-        if ((units -= 2) < 0)
-          break;
+        if ((units -= 2) < 0) break;
         c = str.charCodeAt(i);
         hi = c >> 8;
         lo = c % 256;
@@ -1880,19 +2114,24 @@ var require_buffer = __commonJS({
     function blitBuffer(src, dst, offset, length) {
       let i;
       for (i = 0; i < length; ++i) {
-        if (i + offset >= dst.length || i >= src.length)
-          break;
+        if (i + offset >= dst.length || i >= src.length) break;
         dst[i + offset] = src[i];
       }
       return i;
     }
     function isInstance(obj, type) {
-      return obj instanceof type || obj != null && obj.constructor != null && obj.constructor.name != null && obj.constructor.name === type.name;
+      return (
+        obj instanceof type ||
+        (obj != null &&
+          obj.constructor != null &&
+          obj.constructor.name != null &&
+          obj.constructor.name === type.name)
+      );
     }
     function numberIsNaN(obj) {
       return obj !== obj;
     }
-    var hexSliceLookupTable = function() {
+    var hexSliceLookupTable = (function () {
       const alphabet = "0123456789abcdef";
       const table = new Array(256);
       for (let i = 0; i < 16; ++i) {
@@ -1902,119 +2141,119 @@ var require_buffer = __commonJS({
         }
       }
       return table;
-    }();
+    })();
     function defineBigIntMethod(fn) {
       return typeof BigInt === "undefined" ? BufferBigIntNotDefined : fn;
     }
     function BufferBigIntNotDefined() {
       throw new Error("BigInt not supported");
     }
-  }
+  },
 });
 
 // routes-module:root.tsx?worker
 var require_root = __commonJS({
   "routes-module:root.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/manifest[.]webmanifest.ts?worker
 var require_manifest_webmanifest = __commonJS({
   "routes-module:routes/manifest[.]webmanifest.ts?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/api.kanji.record.tsx?worker
 var require_api_kanji_record = __commonJS({
   "routes-module:routes/api.kanji.record.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/api.kanji.remove.tsx?worker
 var require_api_kanji_remove = __commonJS({
   "routes-module:routes/api.kanji.remove.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/api.setting.set.tsx?worker
 var require_api_setting_set = __commonJS({
   "routes-module:routes/api.setting.set.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/api.kanji.add.tsx?worker
 var require_api_kanji_add = __commonJS({
   "routes-module:routes/api.kanji.add.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/register.tsx?worker
 var require_register = __commonJS({
   "routes-module:routes/register.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/_index.tsx?worker
 var require_index = __commonJS({
   "routes-module:routes/_index.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/logout.tsx?worker
 var require_logout = __commonJS({
   "routes-module:routes/logout.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/search.tsx?worker
 var require_search = __commonJS({
   "routes-module:routes/search.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/about.tsx?worker
 var require_about = __commonJS({
   "routes-module:routes/about.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/login.tsx?worker
 var require_login = __commonJS({
   "routes-module:routes/login.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/study.tsx?worker
 var require_study = __commonJS({
   "routes-module:routes/study.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/quiz.tsx?worker
 var require_quiz = __commonJS({
   "routes-module:routes/quiz.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // routes-module:routes/app.tsx?worker
 var require_app = __commonJS({
   "routes-module:routes/app.tsx?worker"(exports, module) {
     module.exports = {};
-  }
+  },
 });
 
 // node_modules/@remix-run/router/dist/router.js
@@ -2055,34 +2294,40 @@ __export(router_exports, {
   redirectDocument: () => redirectDocument,
   resolvePath: () => resolvePath,
   resolveTo: () => resolveTo,
-  stripBasename: () => stripBasename
+  stripBasename: () => stripBasename,
 });
 function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
+  _extends = Object.assign
+    ? Object.assign.bind()
+    : function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
         }
-      }
-    }
-    return target;
-  };
+        return target;
+      };
   return _extends.apply(this, arguments);
 }
 function createMemoryHistory(options) {
   if (options === void 0) {
     options = {};
   }
-  let {
-    initialEntries = ["/"],
-    initialIndex,
-    v5Compat = false
-  } = options;
+  let { initialEntries = ["/"], initialIndex, v5Compat = false } = options;
   let entries;
-  entries = initialEntries.map((entry2, index2) => createMemoryLocation(entry2, typeof entry2 === "string" ? null : entry2.state, index2 === 0 ? "default" : void 0));
-  let index = clampIndex(initialIndex == null ? entries.length - 1 : initialIndex);
+  entries = initialEntries.map((entry2, index2) =>
+    createMemoryLocation(
+      entry2,
+      typeof entry2 === "string" ? null : entry2.state,
+      index2 === 0 ? "default" : void 0,
+    ),
+  );
+  let index = clampIndex(
+    initialIndex == null ? entries.length - 1 : initialIndex,
+  );
   let action = Action.Pop;
   let listener = null;
   function clampIndex(n) {
@@ -2095,8 +2340,17 @@ function createMemoryHistory(options) {
     if (state === void 0) {
       state = null;
     }
-    let location = createLocation(entries ? getCurrentLocation().pathname : "/", to, state, key);
-    warning(location.pathname.charAt(0) === "/", "relative pathnames are not supported in memory history: " + JSON.stringify(to));
+    let location = createLocation(
+      entries ? getCurrentLocation().pathname : "/",
+      to,
+      state,
+      key,
+    );
+    warning(
+      location.pathname.charAt(0) === "/",
+      "relative pathnames are not supported in memory history: " +
+        JSON.stringify(to),
+    );
     return location;
   }
   function createHref(to) {
@@ -2121,7 +2375,7 @@ function createMemoryHistory(options) {
       return {
         pathname: path.pathname || "",
         search: path.search || "",
-        hash: path.hash || ""
+        hash: path.hash || "",
       };
     },
     push(to, state) {
@@ -2133,7 +2387,7 @@ function createMemoryHistory(options) {
         listener({
           action,
           location: nextLocation,
-          delta: 1
+          delta: 1,
         });
       }
     },
@@ -2145,7 +2399,7 @@ function createMemoryHistory(options) {
         listener({
           action,
           location: nextLocation,
-          delta: 0
+          delta: 0,
         });
       }
     },
@@ -2158,7 +2412,7 @@ function createMemoryHistory(options) {
         listener({
           action,
           location: nextLocation,
-          delta
+          delta,
         });
       }
     },
@@ -2167,7 +2421,7 @@ function createMemoryHistory(options) {
       return () => {
         listener = null;
       };
-    }
+    },
   };
   return history;
 }
@@ -2176,27 +2430,28 @@ function createBrowserHistory(options) {
     options = {};
   }
   function createBrowserLocation(window2, globalHistory) {
-    let {
-      pathname,
-      search,
-      hash
-    } = window2.location;
+    let { pathname, search, hash } = window2.location;
     return createLocation(
       "",
       {
         pathname,
         search,
-        hash
+        hash,
       },
       // state defaults to `null` because `window.history.state` does
-      globalHistory.state && globalHistory.state.usr || null,
-      globalHistory.state && globalHistory.state.key || "default"
+      (globalHistory.state && globalHistory.state.usr) || null,
+      (globalHistory.state && globalHistory.state.key) || "default",
     );
   }
   function createBrowserHref(window2, to) {
     return typeof to === "string" ? to : createPath(to);
   }
-  return getUrlBasedHistory(createBrowserLocation, createBrowserHref, null, options);
+  return getUrlBasedHistory(
+    createBrowserLocation,
+    createBrowserHref,
+    null,
+    options,
+  );
 }
 function createHashHistory(options) {
   if (options === void 0) {
@@ -2206,7 +2461,7 @@ function createHashHistory(options) {
     let {
       pathname = "/",
       search = "",
-      hash = ""
+      hash = "",
     } = parsePath(window2.location.hash.substr(1));
     if (!pathname.startsWith("/") && !pathname.startsWith(".")) {
       pathname = "/" + pathname;
@@ -2216,11 +2471,11 @@ function createHashHistory(options) {
       {
         pathname,
         search,
-        hash
+        hash,
       },
       // state defaults to `null` because `window.history.state` does
-      globalHistory.state && globalHistory.state.usr || null,
-      globalHistory.state && globalHistory.state.key || "default"
+      (globalHistory.state && globalHistory.state.usr) || null,
+      (globalHistory.state && globalHistory.state.key) || "default",
     );
   }
   function createHashHref(window2, to) {
@@ -2234,9 +2489,19 @@ function createHashHistory(options) {
     return href + "#" + (typeof to === "string" ? to : createPath(to));
   }
   function validateHashLocation(location, to) {
-    warning(location.pathname.charAt(0) === "/", "relative pathnames are not supported in hash history.push(" + JSON.stringify(to) + ")");
+    warning(
+      location.pathname.charAt(0) === "/",
+      "relative pathnames are not supported in hash history.push(" +
+        JSON.stringify(to) +
+        ")",
+    );
   }
-  return getUrlBasedHistory(createHashLocation, createHashHref, validateHashLocation, options);
+  return getUrlBasedHistory(
+    createHashLocation,
+    createHashHref,
+    validateHashLocation,
+    options,
+  );
 }
 function invariant(value, message) {
   if (value === false || value === null || typeof value === "undefined") {
@@ -2245,12 +2510,10 @@ function invariant(value, message) {
 }
 function warning(cond, message) {
   if (!cond) {
-    if (typeof console !== "undefined")
-      console.warn(message);
+    if (typeof console !== "undefined") console.warn(message);
     try {
       throw new Error(message);
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 }
 function createKey() {
@@ -2260,33 +2523,33 @@ function getHistoryState(location, index) {
   return {
     usr: location.state,
     key: location.key,
-    idx: index
+    idx: index,
   };
 }
 function createLocation(current, to, state, key) {
   if (state === void 0) {
     state = null;
   }
-  let location = _extends({
-    pathname: typeof current === "string" ? current : current.pathname,
-    search: "",
-    hash: ""
-  }, typeof to === "string" ? parsePath(to) : to, {
-    state,
-    // TODO: This could be cleaned up.  push/replace should probably just take
-    // full Locations now and avoid the need to run through this flow at all
-    // But that's a pretty big refactor to the current test suite so going to
-    // keep as is for the time being and just let any incoming keys take precedence
-    key: to && to.key || key || createKey()
-  });
+  let location = _extends(
+    {
+      pathname: typeof current === "string" ? current : current.pathname,
+      search: "",
+      hash: "",
+    },
+    typeof to === "string" ? parsePath(to) : to,
+    {
+      state,
+      // TODO: This could be cleaned up.  push/replace should probably just take
+      // full Locations now and avoid the need to run through this flow at all
+      // But that's a pretty big refactor to the current test suite so going to
+      // keep as is for the time being and just let any incoming keys take precedence
+      key: (to && to.key) || key || createKey(),
+    },
+  );
   return location;
 }
 function createPath(_ref) {
-  let {
-    pathname = "/",
-    search = "",
-    hash = ""
-  } = _ref;
+  let { pathname = "/", search = "", hash = "" } = _ref;
   if (search && search !== "?")
     pathname += search.charAt(0) === "?" ? search : "?" + search;
   if (hash && hash !== "#")
@@ -2312,27 +2575,32 @@ function parsePath(path) {
   }
   return parsedPath;
 }
-function getUrlBasedHistory(getLocation, createHref, validateLocation, options) {
+function getUrlBasedHistory(
+  getLocation,
+  createHref,
+  validateLocation,
+  options,
+) {
   if (options === void 0) {
     options = {};
   }
-  let {
-    window: window2 = document.defaultView,
-    v5Compat = false
-  } = options;
+  let { window: window2 = document.defaultView, v5Compat = false } = options;
   let globalHistory = window2.history;
   let action = Action.Pop;
   let listener = null;
   let index = getIndex();
   if (index == null) {
     index = 0;
-    globalHistory.replaceState(_extends({}, globalHistory.state, {
-      idx: index
-    }), "");
+    globalHistory.replaceState(
+      _extends({}, globalHistory.state, {
+        idx: index,
+      }),
+      "",
+    );
   }
   function getIndex() {
     let state = globalHistory.state || {
-      idx: null
+      idx: null,
     };
     return state.idx;
   }
@@ -2345,15 +2613,14 @@ function getUrlBasedHistory(getLocation, createHref, validateLocation, options) 
       listener({
         action,
         location: history.location,
-        delta
+        delta,
       });
     }
   }
   function push(to, state) {
     action = Action.Push;
     let location = createLocation(history.location, to, state);
-    if (validateLocation)
-      validateLocation(location, to);
+    if (validateLocation) validateLocation(location, to);
     index = getIndex() + 1;
     let historyState = getHistoryState(location, index);
     let url = history.createHref(location);
@@ -2369,15 +2636,14 @@ function getUrlBasedHistory(getLocation, createHref, validateLocation, options) 
       listener({
         action,
         location: history.location,
-        delta: 1
+        delta: 1,
       });
     }
   }
   function replace(to, state) {
     action = Action.Replace;
     let location = createLocation(history.location, to, state);
-    if (validateLocation)
-      validateLocation(location, to);
+    if (validateLocation) validateLocation(location, to);
     index = getIndex();
     let historyState = getHistoryState(location, index);
     let url = history.createHref(location);
@@ -2386,14 +2652,21 @@ function getUrlBasedHistory(getLocation, createHref, validateLocation, options) 
       listener({
         action,
         location: history.location,
-        delta: 0
+        delta: 0,
       });
     }
   }
   function createURL(to) {
-    let base = window2.location.origin !== "null" ? window2.location.origin : window2.location.href;
+    let base =
+      window2.location.origin !== "null"
+        ? window2.location.origin
+        : window2.location.href;
     let href = typeof to === "string" ? to : createPath(to);
-    invariant(base, "No window.location.(origin|href) available to create URL for href: " + href);
+    invariant(
+      base,
+      "No window.location.(origin|href) available to create URL for href: " +
+        href,
+    );
     return new URL(href, base);
   }
   let history = {
@@ -2423,21 +2696,26 @@ function getUrlBasedHistory(getLocation, createHref, validateLocation, options) 
       return {
         pathname: url.pathname,
         search: url.search,
-        hash: url.hash
+        hash: url.hash,
       };
     },
     push,
     replace,
     go(n) {
       return globalHistory.go(n);
-    }
+    },
   };
   return history;
 }
 function isIndexRoute(route) {
   return route.index === true;
 }
-function convertRoutesToDataRoutes(routes2, mapRouteProperties, parentPath, manifest) {
+function convertRoutesToDataRoutes(
+  routes2,
+  mapRouteProperties,
+  parentPath,
+  manifest,
+) {
   if (parentPath === void 0) {
     parentPath = [];
   }
@@ -2447,22 +2725,35 @@ function convertRoutesToDataRoutes(routes2, mapRouteProperties, parentPath, mani
   return routes2.map((route, index) => {
     let treePath = [...parentPath, index];
     let id = typeof route.id === "string" ? route.id : treePath.join("-");
-    invariant(route.index !== true || !route.children, "Cannot specify children on an index route");
-    invariant(!manifest[id], 'Found a route id collision on id "' + id + `".  Route id's must be globally unique within Data Router usages`);
+    invariant(
+      route.index !== true || !route.children,
+      "Cannot specify children on an index route",
+    );
+    invariant(
+      !manifest[id],
+      'Found a route id collision on id "' +
+        id +
+        `".  Route id's must be globally unique within Data Router usages`,
+    );
     if (isIndexRoute(route)) {
       let indexRoute = _extends({}, route, mapRouteProperties(route), {
-        id
+        id,
       });
       manifest[id] = indexRoute;
       return indexRoute;
     } else {
       let pathOrLayoutRoute = _extends({}, route, mapRouteProperties(route), {
         id,
-        children: void 0
+        children: void 0,
       });
       manifest[id] = pathOrLayoutRoute;
       if (route.children) {
-        pathOrLayoutRoute.children = convertRoutesToDataRoutes(route.children, mapRouteProperties, treePath, manifest);
+        pathOrLayoutRoute.children = convertRoutesToDataRoutes(
+          route.children,
+          mapRouteProperties,
+          treePath,
+          manifest,
+        );
       }
       return pathOrLayoutRoute;
     }
@@ -2472,7 +2763,8 @@ function matchRoutes(routes2, locationArg, basename) {
   if (basename === void 0) {
     basename = "/";
   }
-  let location = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
+  let location =
+    typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
   let pathname = stripBasename(location.pathname || "/", basename);
   if (pathname == null) {
     return null;
@@ -2489,23 +2781,19 @@ function matchRoutes(routes2, locationArg, basename) {
       // encoded here but there also shouldn't be anything to decode so this
       // should be a safe operation.  This avoids needing matchRoutes to be
       // history-aware.
-      safelyDecodeURI(pathname)
+      safelyDecodeURI(pathname),
     );
   }
   return matches;
 }
 function convertRouteMatchToUiMatch(match, loaderData) {
-  let {
-    route,
-    pathname,
-    params
-  } = match;
+  let { route, pathname, params } = match;
   return {
     id: route.id,
     pathname,
     params,
     data: loaderData[route.id],
-    handle: route.handle
+    handle: route.handle,
   };
 }
 function flattenRoutes(routes2, branches, parentsMeta, parentPath) {
@@ -2523,10 +2811,17 @@ function flattenRoutes(routes2, branches, parentsMeta, parentPath) {
       relativePath: relativePath === void 0 ? route.path || "" : relativePath,
       caseSensitive: route.caseSensitive === true,
       childrenIndex: index,
-      route
+      route,
     };
     if (meta.relativePath.startsWith("/")) {
-      invariant(meta.relativePath.startsWith(parentPath), 'Absolute route path "' + meta.relativePath + '" nested under path ' + ('"' + parentPath + '" is not valid. An absolute child route path ') + "must start with the combined path of all its parent routes.");
+      invariant(
+        meta.relativePath.startsWith(parentPath),
+        'Absolute route path "' +
+          meta.relativePath +
+          '" nested under path ' +
+          ('"' + parentPath + '" is not valid. An absolute child route path ') +
+          "must start with the combined path of all its parent routes.",
+      );
       meta.relativePath = meta.relativePath.slice(parentPath.length);
     }
     let path = joinPaths([parentPath, meta.relativePath]);
@@ -2536,7 +2831,8 @@ function flattenRoutes(routes2, branches, parentsMeta, parentPath) {
         // Our types know better, but runtime JS may not!
         // @ts-expect-error
         route.index !== true,
-        "Index routes must not have child routes. Please remove " + ('all child routes from route path "' + path + '".')
+        "Index routes must not have child routes. Please remove " +
+          ('all child routes from route path "' + path + '".'),
       );
       flattenRoutes(route.children, branches, routesMeta, path);
     }
@@ -2546,12 +2842,15 @@ function flattenRoutes(routes2, branches, parentsMeta, parentPath) {
     branches.push({
       path,
       score: computeScore(path, route.index),
-      routesMeta
+      routesMeta,
     });
   };
   routes2.forEach((route, index) => {
     var _route$path;
-    if (route.path === "" || !((_route$path = route.path) != null && _route$path.includes("?"))) {
+    if (
+      route.path === "" ||
+      !((_route$path = route.path) != null && _route$path.includes("?"))
+    ) {
       flattenRoute(route, index);
     } else {
       for (let exploded of explodeOptionalSegments(route.path)) {
@@ -2563,8 +2862,7 @@ function flattenRoutes(routes2, branches, parentsMeta, parentPath) {
 }
 function explodeOptionalSegments(path) {
   let segments = path.split("/");
-  if (segments.length === 0)
-    return [];
+  if (segments.length === 0) return [];
   let [first, ...rest] = segments;
   let isOptional = first.endsWith("?");
   let required = first.replace(/\?$/, "");
@@ -2573,14 +2871,27 @@ function explodeOptionalSegments(path) {
   }
   let restExploded = explodeOptionalSegments(rest.join("/"));
   let result = [];
-  result.push(...restExploded.map((subpath) => subpath === "" ? required : [required, subpath].join("/")));
+  result.push(
+    ...restExploded.map((subpath) =>
+      subpath === "" ? required : [required, subpath].join("/"),
+    ),
+  );
   if (isOptional) {
     result.push(...restExploded);
   }
-  return result.map((exploded) => path.startsWith("/") && exploded === "" ? "/" : exploded);
+  return result.map((exploded) =>
+    path.startsWith("/") && exploded === "" ? "/" : exploded,
+  );
 }
 function rankRouteBranches(branches) {
-  branches.sort((a, b2) => a.score !== b2.score ? b2.score - a.score : compareIndexes(a.routesMeta.map((meta) => meta.childrenIndex), b2.routesMeta.map((meta) => meta.childrenIndex)));
+  branches.sort((a, b2) =>
+    a.score !== b2.score
+      ? b2.score - a.score
+      : compareIndexes(
+          a.routesMeta.map((meta) => meta.childrenIndex),
+          b2.routesMeta.map((meta) => meta.childrenIndex),
+        ),
+  );
 }
 function computeScore(path, index) {
   let segments = path.split("/");
@@ -2591,48 +2902,63 @@ function computeScore(path, index) {
   if (index) {
     initialScore += indexRouteValue;
   }
-  return segments.filter((s) => !isSplat(s)).reduce((score, segment) => score + (paramRe.test(segment) ? dynamicSegmentValue : segment === "" ? emptySegmentValue : staticSegmentValue), initialScore);
+  return segments
+    .filter((s) => !isSplat(s))
+    .reduce(
+      (score, segment) =>
+        score +
+        (paramRe.test(segment)
+          ? dynamicSegmentValue
+          : segment === ""
+            ? emptySegmentValue
+            : staticSegmentValue),
+      initialScore,
+    );
 }
 function compareIndexes(a, b2) {
-  let siblings = a.length === b2.length && a.slice(0, -1).every((n, i) => n === b2[i]);
-  return siblings ? (
-    // If two routes are siblings, we should try to match the earlier sibling
-    // first. This allows people to have fine-grained control over the matching
-    // behavior by simply putting routes with identical paths in the order they
-    // want them tried.
-    a[a.length - 1] - b2[b2.length - 1]
-  ) : (
-    // Otherwise, it doesn't really make sense to rank non-siblings by index,
-    // so they sort equally.
-    0
-  );
+  let siblings =
+    a.length === b2.length && a.slice(0, -1).every((n, i) => n === b2[i]);
+  return siblings
+    ? // If two routes are siblings, we should try to match the earlier sibling
+      // first. This allows people to have fine-grained control over the matching
+      // behavior by simply putting routes with identical paths in the order they
+      // want them tried.
+      a[a.length - 1] - b2[b2.length - 1]
+    : // Otherwise, it doesn't really make sense to rank non-siblings by index,
+      // so they sort equally.
+      0;
 }
 function matchRouteBranch(branch, pathname) {
-  let {
-    routesMeta
-  } = branch;
+  let { routesMeta } = branch;
   let matchedParams = {};
   let matchedPathname = "/";
   let matches = [];
   for (let i = 0; i < routesMeta.length; ++i) {
     let meta = routesMeta[i];
     let end = i === routesMeta.length - 1;
-    let remainingPathname = matchedPathname === "/" ? pathname : pathname.slice(matchedPathname.length) || "/";
-    let match = matchPath({
-      path: meta.relativePath,
-      caseSensitive: meta.caseSensitive,
-      end
-    }, remainingPathname);
-    if (!match)
-      return null;
+    let remainingPathname =
+      matchedPathname === "/"
+        ? pathname
+        : pathname.slice(matchedPathname.length) || "/";
+    let match = matchPath(
+      {
+        path: meta.relativePath,
+        caseSensitive: meta.caseSensitive,
+        end,
+      },
+      remainingPathname,
+    );
+    if (!match) return null;
     Object.assign(matchedParams, match.params);
     let route = meta.route;
     matches.push({
       // TODO: Can this as be avoided?
       params: matchedParams,
       pathname: joinPaths([matchedPathname, match.pathname]),
-      pathnameBase: normalizePathname(joinPaths([matchedPathname, match.pathnameBase])),
-      route
+      pathnameBase: normalizePathname(
+        joinPaths([matchedPathname, match.pathnameBase]),
+      ),
+      route,
     });
     if (match.pathnameBase !== "/") {
       matchedPathname = joinPaths([matchedPathname, match.pathnameBase]);
@@ -2646,26 +2972,45 @@ function generatePath(originalPath, params) {
   }
   let path = originalPath;
   if (path.endsWith("*") && path !== "*" && !path.endsWith("/*")) {
-    warning(false, 'Route path "' + path + '" will be treated as if it were ' + ('"' + path.replace(/\*$/, "/*") + '" because the `*` character must ') + "always follow a `/` in the pattern. To get rid of this warning, " + ('please change the route path to "' + path.replace(/\*$/, "/*") + '".'));
+    warning(
+      false,
+      'Route path "' +
+        path +
+        '" will be treated as if it were ' +
+        ('"' +
+          path.replace(/\*$/, "/*") +
+          '" because the `*` character must ') +
+        "always follow a `/` in the pattern. To get rid of this warning, " +
+        ('please change the route path to "' +
+          path.replace(/\*$/, "/*") +
+          '".'),
+    );
     path = path.replace(/\*$/, "/*");
   }
   const prefix = path.startsWith("/") ? "/" : "";
-  const stringify = (p) => p == null ? "" : typeof p === "string" ? p : String(p);
-  const segments = path.split(/\/+/).map((segment, index, array) => {
-    const isLastSegment = index === array.length - 1;
-    if (isLastSegment && segment === "*") {
-      const star = "*";
-      return stringify(params[star]);
-    }
-    const keyMatch = segment.match(/^:(\w+)(\??)$/);
-    if (keyMatch) {
-      const [, key, optional] = keyMatch;
-      let param = params[key];
-      invariant(optional === "?" || param != null, 'Missing ":' + key + '" param');
-      return stringify(param);
-    }
-    return segment.replace(/\?$/g, "");
-  }).filter((segment) => !!segment);
+  const stringify = (p) =>
+    p == null ? "" : typeof p === "string" ? p : String(p);
+  const segments = path
+    .split(/\/+/)
+    .map((segment, index, array) => {
+      const isLastSegment = index === array.length - 1;
+      if (isLastSegment && segment === "*") {
+        const star = "*";
+        return stringify(params[star]);
+      }
+      const keyMatch = segment.match(/^:(\w+)(\??)$/);
+      if (keyMatch) {
+        const [, key, optional] = keyMatch;
+        let param = params[key];
+        invariant(
+          optional === "?" || param != null,
+          'Missing ":' + key + '" param',
+        );
+        return stringify(param);
+      }
+      return segment.replace(/\?$/g, "");
+    })
+    .filter((segment) => !!segment);
   return prefix + segments.join("/");
 }
 function matchPath(pattern, pathname) {
@@ -2673,24 +3018,26 @@ function matchPath(pattern, pathname) {
     pattern = {
       path: pattern,
       caseSensitive: false,
-      end: true
+      end: true,
     };
   }
-  let [matcher, compiledParams] = compilePath(pattern.path, pattern.caseSensitive, pattern.end);
+  let [matcher, compiledParams] = compilePath(
+    pattern.path,
+    pattern.caseSensitive,
+    pattern.end,
+  );
   let match = pathname.match(matcher);
-  if (!match)
-    return null;
+  if (!match) return null;
   let matchedPathname = match[0];
   let pathnameBase = matchedPathname.replace(/(.)\/+$/, "$1");
   let captureGroups = match.slice(1);
   let params = compiledParams.reduce((memo, _ref, index) => {
-    let {
-      paramName,
-      isOptional
-    } = _ref;
+    let { paramName, isOptional } = _ref;
     if (paramName === "*") {
       let splatValue = captureGroups[index] || "";
-      pathnameBase = matchedPathname.slice(0, matchedPathname.length - splatValue.length).replace(/(.)\/+$/, "$1");
+      pathnameBase = matchedPathname
+        .slice(0, matchedPathname.length - splatValue.length)
+        .replace(/(.)\/+$/, "$1");
     }
     const value = captureGroups[index];
     if (isOptional && !value) {
@@ -2704,7 +3051,7 @@ function matchPath(pattern, pathname) {
     params,
     pathname: matchedPathname,
     pathnameBase,
-    pattern
+    pattern,
   };
 }
 function compilePath(path, caseSensitive, end) {
@@ -2714,26 +3061,40 @@ function compilePath(path, caseSensitive, end) {
   if (end === void 0) {
     end = true;
   }
-  warning(path === "*" || !path.endsWith("*") || path.endsWith("/*"), 'Route path "' + path + '" will be treated as if it were ' + ('"' + path.replace(/\*$/, "/*") + '" because the `*` character must ') + "always follow a `/` in the pattern. To get rid of this warning, " + ('please change the route path to "' + path.replace(/\*$/, "/*") + '".'));
+  warning(
+    path === "*" || !path.endsWith("*") || path.endsWith("/*"),
+    'Route path "' +
+      path +
+      '" will be treated as if it were ' +
+      ('"' + path.replace(/\*$/, "/*") + '" because the `*` character must ') +
+      "always follow a `/` in the pattern. To get rid of this warning, " +
+      ('please change the route path to "' + path.replace(/\*$/, "/*") + '".'),
+  );
   let params = [];
-  let regexpSource = "^" + path.replace(/\/*\*?$/, "").replace(/^\/*/, "/").replace(/[\\.*+^${}|()[\]]/g, "\\$&").replace(/\/:(\w+)(\?)?/g, (_, paramName, isOptional) => {
-    params.push({
-      paramName,
-      isOptional: isOptional != null
-    });
-    return isOptional ? "/?([^\\/]+)?" : "/([^\\/]+)";
-  });
+  let regexpSource =
+    "^" +
+    path
+      .replace(/\/*\*?$/, "")
+      .replace(/^\/*/, "/")
+      .replace(/[\\.*+^${}|()[\]]/g, "\\$&")
+      .replace(/\/:(\w+)(\?)?/g, (_, paramName, isOptional) => {
+        params.push({
+          paramName,
+          isOptional: isOptional != null,
+        });
+        return isOptional ? "/?([^\\/]+)?" : "/([^\\/]+)";
+      });
   if (path.endsWith("*")) {
     params.push({
-      paramName: "*"
+      paramName: "*",
     });
-    regexpSource += path === "*" || path === "/*" ? "(.*)$" : "(?:\\/(.+)|\\/*)$";
+    regexpSource +=
+      path === "*" || path === "/*" ? "(.*)$" : "(?:\\/(.+)|\\/*)$";
   } else if (end) {
     regexpSource += "\\/*$";
   } else if (path !== "" && path !== "/") {
     regexpSource += "(?:(?=\\/|$))";
-  } else
-    ;
+  } else;
   let matcher = new RegExp(regexpSource, caseSensitive ? void 0 : "i");
   return [matcher, params];
 }
@@ -2741,7 +3102,13 @@ function safelyDecodeURI(value) {
   try {
     return decodeURI(value);
   } catch (error) {
-    warning(false, 'The URL path "' + value + '" could not be decoded because it is is a malformed URL segment. This is probably due to a bad percent ' + ("encoding (" + error + ")."));
+    warning(
+      false,
+      'The URL path "' +
+        value +
+        '" could not be decoded because it is is a malformed URL segment. This is probably due to a bad percent ' +
+        ("encoding (" + error + ")."),
+    );
     return value;
   }
 }
@@ -2749,17 +3116,27 @@ function safelyDecodeURIComponent(value, paramName) {
   try {
     return decodeURIComponent(value);
   } catch (error) {
-    warning(false, 'The value for the URL param "' + paramName + '" will not be decoded because' + (' the string "' + value + '" is a malformed URL segment. This is probably') + (" due to a bad percent encoding (" + error + ")."));
+    warning(
+      false,
+      'The value for the URL param "' +
+        paramName +
+        '" will not be decoded because' +
+        (' the string "' +
+          value +
+          '" is a malformed URL segment. This is probably') +
+        (" due to a bad percent encoding (" + error + ")."),
+    );
     return value;
   }
 }
 function stripBasename(pathname, basename) {
-  if (basename === "/")
-    return pathname;
+  if (basename === "/") return pathname;
   if (!pathname.toLowerCase().startsWith(basename.toLowerCase())) {
     return null;
   }
-  let startIndex = basename.endsWith("/") ? basename.length - 1 : basename.length;
+  let startIndex = basename.endsWith("/")
+    ? basename.length - 1
+    : basename.length;
   let nextChar = pathname.charAt(startIndex);
   if (nextChar && nextChar !== "/") {
     return null;
@@ -2773,13 +3150,17 @@ function resolvePath(to, fromPathname) {
   let {
     pathname: toPathname,
     search = "",
-    hash = ""
+    hash = "",
   } = typeof to === "string" ? parsePath(to) : to;
-  let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
+  let pathname = toPathname
+    ? toPathname.startsWith("/")
+      ? toPathname
+      : resolvePathname(toPathname, fromPathname)
+    : fromPathname;
   return {
     pathname,
     search: normalizeSearch(search),
-    hash: normalizeHash(hash)
+    hash: normalizeHash(hash),
   };
 }
 function resolvePathname(relativePath, fromPathname) {
@@ -2787,8 +3168,7 @@ function resolvePathname(relativePath, fromPathname) {
   let relativeSegments = relativePath.split("/");
   relativeSegments.forEach((segment) => {
     if (segment === "..") {
-      if (segments.length > 1)
-        segments.pop();
+      if (segments.length > 1) segments.pop();
     } else if (segment !== ".") {
       segments.push(segment);
     }
@@ -2796,10 +3176,26 @@ function resolvePathname(relativePath, fromPathname) {
   return segments.length > 1 ? segments.join("/") : "/";
 }
 function getInvalidPathError(char, field, dest, path) {
-  return "Cannot include a '" + char + "' character in a manually specified " + ("`to." + field + "` field [" + JSON.stringify(path) + "].  Please separate it out to the ") + ("`to." + dest + "` field. Alternatively you may provide the full path as ") + 'a string in <Link to="..."> and the router will parse it for you.';
+  return (
+    "Cannot include a '" +
+    char +
+    "' character in a manually specified " +
+    ("`to." +
+      field +
+      "` field [" +
+      JSON.stringify(path) +
+      "].  Please separate it out to the ") +
+    ("`to." +
+      dest +
+      "` field. Alternatively you may provide the full path as ") +
+    'a string in <Link to="..."> and the router will parse it for you.'
+  );
 }
 function getPathContributingMatches(matches) {
-  return matches.filter((match, index) => index === 0 || match.route.path && match.route.path.length > 0);
+  return matches.filter(
+    (match, index) =>
+      index === 0 || (match.route.path && match.route.path.length > 0),
+  );
 }
 function resolveTo(toArg, routePathnames, locationPathname, isPathRelative) {
   if (isPathRelative === void 0) {
@@ -2810,9 +3206,18 @@ function resolveTo(toArg, routePathnames, locationPathname, isPathRelative) {
     to = parsePath(toArg);
   } else {
     to = _extends({}, toArg);
-    invariant(!to.pathname || !to.pathname.includes("?"), getInvalidPathError("?", "pathname", "search", to));
-    invariant(!to.pathname || !to.pathname.includes("#"), getInvalidPathError("#", "pathname", "hash", to));
-    invariant(!to.search || !to.search.includes("#"), getInvalidPathError("#", "search", "hash", to));
+    invariant(
+      !to.pathname || !to.pathname.includes("?"),
+      getInvalidPathError("?", "pathname", "search", to),
+    );
+    invariant(
+      !to.pathname || !to.pathname.includes("#"),
+      getInvalidPathError("#", "pathname", "hash", to),
+    );
+    invariant(
+      !to.search || !to.search.includes("#"),
+      getInvalidPathError("#", "search", "hash", to),
+    );
   }
   let isEmptyPath = toArg === "" || to.pathname === "";
   let toPathname = isEmptyPath ? "/" : to.pathname;
@@ -2820,7 +3225,9 @@ function resolveTo(toArg, routePathnames, locationPathname, isPathRelative) {
   if (toPathname == null) {
     from = locationPathname;
   } else if (isPathRelative) {
-    let fromSegments = routePathnames[routePathnames.length - 1].replace(/^\//, "").split("/");
+    let fromSegments = routePathnames[routePathnames.length - 1]
+      .replace(/^\//, "")
+      .split("/");
     if (toPathname.startsWith("..")) {
       let toSegments = toPathname.split("/");
       while (toSegments[0] === "..") {
@@ -2843,15 +3250,24 @@ function resolveTo(toArg, routePathnames, locationPathname, isPathRelative) {
     from = routePathnameIndex >= 0 ? routePathnames[routePathnameIndex] : "/";
   }
   let path = resolvePath(to, from);
-  let hasExplicitTrailingSlash = toPathname && toPathname !== "/" && toPathname.endsWith("/");
-  let hasCurrentTrailingSlash = (isEmptyPath || toPathname === ".") && locationPathname.endsWith("/");
-  if (!path.pathname.endsWith("/") && (hasExplicitTrailingSlash || hasCurrentTrailingSlash)) {
+  let hasExplicitTrailingSlash =
+    toPathname && toPathname !== "/" && toPathname.endsWith("/");
+  let hasCurrentTrailingSlash =
+    (isEmptyPath || toPathname === ".") && locationPathname.endsWith("/");
+  if (
+    !path.pathname.endsWith("/") &&
+    (hasExplicitTrailingSlash || hasCurrentTrailingSlash)
+  ) {
     path.pathname += "/";
   }
   return path;
 }
 function getToPathname(to) {
-  return to === "" || to.pathname === "" ? "/" : typeof to === "string" ? parsePath(to).pathname : to.pathname;
+  return to === "" || to.pathname === ""
+    ? "/"
+    : typeof to === "string"
+      ? parsePath(to).pathname
+      : to.pathname;
 }
 function isTrackedPromise(value) {
   return value instanceof Promise && value._tracked === true;
@@ -2866,33 +3282,57 @@ function unwrapTrackedPromise(value) {
   return value._data;
 }
 function isRouteErrorResponse(error) {
-  return error != null && typeof error.status === "number" && typeof error.statusText === "string" && typeof error.internal === "boolean" && "data" in error;
+  return (
+    error != null &&
+    typeof error.status === "number" &&
+    typeof error.statusText === "string" &&
+    typeof error.internal === "boolean" &&
+    "data" in error
+  );
 }
 function createRouter(init) {
-  const routerWindow = init.window ? init.window : typeof window !== "undefined" ? window : void 0;
-  const isBrowser = typeof routerWindow !== "undefined" && typeof routerWindow.document !== "undefined" && typeof routerWindow.document.createElement !== "undefined";
+  const routerWindow = init.window
+    ? init.window
+    : typeof window !== "undefined"
+      ? window
+      : void 0;
+  const isBrowser =
+    typeof routerWindow !== "undefined" &&
+    typeof routerWindow.document !== "undefined" &&
+    typeof routerWindow.document.createElement !== "undefined";
   const isServer = !isBrowser;
-  invariant(init.routes.length > 0, "You must provide a non-empty routes array to createRouter");
+  invariant(
+    init.routes.length > 0,
+    "You must provide a non-empty routes array to createRouter",
+  );
   let mapRouteProperties;
   if (init.mapRouteProperties) {
     mapRouteProperties = init.mapRouteProperties;
   } else if (init.detectErrorBoundary) {
     let detectErrorBoundary = init.detectErrorBoundary;
     mapRouteProperties = (route) => ({
-      hasErrorBoundary: detectErrorBoundary(route)
+      hasErrorBoundary: detectErrorBoundary(route),
     });
   } else {
     mapRouteProperties = defaultMapRouteProperties;
   }
   let manifest = {};
-  let dataRoutes = convertRoutesToDataRoutes(init.routes, mapRouteProperties, void 0, manifest);
+  let dataRoutes = convertRoutesToDataRoutes(
+    init.routes,
+    mapRouteProperties,
+    void 0,
+    manifest,
+  );
   let inFlightDataRoutes;
   let basename = init.basename || "/";
-  let future = _extends({
-    v7_fetcherPersist: false,
-    v7_normalizeFormMethod: false,
-    v7_prependBasename: false
-  }, init.future);
+  let future = _extends(
+    {
+      v7_fetcherPersist: false,
+      v7_normalizeFormMethod: false,
+      v7_prependBasename: false,
+    },
+    init.future,
+  );
   let unlistenHistory = null;
   let subscribers = /* @__PURE__ */ new Set();
   let savedScrollPositions = null;
@@ -2903,23 +3343,19 @@ function createRouter(init) {
   let initialErrors = null;
   if (initialMatches == null) {
     let error = getInternalRouterError(404, {
-      pathname: init.history.location.pathname
+      pathname: init.history.location.pathname,
     });
-    let {
-      matches,
-      route
-    } = getShortCircuitMatches(dataRoutes);
+    let { matches, route } = getShortCircuitMatches(dataRoutes);
     initialMatches = matches;
     initialErrors = {
-      [route.id]: error
+      [route.id]: error,
     };
   }
-  let initialized = (
+  let initialized =
     // All initialMatches need to be loaded before we're ready.  If we have lazy
     // functions around still then we'll need to run them in initialize()
     !initialMatches.some((m) => m.route.lazy) && // And we have to either have no loaders or have been provided hydrationData
-    (!initialMatches.some((m) => m.route.loader) || init.hydrationData != null)
-  );
+    (!initialMatches.some((m) => m.route.loader) || init.hydrationData != null);
   let router;
   let state = {
     historyAction: init.history.action,
@@ -2931,11 +3367,11 @@ function createRouter(init) {
     restoreScrollPosition: init.hydrationData != null ? false : null,
     preventScrollReset: false,
     revalidation: "idle",
-    loaderData: init.hydrationData && init.hydrationData.loaderData || {},
-    actionData: init.hydrationData && init.hydrationData.actionData || null,
-    errors: init.hydrationData && init.hydrationData.errors || initialErrors,
+    loaderData: (init.hydrationData && init.hydrationData.loaderData) || {},
+    actionData: (init.hydrationData && init.hydrationData.actionData) || null,
+    errors: (init.hydrationData && init.hydrationData.errors) || initialErrors,
     fetchers: /* @__PURE__ */ new Map(),
-    blockers: /* @__PURE__ */ new Map()
+    blockers: /* @__PURE__ */ new Map(),
   };
   let pendingAction = Action.Pop;
   let pendingPreventScrollReset = false;
@@ -2960,20 +3396,19 @@ function createRouter(init) {
   let ignoreNextHistoryUpdate = false;
   function initialize() {
     unlistenHistory = init.history.listen((_ref) => {
-      let {
-        action: historyAction,
-        location,
-        delta
-      } = _ref;
+      let { action: historyAction, location, delta } = _ref;
       if (ignoreNextHistoryUpdate) {
         ignoreNextHistoryUpdate = false;
         return;
       }
-      warning(blockerFunctions.size === 0 || delta != null, "You are trying to use a blocker on a POP navigation to a location that was not created by @remix-run/router. This will fail silently in production. This can happen if you are navigating outside the router via `window.history.pushState`/`window.location.hash` instead of using router navigation APIs.  This can also happen if you are using createHashRouter and the user manually changes the URL.");
+      warning(
+        blockerFunctions.size === 0 || delta != null,
+        "You are trying to use a blocker on a POP navigation to a location that was not created by @remix-run/router. This will fail silently in production. This can happen if you are navigating outside the router via `window.history.pushState`/`window.location.hash` instead of using router navigation APIs.  This can also happen if you are using createHashRouter and the user manually changes the URL.",
+      );
       let blockerKey = shouldBlockNavigation({
         currentLocation: state.location,
         nextLocation: location,
-        historyAction
+        historyAction,
       });
       if (blockerKey && delta != null) {
         ignoreNextHistoryUpdate = true;
@@ -2986,7 +3421,7 @@ function createRouter(init) {
               state: "proceeding",
               proceed: void 0,
               reset: void 0,
-              location
+              location,
             });
             init.history.go(delta);
           },
@@ -2994,9 +3429,9 @@ function createRouter(init) {
             let blockers = new Map(state.blockers);
             blockers.set(blockerKey, IDLE_BLOCKER);
             updateState({
-              blockers
+              blockers,
             });
-          }
+          },
         });
         return;
       }
@@ -3004,9 +3439,11 @@ function createRouter(init) {
     });
     if (isBrowser) {
       restoreAppliedTransitions(routerWindow, appliedViewTransitions);
-      let _saveAppliedTransitions = () => persistAppliedTransitions(routerWindow, appliedViewTransitions);
+      let _saveAppliedTransitions = () =>
+        persistAppliedTransitions(routerWindow, appliedViewTransitions);
       routerWindow.addEventListener("pagehide", _saveAppliedTransitions);
-      removePageHideEventListener = () => routerWindow.removeEventListener("pagehide", _saveAppliedTransitions);
+      removePageHideEventListener = () =>
+        routerWindow.removeEventListener("pagehide", _saveAppliedTransitions);
     }
     if (!state.initialized) {
       startNavigation(Action.Pop, state.location);
@@ -3047,11 +3484,13 @@ function createRouter(init) {
         }
       });
     }
-    [...subscribers].forEach((subscriber) => subscriber(state, {
-      deletedFetchers: deletedFetchersKeys,
-      unstable_viewTransitionOpts: opts.viewTransitionOpts,
-      unstable_flushSync: opts.flushSync === true
-    }));
+    [...subscribers].forEach((subscriber) =>
+      subscriber(state, {
+        deletedFetchers: deletedFetchersKeys,
+        unstable_viewTransitionOpts: opts.viewTransitionOpts,
+        unstable_flushSync: opts.flushSync === true,
+      }),
+    );
     if (future.v7_fetcherPersist) {
       completedFetchers.forEach((key) => state.fetchers.delete(key));
       deletedFetchersKeys.forEach((key) => deleteFetcher(key));
@@ -3059,10 +3498,15 @@ function createRouter(init) {
   }
   function completeNavigation(location, newState, _temp) {
     var _location$state, _location$state2;
-    let {
-      flushSync
-    } = _temp === void 0 ? {} : _temp;
-    let isActionReload = state.actionData != null && state.navigation.formMethod != null && isMutationMethod(state.navigation.formMethod) && state.navigation.state === "loading" && ((_location$state = location.state) == null ? void 0 : _location$state._isRedirect) !== true;
+    let { flushSync } = _temp === void 0 ? {} : _temp;
+    let isActionReload =
+      state.actionData != null &&
+      state.navigation.formMethod != null &&
+      isMutationMethod(state.navigation.formMethod) &&
+      state.navigation.state === "loading" &&
+      ((_location$state = location.state) == null
+        ? void 0
+        : _location$state._isRedirect) !== true;
     let actionData;
     if (newState.actionData) {
       if (Object.keys(newState.actionData).length > 0) {
@@ -3075,21 +3519,32 @@ function createRouter(init) {
     } else {
       actionData = null;
     }
-    let loaderData = newState.loaderData ? mergeLoaderData(state.loaderData, newState.loaderData, newState.matches || [], newState.errors) : state.loaderData;
+    let loaderData = newState.loaderData
+      ? mergeLoaderData(
+          state.loaderData,
+          newState.loaderData,
+          newState.matches || [],
+          newState.errors,
+        )
+      : state.loaderData;
     let blockers = state.blockers;
     if (blockers.size > 0) {
       blockers = new Map(blockers);
       blockers.forEach((_, k2) => blockers.set(k2, IDLE_BLOCKER));
     }
-    let preventScrollReset = pendingPreventScrollReset === true || state.navigation.formMethod != null && isMutationMethod(state.navigation.formMethod) && ((_location$state2 = location.state) == null ? void 0 : _location$state2._isRedirect) !== true;
+    let preventScrollReset =
+      pendingPreventScrollReset === true ||
+      (state.navigation.formMethod != null &&
+        isMutationMethod(state.navigation.formMethod) &&
+        ((_location$state2 = location.state) == null
+          ? void 0
+          : _location$state2._isRedirect) !== true);
     if (inFlightDataRoutes) {
       dataRoutes = inFlightDataRoutes;
       inFlightDataRoutes = void 0;
     }
-    if (isUninterruptedRevalidation)
-      ;
-    else if (pendingAction === Action.Pop)
-      ;
+    if (isUninterruptedRevalidation);
+    else if (pendingAction === Action.Pop);
     else if (pendingAction === Action.Push) {
       init.history.push(location, location.state);
     } else if (pendingAction === Action.Replace) {
@@ -3101,12 +3556,12 @@ function createRouter(init) {
       if (priorPaths && priorPaths.has(location.pathname)) {
         viewTransitionOpts = {
           currentLocation: state.location,
-          nextLocation: location
+          nextLocation: location,
         };
       } else if (appliedViewTransitions.has(location.pathname)) {
         viewTransitionOpts = {
           currentLocation: location,
-          nextLocation: state.location
+          nextLocation: state.location,
         };
       }
     } else if (pendingViewTransitionEnabled) {
@@ -3119,24 +3574,30 @@ function createRouter(init) {
       }
       viewTransitionOpts = {
         currentLocation: state.location,
-        nextLocation: location
+        nextLocation: location,
       };
     }
-    updateState(_extends({}, newState, {
-      actionData,
-      loaderData,
-      historyAction: pendingAction,
-      location,
-      initialized: true,
-      navigation: IDLE_NAVIGATION,
-      revalidation: "idle",
-      restoreScrollPosition: getSavedScrollPosition(location, newState.matches || state.matches),
-      preventScrollReset,
-      blockers
-    }), {
-      viewTransitionOpts,
-      flushSync: flushSync === true
-    });
+    updateState(
+      _extends({}, newState, {
+        actionData,
+        loaderData,
+        historyAction: pendingAction,
+        location,
+        initialized: true,
+        navigation: IDLE_NAVIGATION,
+        revalidation: "idle",
+        restoreScrollPosition: getSavedScrollPosition(
+          location,
+          newState.matches || state.matches,
+        ),
+        preventScrollReset,
+        blockers,
+      }),
+      {
+        viewTransitionOpts,
+        flushSync: flushSync === true,
+      },
+    );
     pendingAction = Action.Pop;
     pendingPreventScrollReset = false;
     pendingViewTransitionEnabled = false;
@@ -3150,30 +3611,49 @@ function createRouter(init) {
       init.history.go(to);
       return;
     }
-    let normalizedPath = normalizeTo(state.location, state.matches, basename, future.v7_prependBasename, to, opts == null ? void 0 : opts.fromRouteId, opts == null ? void 0 : opts.relative);
-    let {
-      path,
-      submission,
-      error
-    } = normalizeNavigateOptions(future.v7_normalizeFormMethod, false, normalizedPath, opts);
+    let normalizedPath = normalizeTo(
+      state.location,
+      state.matches,
+      basename,
+      future.v7_prependBasename,
+      to,
+      opts == null ? void 0 : opts.fromRouteId,
+      opts == null ? void 0 : opts.relative,
+    );
+    let { path, submission, error } = normalizeNavigateOptions(
+      future.v7_normalizeFormMethod,
+      false,
+      normalizedPath,
+      opts,
+    );
     let currentLocation = state.location;
     let nextLocation = createLocation(state.location, path, opts && opts.state);
-    nextLocation = _extends({}, nextLocation, init.history.encodeLocation(nextLocation));
+    nextLocation = _extends(
+      {},
+      nextLocation,
+      init.history.encodeLocation(nextLocation),
+    );
     let userReplace = opts && opts.replace != null ? opts.replace : void 0;
     let historyAction = Action.Push;
     if (userReplace === true) {
       historyAction = Action.Replace;
-    } else if (userReplace === false)
-      ;
-    else if (submission != null && isMutationMethod(submission.formMethod) && submission.formAction === state.location.pathname + state.location.search) {
+    } else if (userReplace === false);
+    else if (
+      submission != null &&
+      isMutationMethod(submission.formMethod) &&
+      submission.formAction === state.location.pathname + state.location.search
+    ) {
       historyAction = Action.Replace;
     }
-    let preventScrollReset = opts && "preventScrollReset" in opts ? opts.preventScrollReset === true : void 0;
+    let preventScrollReset =
+      opts && "preventScrollReset" in opts
+        ? opts.preventScrollReset === true
+        : void 0;
     let flushSync = (opts && opts.unstable_flushSync) === true;
     let blockerKey = shouldBlockNavigation({
       currentLocation,
       nextLocation,
-      historyAction
+      historyAction,
     });
     if (blockerKey) {
       updateBlocker(blockerKey, {
@@ -3184,7 +3664,7 @@ function createRouter(init) {
             state: "proceeding",
             proceed: void 0,
             reset: void 0,
-            location: nextLocation
+            location: nextLocation,
           });
           navigate(to, opts);
         },
@@ -3192,9 +3672,9 @@ function createRouter(init) {
           let blockers = new Map(state.blockers);
           blockers.set(blockerKey, IDLE_BLOCKER);
           updateState({
-            blockers
+            blockers,
           });
-        }
+        },
       });
       return;
     }
@@ -3206,32 +3686,37 @@ function createRouter(init) {
       preventScrollReset,
       replace: opts && opts.replace,
       enableViewTransition: opts && opts.unstable_viewTransition,
-      flushSync
+      flushSync,
     });
   }
   function revalidate() {
     interruptActiveLoads();
     updateState({
-      revalidation: "loading"
+      revalidation: "loading",
     });
     if (state.navigation.state === "submitting") {
       return;
     }
     if (state.navigation.state === "idle") {
       startNavigation(state.historyAction, state.location, {
-        startUninterruptedRevalidation: true
+        startUninterruptedRevalidation: true,
       });
       return;
     }
-    startNavigation(pendingAction || state.historyAction, state.navigation.location, {
-      overrideNavigation: state.navigation
-    });
+    startNavigation(
+      pendingAction || state.historyAction,
+      state.navigation.location,
+      {
+        overrideNavigation: state.navigation,
+      },
+    );
   }
   async function startNavigation(historyAction, location, opts) {
     pendingNavigationController && pendingNavigationController.abort();
     pendingNavigationController = null;
     pendingAction = historyAction;
-    isUninterruptedRevalidation = (opts && opts.startUninterruptedRevalidation) === true;
+    isUninterruptedRevalidation =
+      (opts && opts.startUninterruptedRevalidation) === true;
     saveScrollPosition(state.location, state.matches);
     pendingPreventScrollReset = (opts && opts.preventScrollReset) === true;
     pendingViewTransitionEnabled = (opts && opts.enableViewTransition) === true;
@@ -3241,45 +3726,71 @@ function createRouter(init) {
     let flushSync = (opts && opts.flushSync) === true;
     if (!matches) {
       let error = getInternalRouterError(404, {
-        pathname: location.pathname
+        pathname: location.pathname,
       });
-      let {
-        matches: notFoundMatches,
-        route
-      } = getShortCircuitMatches(routesToUse);
+      let { matches: notFoundMatches, route } =
+        getShortCircuitMatches(routesToUse);
       cancelActiveDeferreds();
-      completeNavigation(location, {
-        matches: notFoundMatches,
-        loaderData: {},
-        errors: {
-          [route.id]: error
-        }
-      }, {
-        flushSync
-      });
+      completeNavigation(
+        location,
+        {
+          matches: notFoundMatches,
+          loaderData: {},
+          errors: {
+            [route.id]: error,
+          },
+        },
+        {
+          flushSync,
+        },
+      );
       return;
     }
-    if (state.initialized && !isRevalidationRequired && isHashChangeOnly(state.location, location) && !(opts && opts.submission && isMutationMethod(opts.submission.formMethod))) {
-      completeNavigation(location, {
-        matches
-      }, {
-        flushSync
-      });
+    if (
+      state.initialized &&
+      !isRevalidationRequired &&
+      isHashChangeOnly(state.location, location) &&
+      !(opts && opts.submission && isMutationMethod(opts.submission.formMethod))
+    ) {
+      completeNavigation(
+        location,
+        {
+          matches,
+        },
+        {
+          flushSync,
+        },
+      );
       return;
     }
     pendingNavigationController = new AbortController();
-    let request = createClientSideRequest(init.history, location, pendingNavigationController.signal, opts && opts.submission);
+    let request = createClientSideRequest(
+      init.history,
+      location,
+      pendingNavigationController.signal,
+      opts && opts.submission,
+    );
     let pendingActionData;
     let pendingError;
     if (opts && opts.pendingError) {
       pendingError = {
-        [findNearestBoundary(matches).route.id]: opts.pendingError
+        [findNearestBoundary(matches).route.id]: opts.pendingError,
       };
-    } else if (opts && opts.submission && isMutationMethod(opts.submission.formMethod)) {
-      let actionOutput = await handleAction2(request, location, opts.submission, matches, {
-        replace: opts.replace,
-        flushSync
-      });
+    } else if (
+      opts &&
+      opts.submission &&
+      isMutationMethod(opts.submission.formMethod)
+    ) {
+      let actionOutput = await handleAction2(
+        request,
+        location,
+        opts.submission,
+        matches,
+        {
+          replace: opts.replace,
+          flushSync,
+        },
+      );
       if (actionOutput.shortCircuited) {
         return;
       }
@@ -3288,26 +3799,42 @@ function createRouter(init) {
       loadingNavigation = getLoadingNavigation(location, opts.submission);
       flushSync = false;
       request = new Request(request.url, {
-        signal: request.signal
+        signal: request.signal,
       });
     }
-    let {
-      shortCircuited,
-      loaderData,
-      errors
-    } = await handleLoaders(request, location, matches, loadingNavigation, opts && opts.submission, opts && opts.fetcherSubmission, opts && opts.replace, flushSync, pendingActionData, pendingError);
+    let { shortCircuited, loaderData, errors } = await handleLoaders(
+      request,
+      location,
+      matches,
+      loadingNavigation,
+      opts && opts.submission,
+      opts && opts.fetcherSubmission,
+      opts && opts.replace,
+      flushSync,
+      pendingActionData,
+      pendingError,
+    );
     if (shortCircuited) {
       return;
     }
     pendingNavigationController = null;
-    completeNavigation(location, _extends({
-      matches
-    }, pendingActionData ? {
-      actionData: pendingActionData
-    } : {}, {
-      loaderData,
-      errors
-    }));
+    completeNavigation(
+      location,
+      _extends(
+        {
+          matches,
+        },
+        pendingActionData
+          ? {
+              actionData: pendingActionData,
+            }
+          : {},
+        {
+          loaderData,
+          errors,
+        },
+      ),
+    );
   }
   async function handleAction2(request, location, submission, matches, opts) {
     if (opts === void 0) {
@@ -3315,11 +3842,14 @@ function createRouter(init) {
     }
     interruptActiveLoads();
     let navigation = getSubmittingNavigation(location, submission);
-    updateState({
-      navigation
-    }, {
-      flushSync: opts.flushSync === true
-    });
+    updateState(
+      {
+        navigation,
+      },
+      {
+        flushSync: opts.flushSync === true,
+      },
+    );
     let result;
     let actionMatch = getTargetMatch(matches, location);
     if (!actionMatch.route.action && !actionMatch.route.lazy) {
@@ -3328,14 +3858,22 @@ function createRouter(init) {
         error: getInternalRouterError(405, {
           method: request.method,
           pathname: location.pathname,
-          routeId: actionMatch.route.id
-        })
+          routeId: actionMatch.route.id,
+        }),
       };
     } else {
-      result = await callLoaderOrAction("action", request, actionMatch, matches, manifest, mapRouteProperties, basename);
+      result = await callLoaderOrAction(
+        "action",
+        request,
+        actionMatch,
+        matches,
+        manifest,
+        mapRouteProperties,
+        basename,
+      );
       if (request.signal.aborted) {
         return {
-          shortCircuited: true
+          shortCircuited: true,
         };
       }
     }
@@ -3344,14 +3882,15 @@ function createRouter(init) {
       if (opts && opts.replace != null) {
         replace = opts.replace;
       } else {
-        replace = result.location === state.location.pathname + state.location.search;
+        replace =
+          result.location === state.location.pathname + state.location.search;
       }
       await startRedirectNavigation(state, result, {
         submission,
-        replace
+        replace,
       });
       return {
-        shortCircuited: true
+        shortCircuited: true,
       };
     }
     if (isErrorResult(result)) {
@@ -3363,64 +3902,126 @@ function createRouter(init) {
         // Send back an empty object we can use to clear out any prior actionData
         pendingActionData: {},
         pendingActionError: {
-          [boundaryMatch.route.id]: result.error
-        }
+          [boundaryMatch.route.id]: result.error,
+        },
       };
     }
     if (isDeferredResult(result)) {
       throw getInternalRouterError(400, {
-        type: "defer-action"
+        type: "defer-action",
       });
     }
     return {
       pendingActionData: {
-        [actionMatch.route.id]: result.data
-      }
+        [actionMatch.route.id]: result.data,
+      },
     };
   }
-  async function handleLoaders(request, location, matches, overrideNavigation, submission, fetcherSubmission, replace, flushSync, pendingActionData, pendingError) {
-    let loadingNavigation = overrideNavigation || getLoadingNavigation(location, submission);
-    let activeSubmission = submission || fetcherSubmission || getSubmissionFromNavigation(loadingNavigation);
+  async function handleLoaders(
+    request,
+    location,
+    matches,
+    overrideNavigation,
+    submission,
+    fetcherSubmission,
+    replace,
+    flushSync,
+    pendingActionData,
+    pendingError,
+  ) {
+    let loadingNavigation =
+      overrideNavigation || getLoadingNavigation(location, submission);
+    let activeSubmission =
+      submission ||
+      fetcherSubmission ||
+      getSubmissionFromNavigation(loadingNavigation);
     let routesToUse = inFlightDataRoutes || dataRoutes;
-    let [matchesToLoad, revalidatingFetchers] = getMatchesToLoad(init.history, state, matches, activeSubmission, location, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionData, pendingError);
-    cancelActiveDeferreds((routeId) => !(matches && matches.some((m) => m.route.id === routeId)) || matchesToLoad && matchesToLoad.some((m) => m.route.id === routeId));
+    let [matchesToLoad, revalidatingFetchers] = getMatchesToLoad(
+      init.history,
+      state,
+      matches,
+      activeSubmission,
+      location,
+      isRevalidationRequired,
+      cancelledDeferredRoutes,
+      cancelledFetcherLoads,
+      fetchLoadMatches,
+      fetchRedirectIds,
+      routesToUse,
+      basename,
+      pendingActionData,
+      pendingError,
+    );
+    cancelActiveDeferreds(
+      (routeId) =>
+        !(matches && matches.some((m) => m.route.id === routeId)) ||
+        (matchesToLoad && matchesToLoad.some((m) => m.route.id === routeId)),
+    );
     pendingNavigationLoadId = ++incrementingLoadId;
     if (matchesToLoad.length === 0 && revalidatingFetchers.length === 0) {
       let updatedFetchers2 = markFetchRedirectsDone();
-      completeNavigation(location, _extends({
-        matches,
-        loaderData: {},
-        // Commit pending error if we're short circuiting
-        errors: pendingError || null
-      }, pendingActionData ? {
-        actionData: pendingActionData
-      } : {}, updatedFetchers2 ? {
-        fetchers: new Map(state.fetchers)
-      } : {}), {
-        flushSync
-      });
+      completeNavigation(
+        location,
+        _extends(
+          {
+            matches,
+            loaderData: {},
+            // Commit pending error if we're short circuiting
+            errors: pendingError || null,
+          },
+          pendingActionData
+            ? {
+                actionData: pendingActionData,
+              }
+            : {},
+          updatedFetchers2
+            ? {
+                fetchers: new Map(state.fetchers),
+              }
+            : {},
+        ),
+        {
+          flushSync,
+        },
+      );
       return {
-        shortCircuited: true
+        shortCircuited: true,
       };
     }
     if (!isUninterruptedRevalidation) {
       revalidatingFetchers.forEach((rf) => {
         let fetcher = state.fetchers.get(rf.key);
-        let revalidatingFetcher = getLoadingFetcher(void 0, fetcher ? fetcher.data : void 0);
+        let revalidatingFetcher = getLoadingFetcher(
+          void 0,
+          fetcher ? fetcher.data : void 0,
+        );
         state.fetchers.set(rf.key, revalidatingFetcher);
       });
       let actionData = pendingActionData || state.actionData;
-      updateState(_extends({
-        navigation: loadingNavigation
-      }, actionData ? Object.keys(actionData).length === 0 ? {
-        actionData: null
-      } : {
-        actionData
-      } : {}, revalidatingFetchers.length > 0 ? {
-        fetchers: new Map(state.fetchers)
-      } : {}), {
-        flushSync
-      });
+      updateState(
+        _extends(
+          {
+            navigation: loadingNavigation,
+          },
+          actionData
+            ? Object.keys(actionData).length === 0
+              ? {
+                  actionData: null,
+                }
+              : {
+                  actionData,
+                }
+            : {},
+          revalidatingFetchers.length > 0
+            ? {
+                fetchers: new Map(state.fetchers),
+              }
+            : {},
+        ),
+        {
+          flushSync,
+        },
+      );
     }
     revalidatingFetchers.forEach((rf) => {
       if (fetchControllers.has(rf.key)) {
@@ -3430,41 +4031,58 @@ function createRouter(init) {
         fetchControllers.set(rf.key, rf.controller);
       }
     });
-    let abortPendingFetchRevalidations = () => revalidatingFetchers.forEach((f2) => abortFetcher(f2.key));
+    let abortPendingFetchRevalidations = () =>
+      revalidatingFetchers.forEach((f2) => abortFetcher(f2.key));
     if (pendingNavigationController) {
-      pendingNavigationController.signal.addEventListener("abort", abortPendingFetchRevalidations);
+      pendingNavigationController.signal.addEventListener(
+        "abort",
+        abortPendingFetchRevalidations,
+      );
     }
-    let {
-      results,
-      loaderResults,
-      fetcherResults
-    } = await callLoadersAndMaybeResolveData(state.matches, matches, matchesToLoad, revalidatingFetchers, request);
+    let { results, loaderResults, fetcherResults } =
+      await callLoadersAndMaybeResolveData(
+        state.matches,
+        matches,
+        matchesToLoad,
+        revalidatingFetchers,
+        request,
+      );
     if (request.signal.aborted) {
       return {
-        shortCircuited: true
+        shortCircuited: true,
       };
     }
     if (pendingNavigationController) {
-      pendingNavigationController.signal.removeEventListener("abort", abortPendingFetchRevalidations);
+      pendingNavigationController.signal.removeEventListener(
+        "abort",
+        abortPendingFetchRevalidations,
+      );
     }
     revalidatingFetchers.forEach((rf) => fetchControllers.delete(rf.key));
     let redirect4 = findRedirect(results);
     if (redirect4) {
       if (redirect4.idx >= matchesToLoad.length) {
-        let fetcherKey = revalidatingFetchers[redirect4.idx - matchesToLoad.length].key;
+        let fetcherKey =
+          revalidatingFetchers[redirect4.idx - matchesToLoad.length].key;
         fetchRedirectIds.add(fetcherKey);
       }
       await startRedirectNavigation(state, redirect4.result, {
-        replace
+        replace,
       });
       return {
-        shortCircuited: true
+        shortCircuited: true,
       };
     }
-    let {
-      loaderData,
-      errors
-    } = processLoaderData(state, matches, matchesToLoad, loaderResults, pendingError, revalidatingFetchers, fetcherResults, activeDeferreds);
+    let { loaderData, errors } = processLoaderData(
+      state,
+      matches,
+      matchesToLoad,
+      loaderResults,
+      pendingError,
+      revalidatingFetchers,
+      fetcherResults,
+      activeDeferreds,
+    );
     activeDeferreds.forEach((deferredData, routeId) => {
       deferredData.subscribe((aborted) => {
         if (aborted || deferredData.done) {
@@ -3474,78 +4092,136 @@ function createRouter(init) {
     });
     let updatedFetchers = markFetchRedirectsDone();
     let didAbortFetchLoads = abortStaleFetchLoads(pendingNavigationLoadId);
-    let shouldUpdateFetchers = updatedFetchers || didAbortFetchLoads || revalidatingFetchers.length > 0;
-    return _extends({
-      loaderData,
-      errors
-    }, shouldUpdateFetchers ? {
-      fetchers: new Map(state.fetchers)
-    } : {});
+    let shouldUpdateFetchers =
+      updatedFetchers || didAbortFetchLoads || revalidatingFetchers.length > 0;
+    return _extends(
+      {
+        loaderData,
+        errors,
+      },
+      shouldUpdateFetchers
+        ? {
+            fetchers: new Map(state.fetchers),
+          }
+        : {},
+    );
   }
   function fetch2(key, routeId, href, opts) {
     if (isServer) {
-      throw new Error("router.fetch() was called during the server render, but it shouldn't be. You are likely calling a useFetcher() method in the body of your component. Try moving it to a useEffect or a callback.");
+      throw new Error(
+        "router.fetch() was called during the server render, but it shouldn't be. You are likely calling a useFetcher() method in the body of your component. Try moving it to a useEffect or a callback.",
+      );
     }
-    if (fetchControllers.has(key))
-      abortFetcher(key);
+    if (fetchControllers.has(key)) abortFetcher(key);
     let flushSync = (opts && opts.unstable_flushSync) === true;
     let routesToUse = inFlightDataRoutes || dataRoutes;
-    let normalizedPath = normalizeTo(state.location, state.matches, basename, future.v7_prependBasename, href, routeId, opts == null ? void 0 : opts.relative);
+    let normalizedPath = normalizeTo(
+      state.location,
+      state.matches,
+      basename,
+      future.v7_prependBasename,
+      href,
+      routeId,
+      opts == null ? void 0 : opts.relative,
+    );
     let matches = matchRoutes(routesToUse, normalizedPath, basename);
     if (!matches) {
-      setFetcherError(key, routeId, getInternalRouterError(404, {
-        pathname: normalizedPath
-      }), {
-        flushSync
-      });
+      setFetcherError(
+        key,
+        routeId,
+        getInternalRouterError(404, {
+          pathname: normalizedPath,
+        }),
+        {
+          flushSync,
+        },
+      );
       return;
     }
-    let {
-      path,
-      submission,
-      error
-    } = normalizeNavigateOptions(future.v7_normalizeFormMethod, true, normalizedPath, opts);
+    let { path, submission, error } = normalizeNavigateOptions(
+      future.v7_normalizeFormMethod,
+      true,
+      normalizedPath,
+      opts,
+    );
     if (error) {
       setFetcherError(key, routeId, error, {
-        flushSync
+        flushSync,
       });
       return;
     }
     let match = getTargetMatch(matches, path);
     pendingPreventScrollReset = (opts && opts.preventScrollReset) === true;
     if (submission && isMutationMethod(submission.formMethod)) {
-      handleFetcherAction(key, routeId, path, match, matches, flushSync, submission);
+      handleFetcherAction(
+        key,
+        routeId,
+        path,
+        match,
+        matches,
+        flushSync,
+        submission,
+      );
       return;
     }
     fetchLoadMatches.set(key, {
       routeId,
-      path
+      path,
     });
-    handleFetcherLoader(key, routeId, path, match, matches, flushSync, submission);
+    handleFetcherLoader(
+      key,
+      routeId,
+      path,
+      match,
+      matches,
+      flushSync,
+      submission,
+    );
   }
-  async function handleFetcherAction(key, routeId, path, match, requestMatches, flushSync, submission) {
+  async function handleFetcherAction(
+    key,
+    routeId,
+    path,
+    match,
+    requestMatches,
+    flushSync,
+    submission,
+  ) {
     interruptActiveLoads();
     fetchLoadMatches.delete(key);
     if (!match.route.action && !match.route.lazy) {
       let error = getInternalRouterError(405, {
         method: submission.formMethod,
         pathname: path,
-        routeId
+        routeId,
       });
       setFetcherError(key, routeId, error, {
-        flushSync
+        flushSync,
       });
       return;
     }
     let existingFetcher = state.fetchers.get(key);
     updateFetcherState(key, getSubmittingFetcher(submission, existingFetcher), {
-      flushSync
+      flushSync,
     });
     let abortController = new AbortController();
-    let fetchRequest = createClientSideRequest(init.history, path, abortController.signal, submission);
+    let fetchRequest = createClientSideRequest(
+      init.history,
+      path,
+      abortController.signal,
+      submission,
+    );
     fetchControllers.set(key, abortController);
     let originatingLoadId = incrementingLoadId;
-    let actionResult = await callLoaderOrAction("action", fetchRequest, match, requestMatches, manifest, mapRouteProperties, basename);
+    let actionResult = await callLoaderOrAction(
+      "action",
+      fetchRequest,
+      match,
+      requestMatches,
+      manifest,
+      mapRouteProperties,
+      basename,
+    );
     if (fetchRequest.signal.aborted) {
       if (fetchControllers.get(key) === abortController) {
         fetchControllers.delete(key);
@@ -3565,7 +4241,7 @@ function createRouter(init) {
         fetchRedirectIds.add(key);
         updateFetcherState(key, getLoadingFetcher(submission));
         return startRedirectNavigation(state, actionResult, {
-          fetcherSubmission: submission
+          fetcherSubmission: submission,
         });
       }
     }
@@ -3575,13 +4251,20 @@ function createRouter(init) {
     }
     if (isDeferredResult(actionResult)) {
       throw getInternalRouterError(400, {
-        type: "defer-action"
+        type: "defer-action",
       });
     }
     let nextLocation = state.navigation.location || state.location;
-    let revalidationRequest = createClientSideRequest(init.history, nextLocation, abortController.signal);
+    let revalidationRequest = createClientSideRequest(
+      init.history,
+      nextLocation,
+      abortController.signal,
+    );
     let routesToUse = inFlightDataRoutes || dataRoutes;
-    let matches = state.navigation.state !== "idle" ? matchRoutes(routesToUse, state.navigation.location, basename) : state.matches;
+    let matches =
+      state.navigation.state !== "idle"
+        ? matchRoutes(routesToUse, state.navigation.location, basename)
+        : state.matches;
     invariant(matches, "Didn't find any matches after fetcher action");
     let loadId = ++incrementingLoadId;
     fetchReloadIds.set(key, loadId);
@@ -3601,87 +4284,146 @@ function createRouter(init) {
       routesToUse,
       basename,
       {
-        [match.route.id]: actionResult.data
+        [match.route.id]: actionResult.data,
       },
-      void 0
+      void 0,
       // No need to send through errors since we short circuit above
     );
-    revalidatingFetchers.filter((rf) => rf.key !== key).forEach((rf) => {
-      let staleKey = rf.key;
-      let existingFetcher2 = state.fetchers.get(staleKey);
-      let revalidatingFetcher = getLoadingFetcher(void 0, existingFetcher2 ? existingFetcher2.data : void 0);
-      state.fetchers.set(staleKey, revalidatingFetcher);
-      if (fetchControllers.has(staleKey)) {
-        abortFetcher(staleKey);
-      }
-      if (rf.controller) {
-        fetchControllers.set(staleKey, rf.controller);
-      }
-    });
+    revalidatingFetchers
+      .filter((rf) => rf.key !== key)
+      .forEach((rf) => {
+        let staleKey = rf.key;
+        let existingFetcher2 = state.fetchers.get(staleKey);
+        let revalidatingFetcher = getLoadingFetcher(
+          void 0,
+          existingFetcher2 ? existingFetcher2.data : void 0,
+        );
+        state.fetchers.set(staleKey, revalidatingFetcher);
+        if (fetchControllers.has(staleKey)) {
+          abortFetcher(staleKey);
+        }
+        if (rf.controller) {
+          fetchControllers.set(staleKey, rf.controller);
+        }
+      });
     updateState({
-      fetchers: new Map(state.fetchers)
+      fetchers: new Map(state.fetchers),
     });
-    let abortPendingFetchRevalidations = () => revalidatingFetchers.forEach((rf) => abortFetcher(rf.key));
-    abortController.signal.addEventListener("abort", abortPendingFetchRevalidations);
-    let {
-      results,
-      loaderResults,
-      fetcherResults
-    } = await callLoadersAndMaybeResolveData(state.matches, matches, matchesToLoad, revalidatingFetchers, revalidationRequest);
+    let abortPendingFetchRevalidations = () =>
+      revalidatingFetchers.forEach((rf) => abortFetcher(rf.key));
+    abortController.signal.addEventListener(
+      "abort",
+      abortPendingFetchRevalidations,
+    );
+    let { results, loaderResults, fetcherResults } =
+      await callLoadersAndMaybeResolveData(
+        state.matches,
+        matches,
+        matchesToLoad,
+        revalidatingFetchers,
+        revalidationRequest,
+      );
     if (abortController.signal.aborted) {
       return;
     }
-    abortController.signal.removeEventListener("abort", abortPendingFetchRevalidations);
+    abortController.signal.removeEventListener(
+      "abort",
+      abortPendingFetchRevalidations,
+    );
     fetchReloadIds.delete(key);
     fetchControllers.delete(key);
     revalidatingFetchers.forEach((r) => fetchControllers.delete(r.key));
     let redirect4 = findRedirect(results);
     if (redirect4) {
       if (redirect4.idx >= matchesToLoad.length) {
-        let fetcherKey = revalidatingFetchers[redirect4.idx - matchesToLoad.length].key;
+        let fetcherKey =
+          revalidatingFetchers[redirect4.idx - matchesToLoad.length].key;
         fetchRedirectIds.add(fetcherKey);
       }
       return startRedirectNavigation(state, redirect4.result);
     }
-    let {
-      loaderData,
-      errors
-    } = processLoaderData(state, state.matches, matchesToLoad, loaderResults, void 0, revalidatingFetchers, fetcherResults, activeDeferreds);
+    let { loaderData, errors } = processLoaderData(
+      state,
+      state.matches,
+      matchesToLoad,
+      loaderResults,
+      void 0,
+      revalidatingFetchers,
+      fetcherResults,
+      activeDeferreds,
+    );
     if (state.fetchers.has(key)) {
       let doneFetcher = getDoneFetcher(actionResult.data);
       state.fetchers.set(key, doneFetcher);
     }
     abortStaleFetchLoads(loadId);
-    if (state.navigation.state === "loading" && loadId > pendingNavigationLoadId) {
+    if (
+      state.navigation.state === "loading" &&
+      loadId > pendingNavigationLoadId
+    ) {
       invariant(pendingAction, "Expected pending action");
       pendingNavigationController && pendingNavigationController.abort();
       completeNavigation(state.navigation.location, {
         matches,
         loaderData,
         errors,
-        fetchers: new Map(state.fetchers)
+        fetchers: new Map(state.fetchers),
       });
     } else {
       updateState({
         errors,
-        loaderData: mergeLoaderData(state.loaderData, loaderData, matches, errors),
-        fetchers: new Map(state.fetchers)
+        loaderData: mergeLoaderData(
+          state.loaderData,
+          loaderData,
+          matches,
+          errors,
+        ),
+        fetchers: new Map(state.fetchers),
       });
       isRevalidationRequired = false;
     }
   }
-  async function handleFetcherLoader(key, routeId, path, match, matches, flushSync, submission) {
+  async function handleFetcherLoader(
+    key,
+    routeId,
+    path,
+    match,
+    matches,
+    flushSync,
+    submission,
+  ) {
     let existingFetcher = state.fetchers.get(key);
-    updateFetcherState(key, getLoadingFetcher(submission, existingFetcher ? existingFetcher.data : void 0), {
-      flushSync
-    });
+    updateFetcherState(
+      key,
+      getLoadingFetcher(
+        submission,
+        existingFetcher ? existingFetcher.data : void 0,
+      ),
+      {
+        flushSync,
+      },
+    );
     let abortController = new AbortController();
-    let fetchRequest = createClientSideRequest(init.history, path, abortController.signal);
+    let fetchRequest = createClientSideRequest(
+      init.history,
+      path,
+      abortController.signal,
+    );
     fetchControllers.set(key, abortController);
     let originatingLoadId = incrementingLoadId;
-    let result = await callLoaderOrAction("loader", fetchRequest, match, matches, manifest, mapRouteProperties, basename);
+    let result = await callLoaderOrAction(
+      "loader",
+      fetchRequest,
+      match,
+      matches,
+      manifest,
+      mapRouteProperties,
+      basename,
+    );
     if (isDeferredResult(result)) {
-      result = await resolveDeferredData(result, fetchRequest.signal, true) || result;
+      result =
+        (await resolveDeferredData(result, fetchRequest.signal, true)) ||
+        result;
     }
     if (fetchControllers.get(key) === abortController) {
       fetchControllers.delete(key);
@@ -3711,18 +4453,18 @@ function createRouter(init) {
     updateFetcherState(key, getDoneFetcher(result.data));
   }
   async function startRedirectNavigation(state2, redirect4, _temp2) {
-    let {
-      submission,
-      fetcherSubmission,
-      replace
-    } = _temp2 === void 0 ? {} : _temp2;
+    let { submission, fetcherSubmission, replace } =
+      _temp2 === void 0 ? {} : _temp2;
     if (redirect4.revalidate) {
       isRevalidationRequired = true;
     }
     let redirectLocation = createLocation(state2.location, redirect4.location, {
-      _isRedirect: true
+      _isRedirect: true,
     });
-    invariant(redirectLocation, "Expected a location on the redirect navigation");
+    invariant(
+      redirectLocation,
+      "Expected a location on the redirect navigation",
+    );
     if (isBrowser) {
       let isDocumentReload = false;
       if (redirect4.reloadDocument) {
@@ -3730,8 +4472,8 @@ function createRouter(init) {
       } else if (ABSOLUTE_URL_REGEX.test(redirect4.location)) {
         const url = init.history.createURL(redirect4.location);
         isDocumentReload = // Hard reload if it's an absolute URL to a new origin
-        url.origin !== routerWindow.location.origin || // Hard reload if it's an absolute URL that does not match our basename
-        stripBasename(url.pathname, basename) == null;
+          url.origin !== routerWindow.location.origin || // Hard reload if it's an absolute URL that does not match our basename
+          stripBasename(url.pathname, basename) == null;
       }
       if (isDocumentReload) {
         if (replace) {
@@ -3744,55 +4486,113 @@ function createRouter(init) {
     }
     pendingNavigationController = null;
     let redirectHistoryAction = replace === true ? Action.Replace : Action.Push;
-    let {
-      formMethod,
-      formAction,
+    let { formMethod, formAction, formEncType } = state2.navigation;
+    if (
+      !submission &&
+      !fetcherSubmission &&
+      formMethod &&
+      formAction &&
       formEncType
-    } = state2.navigation;
-    if (!submission && !fetcherSubmission && formMethod && formAction && formEncType) {
+    ) {
       submission = getSubmissionFromNavigation(state2.navigation);
     }
     let activeSubmission = submission || fetcherSubmission;
-    if (redirectPreserveMethodStatusCodes.has(redirect4.status) && activeSubmission && isMutationMethod(activeSubmission.formMethod)) {
+    if (
+      redirectPreserveMethodStatusCodes.has(redirect4.status) &&
+      activeSubmission &&
+      isMutationMethod(activeSubmission.formMethod)
+    ) {
       await startNavigation(redirectHistoryAction, redirectLocation, {
         submission: _extends({}, activeSubmission, {
-          formAction: redirect4.location
+          formAction: redirect4.location,
         }),
         // Preserve this flag across redirects
-        preventScrollReset: pendingPreventScrollReset
+        preventScrollReset: pendingPreventScrollReset,
       });
     } else {
-      let overrideNavigation = getLoadingNavigation(redirectLocation, submission);
+      let overrideNavigation = getLoadingNavigation(
+        redirectLocation,
+        submission,
+      );
       await startNavigation(redirectHistoryAction, redirectLocation, {
         overrideNavigation,
         // Send fetcher submissions through for shouldRevalidate
         fetcherSubmission,
         // Preserve this flag across redirects
-        preventScrollReset: pendingPreventScrollReset
+        preventScrollReset: pendingPreventScrollReset,
       });
     }
   }
-  async function callLoadersAndMaybeResolveData(currentMatches, matches, matchesToLoad, fetchersToLoad, request) {
-    let results = await Promise.all([...matchesToLoad.map((match) => callLoaderOrAction("loader", request, match, matches, manifest, mapRouteProperties, basename)), ...fetchersToLoad.map((f2) => {
-      if (f2.matches && f2.match && f2.controller) {
-        return callLoaderOrAction("loader", createClientSideRequest(init.history, f2.path, f2.controller.signal), f2.match, f2.matches, manifest, mapRouteProperties, basename);
-      } else {
-        let error = {
-          type: ResultType.error,
-          error: getInternalRouterError(404, {
-            pathname: f2.path
-          })
-        };
-        return error;
-      }
-    })]);
+  async function callLoadersAndMaybeResolveData(
+    currentMatches,
+    matches,
+    matchesToLoad,
+    fetchersToLoad,
+    request,
+  ) {
+    let results = await Promise.all([
+      ...matchesToLoad.map((match) =>
+        callLoaderOrAction(
+          "loader",
+          request,
+          match,
+          matches,
+          manifest,
+          mapRouteProperties,
+          basename,
+        ),
+      ),
+      ...fetchersToLoad.map((f2) => {
+        if (f2.matches && f2.match && f2.controller) {
+          return callLoaderOrAction(
+            "loader",
+            createClientSideRequest(
+              init.history,
+              f2.path,
+              f2.controller.signal,
+            ),
+            f2.match,
+            f2.matches,
+            manifest,
+            mapRouteProperties,
+            basename,
+          );
+        } else {
+          let error = {
+            type: ResultType.error,
+            error: getInternalRouterError(404, {
+              pathname: f2.path,
+            }),
+          };
+          return error;
+        }
+      }),
+    ]);
     let loaderResults = results.slice(0, matchesToLoad.length);
     let fetcherResults = results.slice(matchesToLoad.length);
-    await Promise.all([resolveDeferredResults(currentMatches, matchesToLoad, loaderResults, loaderResults.map(() => request.signal), false, state.loaderData), resolveDeferredResults(currentMatches, fetchersToLoad.map((f2) => f2.match), fetcherResults, fetchersToLoad.map((f2) => f2.controller ? f2.controller.signal : null), true)]);
+    await Promise.all([
+      resolveDeferredResults(
+        currentMatches,
+        matchesToLoad,
+        loaderResults,
+        loaderResults.map(() => request.signal),
+        false,
+        state.loaderData,
+      ),
+      resolveDeferredResults(
+        currentMatches,
+        fetchersToLoad.map((f2) => f2.match),
+        fetcherResults,
+        fetchersToLoad.map((f2) =>
+          f2.controller ? f2.controller.signal : null,
+        ),
+        true,
+      ),
+    ]);
     return {
       results,
       loaderResults,
-      fetcherResults
+      fetcherResults,
     };
   }
   function interruptActiveLoads() {
@@ -3810,11 +4610,14 @@ function createRouter(init) {
       opts = {};
     }
     state.fetchers.set(key, fetcher);
-    updateState({
-      fetchers: new Map(state.fetchers)
-    }, {
-      flushSync: (opts && opts.flushSync) === true
-    });
+    updateState(
+      {
+        fetchers: new Map(state.fetchers),
+      },
+      {
+        flushSync: (opts && opts.flushSync) === true,
+      },
+    );
   }
   function setFetcherError(key, routeId, error, opts) {
     if (opts === void 0) {
@@ -3822,14 +4625,17 @@ function createRouter(init) {
     }
     let boundaryMatch = findNearestBoundary(state.matches, routeId);
     deleteFetcher(key);
-    updateState({
-      errors: {
-        [boundaryMatch.route.id]: error
+    updateState(
+      {
+        errors: {
+          [boundaryMatch.route.id]: error,
+        },
+        fetchers: new Map(state.fetchers),
       },
-      fetchers: new Map(state.fetchers)
-    }, {
-      flushSync: (opts && opts.flushSync) === true
-    });
+      {
+        flushSync: (opts && opts.flushSync) === true,
+      },
+    );
   }
   function getFetcher(key) {
     if (future.v7_fetcherPersist) {
@@ -3842,7 +4648,10 @@ function createRouter(init) {
   }
   function deleteFetcher(key) {
     let fetcher = state.fetchers.get(key);
-    if (fetchControllers.has(key) && !(fetcher && fetcher.state === "loading" && fetchReloadIds.has(key))) {
+    if (
+      fetchControllers.has(key) &&
+      !(fetcher && fetcher.state === "loading" && fetchReloadIds.has(key))
+    ) {
       abortFetcher(key);
     }
     fetchLoadMatches.delete(key);
@@ -3864,7 +4673,7 @@ function createRouter(init) {
       deleteFetcher(key);
     }
     updateState({
-      fetchers: new Map(state.fetchers)
+      fetchers: new Map(state.fetchers),
     });
   }
   function abortFetcher(key) {
@@ -3924,19 +4733,25 @@ function createRouter(init) {
   }
   function updateBlocker(key, newBlocker) {
     let blocker = state.blockers.get(key) || IDLE_BLOCKER;
-    invariant(blocker.state === "unblocked" && newBlocker.state === "blocked" || blocker.state === "blocked" && newBlocker.state === "blocked" || blocker.state === "blocked" && newBlocker.state === "proceeding" || blocker.state === "blocked" && newBlocker.state === "unblocked" || blocker.state === "proceeding" && newBlocker.state === "unblocked", "Invalid blocker state transition: " + blocker.state + " -> " + newBlocker.state);
+    invariant(
+      (blocker.state === "unblocked" && newBlocker.state === "blocked") ||
+        (blocker.state === "blocked" && newBlocker.state === "blocked") ||
+        (blocker.state === "blocked" && newBlocker.state === "proceeding") ||
+        (blocker.state === "blocked" && newBlocker.state === "unblocked") ||
+        (blocker.state === "proceeding" && newBlocker.state === "unblocked"),
+      "Invalid blocker state transition: " +
+        blocker.state +
+        " -> " +
+        newBlocker.state,
+    );
     let blockers = new Map(state.blockers);
     blockers.set(key, newBlocker);
     updateState({
-      blockers
+      blockers,
     });
   }
   function shouldBlockNavigation(_ref2) {
-    let {
-      currentLocation,
-      nextLocation,
-      historyAction
-    } = _ref2;
+    let { currentLocation, nextLocation, historyAction } = _ref2;
     if (blockerFunctions.size === 0) {
       return;
     }
@@ -3949,11 +4764,13 @@ function createRouter(init) {
     if (blocker && blocker.state === "proceeding") {
       return;
     }
-    if (blockerFunction({
-      currentLocation,
-      nextLocation,
-      historyAction
-    })) {
+    if (
+      blockerFunction({
+        currentLocation,
+        nextLocation,
+        historyAction,
+      })
+    ) {
       return blockerKey;
     }
   }
@@ -3977,7 +4794,7 @@ function createRouter(init) {
       let y2 = getSavedScrollPosition(state.location, state.matches);
       if (y2 != null) {
         updateState({
-          restoreScrollPosition: y2
+          restoreScrollPosition: y2,
         });
       }
     }
@@ -3989,7 +4806,10 @@ function createRouter(init) {
   }
   function getScrollKey(location, matches) {
     if (getScrollRestorationKey) {
-      let key = getScrollRestorationKey(location, matches.map((m) => convertRouteMatchToUiMatch(m, state.loaderData)));
+      let key = getScrollRestorationKey(
+        location,
+        matches.map((m) => convertRouteMatchToUiMatch(m, state.loaderData)),
+      );
       return key || location.key;
     }
     return location.key;
@@ -4012,7 +4832,12 @@ function createRouter(init) {
   }
   function _internalSetRoutes(newRoutes) {
     manifest = {};
-    inFlightDataRoutes = convertRoutesToDataRoutes(newRoutes, mapRouteProperties, void 0, manifest);
+    inFlightDataRoutes = convertRoutesToDataRoutes(
+      newRoutes,
+      mapRouteProperties,
+      void 0,
+      manifest,
+    );
   }
   router = {
     get basename() {
@@ -4046,12 +4871,15 @@ function createRouter(init) {
     _internalActiveDeferreds: activeDeferreds,
     // TODO: Remove setRoutes, it's temporary to avoid dealing with
     // updating the tree while validating the update algorithm.
-    _internalSetRoutes
+    _internalSetRoutes,
   };
   return router;
 }
 function createStaticHandler(routes2, opts) {
-  invariant(routes2.length > 0, "You must provide a non-empty routes array to createStaticHandler");
+  invariant(
+    routes2.length > 0,
+    "You must provide a non-empty routes array to createStaticHandler",
+  );
   let manifest = {};
   let basename = (opts ? opts.basename : null) || "/";
   let mapRouteProperties;
@@ -4060,28 +4888,29 @@ function createStaticHandler(routes2, opts) {
   } else if (opts != null && opts.detectErrorBoundary) {
     let detectErrorBoundary = opts.detectErrorBoundary;
     mapRouteProperties = (route) => ({
-      hasErrorBoundary: detectErrorBoundary(route)
+      hasErrorBoundary: detectErrorBoundary(route),
     });
   } else {
     mapRouteProperties = defaultMapRouteProperties;
   }
-  let dataRoutes = convertRoutesToDataRoutes(routes2, mapRouteProperties, void 0, manifest);
+  let dataRoutes = convertRoutesToDataRoutes(
+    routes2,
+    mapRouteProperties,
+    void 0,
+    manifest,
+  );
   async function query(request, _temp3) {
-    let {
-      requestContext
-    } = _temp3 === void 0 ? {} : _temp3;
+    let { requestContext } = _temp3 === void 0 ? {} : _temp3;
     let url = new URL(request.url);
     let method = request.method;
     let location = createLocation("", createPath(url), null, "default");
     let matches = matchRoutes(dataRoutes, location, basename);
     if (!isValidMethod(method) && method !== "HEAD") {
       let error = getInternalRouterError(405, {
-        method
+        method,
       });
-      let {
-        matches: methodNotAllowedMatches,
-        route
-      } = getShortCircuitMatches(dataRoutes);
+      let { matches: methodNotAllowedMatches, route } =
+        getShortCircuitMatches(dataRoutes);
       return {
         basename,
         location,
@@ -4089,21 +4918,19 @@ function createStaticHandler(routes2, opts) {
         loaderData: {},
         actionData: null,
         errors: {
-          [route.id]: error
+          [route.id]: error,
         },
         statusCode: error.status,
         loaderHeaders: {},
         actionHeaders: {},
-        activeDeferreds: null
+        activeDeferreds: null,
       };
     } else if (!matches) {
       let error = getInternalRouterError(404, {
-        pathname: location.pathname
+        pathname: location.pathname,
       });
-      let {
-        matches: notFoundMatches,
-        route
-      } = getShortCircuitMatches(dataRoutes);
+      let { matches: notFoundMatches, route } =
+        getShortCircuitMatches(dataRoutes);
       return {
         basename,
         location,
@@ -4111,53 +4938,61 @@ function createStaticHandler(routes2, opts) {
         loaderData: {},
         actionData: null,
         errors: {
-          [route.id]: error
+          [route.id]: error,
         },
         statusCode: error.status,
         loaderHeaders: {},
         actionHeaders: {},
-        activeDeferreds: null
+        activeDeferreds: null,
       };
     }
     let result = await queryImpl(request, location, matches, requestContext);
     if (isResponse(result)) {
       return result;
     }
-    return _extends({
-      location,
-      basename
-    }, result);
+    return _extends(
+      {
+        location,
+        basename,
+      },
+      result,
+    );
   }
   async function queryRoute(request, _temp4) {
-    let {
-      routeId,
-      requestContext
-    } = _temp4 === void 0 ? {} : _temp4;
+    let { routeId, requestContext } = _temp4 === void 0 ? {} : _temp4;
     let url = new URL(request.url);
     let method = request.method;
     let location = createLocation("", createPath(url), null, "default");
     let matches = matchRoutes(dataRoutes, location, basename);
     if (!isValidMethod(method) && method !== "HEAD" && method !== "OPTIONS") {
       throw getInternalRouterError(405, {
-        method
+        method,
       });
     } else if (!matches) {
       throw getInternalRouterError(404, {
-        pathname: location.pathname
+        pathname: location.pathname,
       });
     }
-    let match = routeId ? matches.find((m) => m.route.id === routeId) : getTargetMatch(matches, location);
+    let match = routeId
+      ? matches.find((m) => m.route.id === routeId)
+      : getTargetMatch(matches, location);
     if (routeId && !match) {
       throw getInternalRouterError(403, {
         pathname: location.pathname,
-        routeId
+        routeId,
       });
     } else if (!match) {
       throw getInternalRouterError(404, {
-        pathname: location.pathname
+        pathname: location.pathname,
       });
     }
-    let result = await queryImpl(request, location, matches, requestContext, match);
+    let result = await queryImpl(
+      request,
+      location,
+      matches,
+      requestContext,
+      match,
+    );
     if (isResponse(result)) {
       return result;
     }
@@ -4171,25 +5006,50 @@ function createStaticHandler(routes2, opts) {
     if (result.loaderData) {
       var _result$activeDeferre;
       let data = Object.values(result.loaderData)[0];
-      if ((_result$activeDeferre = result.activeDeferreds) != null && _result$activeDeferre[match.route.id]) {
+      if (
+        (_result$activeDeferre = result.activeDeferreds) != null &&
+        _result$activeDeferre[match.route.id]
+      ) {
         data[UNSAFE_DEFERRED_SYMBOL] = result.activeDeferreds[match.route.id];
       }
       return data;
     }
     return void 0;
   }
-  async function queryImpl(request, location, matches, requestContext, routeMatch) {
-    invariant(request.signal, "query()/queryRoute() requests must contain an AbortController signal");
+  async function queryImpl(
+    request,
+    location,
+    matches,
+    requestContext,
+    routeMatch,
+  ) {
+    invariant(
+      request.signal,
+      "query()/queryRoute() requests must contain an AbortController signal",
+    );
     try {
       if (isMutationMethod(request.method.toLowerCase())) {
-        let result2 = await submit(request, matches, routeMatch || getTargetMatch(matches, location), requestContext, routeMatch != null);
+        let result2 = await submit(
+          request,
+          matches,
+          routeMatch || getTargetMatch(matches, location),
+          requestContext,
+          routeMatch != null,
+        );
         return result2;
       }
-      let result = await loadRouteData(request, matches, requestContext, routeMatch);
-      return isResponse(result) ? result : _extends({}, result, {
-        actionData: null,
-        actionHeaders: {}
-      });
+      let result = await loadRouteData(
+        request,
+        matches,
+        requestContext,
+        routeMatch,
+      );
+      return isResponse(result)
+        ? result
+        : _extends({}, result, {
+            actionData: null,
+            actionHeaders: {},
+          });
     } catch (e) {
       if (isQueryRouteResponse(e)) {
         if (e.type === ResultType.error) {
@@ -4203,50 +5063,67 @@ function createStaticHandler(routes2, opts) {
       throw e;
     }
   }
-  async function submit(request, matches, actionMatch, requestContext, isRouteRequest) {
+  async function submit(
+    request,
+    matches,
+    actionMatch,
+    requestContext,
+    isRouteRequest,
+  ) {
     let result;
     if (!actionMatch.route.action && !actionMatch.route.lazy) {
       let error = getInternalRouterError(405, {
         method: request.method,
         pathname: new URL(request.url).pathname,
-        routeId: actionMatch.route.id
+        routeId: actionMatch.route.id,
       });
       if (isRouteRequest) {
         throw error;
       }
       result = {
         type: ResultType.error,
-        error
+        error,
       };
     } else {
-      result = await callLoaderOrAction("action", request, actionMatch, matches, manifest, mapRouteProperties, basename, {
-        isStaticRequest: true,
-        isRouteRequest,
-        requestContext
-      });
+      result = await callLoaderOrAction(
+        "action",
+        request,
+        actionMatch,
+        matches,
+        manifest,
+        mapRouteProperties,
+        basename,
+        {
+          isStaticRequest: true,
+          isRouteRequest,
+          requestContext,
+        },
+      );
       if (request.signal.aborted) {
         let method = isRouteRequest ? "queryRoute" : "query";
-        throw new Error(method + "() call aborted: " + request.method + " " + request.url);
+        throw new Error(
+          method + "() call aborted: " + request.method + " " + request.url,
+        );
       }
     }
     if (isRedirectResult(result)) {
       throw new Response(null, {
         status: result.status,
         headers: {
-          Location: result.location
-        }
+          Location: result.location,
+        },
       });
     }
     if (isDeferredResult(result)) {
       let error = getInternalRouterError(400, {
-        type: "defer-action"
+        type: "defer-action",
       });
       if (isRouteRequest) {
         throw error;
       }
       result = {
         type: ResultType.error,
-        error
+        error,
       };
     }
     if (isRouteRequest) {
@@ -4257,7 +5134,7 @@ function createStaticHandler(routes2, opts) {
         matches: [actionMatch],
         loaderData: {},
         actionData: {
-          [actionMatch.route.id]: result.data
+          [actionMatch.route.id]: result.data,
         },
         errors: null,
         // Note: statusCode + headers are unused here since queryRoute will
@@ -4265,74 +5142,141 @@ function createStaticHandler(routes2, opts) {
         statusCode: 200,
         loaderHeaders: {},
         actionHeaders: {},
-        activeDeferreds: null
+        activeDeferreds: null,
       };
     }
     if (isErrorResult(result)) {
       let boundaryMatch = findNearestBoundary(matches, actionMatch.route.id);
-      let context2 = await loadRouteData(request, matches, requestContext, void 0, {
-        [boundaryMatch.route.id]: result.error
-      });
+      let context2 = await loadRouteData(
+        request,
+        matches,
+        requestContext,
+        void 0,
+        {
+          [boundaryMatch.route.id]: result.error,
+        },
+      );
       return _extends({}, context2, {
-        statusCode: isRouteErrorResponse(result.error) ? result.error.status : 500,
+        statusCode: isRouteErrorResponse(result.error)
+          ? result.error.status
+          : 500,
         actionData: null,
-        actionHeaders: _extends({}, result.headers ? {
-          [actionMatch.route.id]: result.headers
-        } : {})
+        actionHeaders: _extends(
+          {},
+          result.headers
+            ? {
+                [actionMatch.route.id]: result.headers,
+              }
+            : {},
+        ),
       });
     }
     let loaderRequest = new Request(request.url, {
       headers: request.headers,
       redirect: request.redirect,
-      signal: request.signal
+      signal: request.signal,
     });
     let context = await loadRouteData(loaderRequest, matches, requestContext);
-    return _extends({}, context, result.statusCode ? {
-      statusCode: result.statusCode
-    } : {}, {
-      actionData: {
-        [actionMatch.route.id]: result.data
+    return _extends(
+      {},
+      context,
+      result.statusCode
+        ? {
+            statusCode: result.statusCode,
+          }
+        : {},
+      {
+        actionData: {
+          [actionMatch.route.id]: result.data,
+        },
+        actionHeaders: _extends(
+          {},
+          result.headers
+            ? {
+                [actionMatch.route.id]: result.headers,
+              }
+            : {},
+        ),
       },
-      actionHeaders: _extends({}, result.headers ? {
-        [actionMatch.route.id]: result.headers
-      } : {})
-    });
+    );
   }
-  async function loadRouteData(request, matches, requestContext, routeMatch, pendingActionError) {
+  async function loadRouteData(
+    request,
+    matches,
+    requestContext,
+    routeMatch,
+    pendingActionError,
+  ) {
     let isRouteRequest = routeMatch != null;
-    if (isRouteRequest && !(routeMatch != null && routeMatch.route.loader) && !(routeMatch != null && routeMatch.route.lazy)) {
+    if (
+      isRouteRequest &&
+      !(routeMatch != null && routeMatch.route.loader) &&
+      !(routeMatch != null && routeMatch.route.lazy)
+    ) {
       throw getInternalRouterError(400, {
         method: request.method,
         pathname: new URL(request.url).pathname,
-        routeId: routeMatch == null ? void 0 : routeMatch.route.id
+        routeId: routeMatch == null ? void 0 : routeMatch.route.id,
       });
     }
-    let requestMatches = routeMatch ? [routeMatch] : getLoaderMatchesUntilBoundary(matches, Object.keys(pendingActionError || {})[0]);
-    let matchesToLoad = requestMatches.filter((m) => m.route.loader || m.route.lazy);
+    let requestMatches = routeMatch
+      ? [routeMatch]
+      : getLoaderMatchesUntilBoundary(
+          matches,
+          Object.keys(pendingActionError || {})[0],
+        );
+    let matchesToLoad = requestMatches.filter(
+      (m) => m.route.loader || m.route.lazy,
+    );
     if (matchesToLoad.length === 0) {
       return {
         matches,
         // Add a null for all matched routes for proper revalidation on the client
-        loaderData: matches.reduce((acc, m) => Object.assign(acc, {
-          [m.route.id]: null
-        }), {}),
+        loaderData: matches.reduce(
+          (acc, m) =>
+            Object.assign(acc, {
+              [m.route.id]: null,
+            }),
+          {},
+        ),
         errors: pendingActionError || null,
         statusCode: 200,
         loaderHeaders: {},
-        activeDeferreds: null
+        activeDeferreds: null,
       };
     }
-    let results = await Promise.all([...matchesToLoad.map((match) => callLoaderOrAction("loader", request, match, matches, manifest, mapRouteProperties, basename, {
-      isStaticRequest: true,
-      isRouteRequest,
-      requestContext
-    }))]);
+    let results = await Promise.all([
+      ...matchesToLoad.map((match) =>
+        callLoaderOrAction(
+          "loader",
+          request,
+          match,
+          matches,
+          manifest,
+          mapRouteProperties,
+          basename,
+          {
+            isStaticRequest: true,
+            isRouteRequest,
+            requestContext,
+          },
+        ),
+      ),
+    ]);
     if (request.signal.aborted) {
       let method = isRouteRequest ? "queryRoute" : "query";
-      throw new Error(method + "() call aborted: " + request.method + " " + request.url);
+      throw new Error(
+        method + "() call aborted: " + request.method + " " + request.url,
+      );
     }
     let activeDeferreds = /* @__PURE__ */ new Map();
-    let context = processRouteLoaderData(matches, matchesToLoad, results, pendingActionError, activeDeferreds);
+    let context = processRouteLoaderData(
+      matches,
+      matchesToLoad,
+      results,
+      pendingActionError,
+      activeDeferreds,
+    );
     let executedLoaders = new Set(matchesToLoad.map((match) => match.route.id));
     matches.forEach((match) => {
       if (!executedLoaders.has(match.route.id)) {
@@ -4341,28 +5285,43 @@ function createStaticHandler(routes2, opts) {
     });
     return _extends({}, context, {
       matches,
-      activeDeferreds: activeDeferreds.size > 0 ? Object.fromEntries(activeDeferreds.entries()) : null
+      activeDeferreds:
+        activeDeferreds.size > 0
+          ? Object.fromEntries(activeDeferreds.entries())
+          : null,
     });
   }
   return {
     dataRoutes,
     query,
-    queryRoute
+    queryRoute,
   };
 }
 function getStaticContextFromError(routes2, context, error) {
   let newContext = _extends({}, context, {
     statusCode: 500,
     errors: {
-      [context._deepestRenderedBoundaryId || routes2[0].id]: error
-    }
+      [context._deepestRenderedBoundaryId || routes2[0].id]: error,
+    },
   });
   return newContext;
 }
 function isSubmissionNavigation(opts) {
-  return opts != null && ("formData" in opts && opts.formData != null || "body" in opts && opts.body !== void 0);
+  return (
+    opts != null &&
+    (("formData" in opts && opts.formData != null) ||
+      ("body" in opts && opts.body !== void 0))
+  );
 }
-function normalizeTo(location, matches, basename, prependBasename, to, fromRouteId, relative) {
+function normalizeTo(
+  location,
+  matches,
+  basename,
+  prependBasename,
+  to,
+  fromRouteId,
+  relative,
+) {
   let contextualMatches;
   let activeRouteMatch;
   if (fromRouteId) {
@@ -4378,54 +5337,73 @@ function normalizeTo(location, matches, basename, prependBasename, to, fromRoute
     contextualMatches = matches;
     activeRouteMatch = matches[matches.length - 1];
   }
-  let path = resolveTo(to ? to : ".", getPathContributingMatches(contextualMatches).map((m) => m.pathnameBase), stripBasename(location.pathname, basename) || location.pathname, relative === "path");
+  let path = resolveTo(
+    to ? to : ".",
+    getPathContributingMatches(contextualMatches).map((m) => m.pathnameBase),
+    stripBasename(location.pathname, basename) || location.pathname,
+    relative === "path",
+  );
   if (to == null) {
     path.search = location.search;
     path.hash = location.hash;
   }
-  if ((to == null || to === "" || to === ".") && activeRouteMatch && activeRouteMatch.route.index && !hasNakedIndexQuery(path.search)) {
-    path.search = path.search ? path.search.replace(/^\?/, "?index&") : "?index";
+  if (
+    (to == null || to === "" || to === ".") &&
+    activeRouteMatch &&
+    activeRouteMatch.route.index &&
+    !hasNakedIndexQuery(path.search)
+  ) {
+    path.search = path.search
+      ? path.search.replace(/^\?/, "?index&")
+      : "?index";
   }
   if (prependBasename && basename !== "/") {
-    path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
+    path.pathname =
+      path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
   }
   return createPath(path);
 }
 function normalizeNavigateOptions(normalizeFormMethod, isFetcher, path, opts) {
   if (!opts || !isSubmissionNavigation(opts)) {
     return {
-      path
+      path,
     };
   }
   if (opts.formMethod && !isValidMethod(opts.formMethod)) {
     return {
       path,
       error: getInternalRouterError(405, {
-        method: opts.formMethod
-      })
+        method: opts.formMethod,
+      }),
     };
   }
   let getInvalidBodyError = () => ({
     path,
     error: getInternalRouterError(400, {
-      type: "invalid-body"
-    })
+      type: "invalid-body",
+    }),
   });
   let rawFormMethod = opts.formMethod || "get";
-  let formMethod = normalizeFormMethod ? rawFormMethod.toUpperCase() : rawFormMethod.toLowerCase();
+  let formMethod = normalizeFormMethod
+    ? rawFormMethod.toUpperCase()
+    : rawFormMethod.toLowerCase();
   let formAction = stripHashFromPath(path);
   if (opts.body !== void 0) {
     if (opts.formEncType === "text/plain") {
       if (!isMutationMethod(formMethod)) {
         return getInvalidBodyError();
       }
-      let text = typeof opts.body === "string" ? opts.body : opts.body instanceof FormData || opts.body instanceof URLSearchParams ? (
-        // https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#plain-text-form-data
-        Array.from(opts.body.entries()).reduce((acc, _ref3) => {
-          let [name, value] = _ref3;
-          return "" + acc + name + "=" + value + "\n";
-        }, "")
-      ) : String(opts.body);
+      let text =
+        typeof opts.body === "string"
+          ? opts.body
+          : opts.body instanceof FormData ||
+              opts.body instanceof URLSearchParams
+            ? // https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#plain-text-form-data
+              Array.from(opts.body.entries()).reduce((acc, _ref3) => {
+                let [name, value] = _ref3;
+                return "" + acc + name + "=" + value + "\n";
+              }, "")
+            : String(opts.body);
       return {
         path,
         submission: {
@@ -4434,15 +5412,16 @@ function normalizeNavigateOptions(normalizeFormMethod, isFetcher, path, opts) {
           formEncType: opts.formEncType,
           formData: void 0,
           json: void 0,
-          text
-        }
+          text,
+        },
       };
     } else if (opts.formEncType === "application/json") {
       if (!isMutationMethod(formMethod)) {
         return getInvalidBodyError();
       }
       try {
-        let json5 = typeof opts.body === "string" ? JSON.parse(opts.body) : opts.body;
+        let json5 =
+          typeof opts.body === "string" ? JSON.parse(opts.body) : opts.body;
         return {
           path,
           submission: {
@@ -4451,15 +5430,18 @@ function normalizeNavigateOptions(normalizeFormMethod, isFetcher, path, opts) {
             formEncType: opts.formEncType,
             formData: void 0,
             json: json5,
-            text: void 0
-          }
+            text: void 0,
+          },
         };
       } catch (e) {
         return getInvalidBodyError();
       }
     }
   }
-  invariant(typeof FormData === "function", "FormData is not available in this environment");
+  invariant(
+    typeof FormData === "function",
+    "FormData is not available in this environment",
+  );
   let searchParams;
   let formData;
   if (opts.formData) {
@@ -4485,15 +5467,16 @@ function normalizeNavigateOptions(normalizeFormMethod, isFetcher, path, opts) {
   let submission = {
     formMethod,
     formAction,
-    formEncType: opts && opts.formEncType || "application/x-www-form-urlencoded",
+    formEncType:
+      (opts && opts.formEncType) || "application/x-www-form-urlencoded",
     formData,
     json: void 0,
-    text: void 0
+    text: void 0,
   };
   if (isMutationMethod(submission.formMethod)) {
     return {
       path,
-      submission
+      submission,
     };
   }
   let parsedPath = parsePath(path);
@@ -4503,7 +5486,7 @@ function normalizeNavigateOptions(normalizeFormMethod, isFetcher, path, opts) {
   parsedPath.search = "?" + searchParams;
   return {
     path: createPath(parsedPath),
-    submission
+    submission,
   };
 }
 function getLoaderMatchesUntilBoundary(matches, boundaryId) {
@@ -4516,8 +5499,27 @@ function getLoaderMatchesUntilBoundary(matches, boundaryId) {
   }
   return boundaryMatches;
 }
-function getMatchesToLoad(history, state, matches, submission, location, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionData, pendingError) {
-  let actionResult = pendingError ? Object.values(pendingError)[0] : pendingActionData ? Object.values(pendingActionData)[0] : void 0;
+function getMatchesToLoad(
+  history,
+  state,
+  matches,
+  submission,
+  location,
+  isRevalidationRequired,
+  cancelledDeferredRoutes,
+  cancelledFetcherLoads,
+  fetchLoadMatches,
+  fetchRedirectIds,
+  routesToUse,
+  basename,
+  pendingActionData,
+  pendingError,
+) {
+  let actionResult = pendingError
+    ? Object.values(pendingError)[0]
+    : pendingActionData
+      ? Object.values(pendingActionData)[0]
+      : void 0;
   let currentUrl = history.createURL(state.location);
   let nextUrl = history.createURL(location);
   let boundaryId = pendingError ? Object.keys(pendingError)[0] : void 0;
@@ -4529,25 +5531,36 @@ function getMatchesToLoad(history, state, matches, submission, location, isReval
     if (match.route.loader == null) {
       return false;
     }
-    if (isNewLoader(state.loaderData, state.matches[index], match) || cancelledDeferredRoutes.some((id) => id === match.route.id)) {
+    if (
+      isNewLoader(state.loaderData, state.matches[index], match) ||
+      cancelledDeferredRoutes.some((id) => id === match.route.id)
+    ) {
       return true;
     }
     let currentRouteMatch = state.matches[index];
     let nextRouteMatch = match;
-    return shouldRevalidateLoader(match, _extends({
-      currentUrl,
-      currentParams: currentRouteMatch.params,
-      nextUrl,
-      nextParams: nextRouteMatch.params
-    }, submission, {
-      actionResult,
-      defaultShouldRevalidate: (
-        // Forced revalidation due to submission, useRevalidator, or X-Remix-Revalidate
-        isRevalidationRequired || // Clicked the same link, resubmitted a GET form
-        currentUrl.pathname + currentUrl.search === nextUrl.pathname + nextUrl.search || // Search params affect all loaders
-        currentUrl.search !== nextUrl.search || isNewRouteInstance(currentRouteMatch, nextRouteMatch)
-      )
-    }));
+    return shouldRevalidateLoader(
+      match,
+      _extends(
+        {
+          currentUrl,
+          currentParams: currentRouteMatch.params,
+          nextUrl,
+          nextParams: nextRouteMatch.params,
+        },
+        submission,
+        {
+          actionResult,
+          defaultShouldRevalidate:
+            // Forced revalidation due to submission, useRevalidator, or X-Remix-Revalidate
+            isRevalidationRequired || // Clicked the same link, resubmitted a GET form
+            currentUrl.pathname + currentUrl.search ===
+              nextUrl.pathname + nextUrl.search || // Search params affect all loaders
+            currentUrl.search !== nextUrl.search ||
+            isNewRouteInstance(currentRouteMatch, nextRouteMatch),
+        },
+      ),
+    );
   });
   let revalidatingFetchers = [];
   fetchLoadMatches.forEach((f2, key) => {
@@ -4562,7 +5575,7 @@ function getMatchesToLoad(history, state, matches, submission, location, isReval
         path: f2.path,
         matches: null,
         match: null,
-        controller: null
+        controller: null,
       });
       return;
     }
@@ -4576,15 +5589,22 @@ function getMatchesToLoad(history, state, matches, submission, location, isReval
     } else if (fetcher && fetcher.state !== "idle" && fetcher.data === void 0) {
       shouldRevalidate = isRevalidationRequired;
     } else {
-      shouldRevalidate = shouldRevalidateLoader(fetcherMatch, _extends({
-        currentUrl,
-        currentParams: state.matches[state.matches.length - 1].params,
-        nextUrl,
-        nextParams: matches[matches.length - 1].params
-      }, submission, {
-        actionResult,
-        defaultShouldRevalidate: isRevalidationRequired
-      }));
+      shouldRevalidate = shouldRevalidateLoader(
+        fetcherMatch,
+        _extends(
+          {
+            currentUrl,
+            currentParams: state.matches[state.matches.length - 1].params,
+            nextUrl,
+            nextParams: matches[matches.length - 1].params,
+          },
+          submission,
+          {
+            actionResult,
+            defaultShouldRevalidate: isRevalidationRequired,
+          },
+        ),
+      );
     }
     if (shouldRevalidate) {
       revalidatingFetchers.push({
@@ -4593,18 +5613,17 @@ function getMatchesToLoad(history, state, matches, submission, location, isReval
         path: f2.path,
         matches: fetcherMatches,
         match: fetcherMatch,
-        controller: new AbortController()
+        controller: new AbortController(),
       });
     }
   });
   return [navigationMatches, revalidatingFetchers];
 }
 function isNewLoader(currentLoaderData, currentMatch, match) {
-  let isNew = (
+  let isNew =
     // [a] -> [a, b]
     !currentMatch || // [a, b] -> [a, c]
-    match.route.id !== currentMatch.route.id
-  );
+    match.route.id !== currentMatch.route.id;
   let isMissingData = currentLoaderData[match.route.id] === void 0;
   return isNew || isMissingData;
 }
@@ -4614,7 +5633,9 @@ function isNewRouteInstance(currentMatch, match) {
     // param change for this match, /users/123 -> /users/456
     currentMatch.pathname !== match.pathname || // splat param changed, which is not present in match.path
     // e.g. /files/images/avatar.jpg -> files/finances.xls
-    currentPath != null && currentPath.endsWith("*") && currentMatch.params["*"] !== match.params["*"]
+    (currentPath != null &&
+      currentPath.endsWith("*") &&
+      currentMatch.params["*"] !== match.params["*"])
   );
 }
 function shouldRevalidateLoader(loaderMatch, arg) {
@@ -4639,20 +5660,46 @@ async function loadLazyRouteModule(route, mapRouteProperties, manifest) {
   let routeUpdates = {};
   for (let lazyRouteProperty in lazyRoute) {
     let staticRouteValue = routeToUpdate[lazyRouteProperty];
-    let isPropertyStaticallyDefined = staticRouteValue !== void 0 && // This property isn't static since it should always be updated based
-    // on the route updates
-    lazyRouteProperty !== "hasErrorBoundary";
-    warning(!isPropertyStaticallyDefined, 'Route "' + routeToUpdate.id + '" has a static property "' + lazyRouteProperty + '" defined but its lazy function is also returning a value for this property. ' + ('The lazy route property "' + lazyRouteProperty + '" will be ignored.'));
-    if (!isPropertyStaticallyDefined && !immutableRouteKeys.has(lazyRouteProperty)) {
+    let isPropertyStaticallyDefined =
+      staticRouteValue !== void 0 && // This property isn't static since it should always be updated based
+      // on the route updates
+      lazyRouteProperty !== "hasErrorBoundary";
+    warning(
+      !isPropertyStaticallyDefined,
+      'Route "' +
+        routeToUpdate.id +
+        '" has a static property "' +
+        lazyRouteProperty +
+        '" defined but its lazy function is also returning a value for this property. ' +
+        ('The lazy route property "' +
+          lazyRouteProperty +
+          '" will be ignored.'),
+    );
+    if (
+      !isPropertyStaticallyDefined &&
+      !immutableRouteKeys.has(lazyRouteProperty)
+    ) {
       routeUpdates[lazyRouteProperty] = lazyRoute[lazyRouteProperty];
     }
   }
   Object.assign(routeToUpdate, routeUpdates);
-  Object.assign(routeToUpdate, _extends({}, mapRouteProperties(routeToUpdate), {
-    lazy: void 0
-  }));
+  Object.assign(
+    routeToUpdate,
+    _extends({}, mapRouteProperties(routeToUpdate), {
+      lazy: void 0,
+    }),
+  );
 }
-async function callLoaderOrAction(type, request, match, matches, manifest, mapRouteProperties, basename, opts) {
+async function callLoaderOrAction(
+  type,
+  request,
+  match,
+  matches,
+  manifest,
+  mapRouteProperties,
+  basename,
+  opts,
+) {
   if (opts === void 0) {
     opts = {};
   }
@@ -4661,14 +5708,17 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
   let onReject;
   let runHandler = (handler2) => {
     let reject;
-    let abortPromise = new Promise((_, r) => reject = r);
+    let abortPromise = new Promise((_, r) => (reject = r));
     onReject = () => reject();
     request.signal.addEventListener("abort", onReject);
-    return Promise.race([handler2({
-      request,
-      params: match.params,
-      context: opts.requestContext
-    }), abortPromise]);
+    return Promise.race([
+      handler2({
+        request,
+        params: match.params,
+        context: opts.requestContext,
+      }),
+      abortPromise,
+    ]);
   };
   try {
     let handler2 = match.route[type];
@@ -4682,7 +5732,7 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
           runHandler(handler2).catch((e) => {
             handlerError = e;
           }),
-          loadLazyRouteModule(match.route, mapRouteProperties, manifest)
+          loadLazyRouteModule(match.route, mapRouteProperties, manifest),
         ]);
         if (handlerError) {
           throw handlerError;
@@ -4699,12 +5749,12 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
           throw getInternalRouterError(405, {
             method: request.method,
             pathname,
-            routeId: match.route.id
+            routeId: match.route.id,
           });
         } else {
           return {
             type: ResultType.data,
-            data: void 0
+            data: void 0,
           };
         }
       }
@@ -4712,12 +5762,23 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
       let url = new URL(request.url);
       let pathname = url.pathname + url.search;
       throw getInternalRouterError(404, {
-        pathname
+        pathname,
       });
     } else {
       result = await runHandler(handler2);
     }
-    invariant(result !== void 0, "You defined " + (type === "action" ? "an action" : "a loader") + " for route " + ('"' + match.route.id + "\" but didn't return anything from your `" + type + "` ") + "function. Please return a value or `null`.");
+    invariant(
+      result !== void 0,
+      "You defined " +
+        (type === "action" ? "an action" : "a loader") +
+        " for route " +
+        ('"' +
+          match.route.id +
+          "\" but didn't return anything from your `" +
+          type +
+          "` ") +
+        "function. Please return a value or `null`.",
+    );
   } catch (e) {
     resultType = ResultType.error;
     result = e;
@@ -4730,12 +5791,23 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
     let status = result.status;
     if (redirectStatusCodes.has(status)) {
       let location = result.headers.get("Location");
-      invariant(location, "Redirects returned/thrown from loaders/actions must have a Location header");
+      invariant(
+        location,
+        "Redirects returned/thrown from loaders/actions must have a Location header",
+      );
       if (!ABSOLUTE_URL_REGEX.test(location)) {
-        location = normalizeTo(new URL(request.url), matches.slice(0, matches.indexOf(match) + 1), basename, true, location);
+        location = normalizeTo(
+          new URL(request.url),
+          matches.slice(0, matches.indexOf(match) + 1),
+          basename,
+          true,
+          location,
+        );
       } else if (!opts.isStaticRequest) {
         let currentUrl = new URL(request.url);
-        let url = location.startsWith("//") ? new URL(currentUrl.protocol + location) : new URL(location);
+        let url = location.startsWith("//")
+          ? new URL(currentUrl.protocol + location)
+          : new URL(location);
         let isSameBasename = stripBasename(url.pathname, basename) != null;
         if (url.origin === currentUrl.origin && isSameBasename) {
           location = url.pathname + url.search + url.hash;
@@ -4750,13 +5822,14 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
         status,
         location,
         revalidate: result.headers.get("X-Remix-Revalidate") !== null,
-        reloadDocument: result.headers.get("X-Remix-Reload-Document") !== null
+        reloadDocument: result.headers.get("X-Remix-Reload-Document") !== null,
       };
     }
     if (opts.isRouteRequest) {
       let queryRouteResponse = {
-        type: resultType === ResultType.error ? ResultType.error : ResultType.data,
-        response: result
+        type:
+          resultType === ResultType.error ? ResultType.error : ResultType.data,
+        response: result,
       };
       throw queryRouteResponse;
     }
@@ -4771,20 +5844,20 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
       return {
         type: resultType,
         error: new ErrorResponseImpl(status, result.statusText, data),
-        headers: result.headers
+        headers: result.headers,
       };
     }
     return {
       type: ResultType.data,
       data,
       statusCode: result.status,
-      headers: result.headers
+      headers: result.headers,
     };
   }
   if (resultType === ResultType.error) {
     return {
       type: resultType,
-      error: result
+      error: result,
     };
   }
   if (isDeferredData(result)) {
@@ -4792,34 +5865,38 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
     return {
       type: ResultType.deferred,
       deferredData: result,
-      statusCode: (_result$init = result.init) == null ? void 0 : _result$init.status,
-      headers: ((_result$init2 = result.init) == null ? void 0 : _result$init2.headers) && new Headers(result.init.headers)
+      statusCode:
+        (_result$init = result.init) == null ? void 0 : _result$init.status,
+      headers:
+        ((_result$init2 = result.init) == null
+          ? void 0
+          : _result$init2.headers) && new Headers(result.init.headers),
     };
   }
   return {
     type: ResultType.data,
-    data: result
+    data: result,
   };
 }
 function createClientSideRequest(history, location, signal, submission) {
   let url = history.createURL(stripHashFromPath(location)).toString();
   let init = {
-    signal
+    signal,
   };
   if (submission && isMutationMethod(submission.formMethod)) {
-    let {
-      formMethod,
-      formEncType
-    } = submission;
+    let { formMethod, formEncType } = submission;
     init.method = formMethod.toUpperCase();
     if (formEncType === "application/json") {
       init.headers = new Headers({
-        "Content-Type": formEncType
+        "Content-Type": formEncType,
       });
       init.body = JSON.stringify(submission.json);
     } else if (formEncType === "text/plain") {
       init.body = submission.text;
-    } else if (formEncType === "application/x-www-form-urlencoded" && submission.formData) {
+    } else if (
+      formEncType === "application/x-www-form-urlencoded" &&
+      submission.formData
+    ) {
       init.body = convertFormDataToSearchParams(submission.formData);
     } else {
       init.body = submission.formData;
@@ -4841,7 +5918,13 @@ function convertSearchParamsToFormData(searchParams) {
   }
   return formData;
 }
-function processRouteLoaderData(matches, matchesToLoad, results, pendingError, activeDeferreds) {
+function processRouteLoaderData(
+  matches,
+  matchesToLoad,
+  results,
+  pendingError,
+  activeDeferreds,
+) {
   let loaderData = {};
   let errors = null;
   let statusCode;
@@ -4849,7 +5932,10 @@ function processRouteLoaderData(matches, matchesToLoad, results, pendingError, a
   let loaderHeaders = {};
   results.forEach((result, index) => {
     let id = matchesToLoad[index].route.id;
-    invariant(!isRedirectResult(result), "Cannot handle redirect results in processLoaderData");
+    invariant(
+      !isRedirectResult(result),
+      "Cannot handle redirect results in processLoaderData",
+    );
     if (isErrorResult(result)) {
       let boundaryMatch = findNearestBoundary(matches, id);
       let error = result.error;
@@ -4864,7 +5950,9 @@ function processRouteLoaderData(matches, matchesToLoad, results, pendingError, a
       loaderData[id] = void 0;
       if (!foundError) {
         foundError = true;
-        statusCode = isRouteErrorResponse(result.error) ? result.error.status : 500;
+        statusCode = isRouteErrorResponse(result.error)
+          ? result.error.status
+          : 500;
       }
       if (result.headers) {
         loaderHeaders[id] = result.headers;
@@ -4876,7 +5964,11 @@ function processRouteLoaderData(matches, matchesToLoad, results, pendingError, a
       } else {
         loaderData[id] = result.data;
       }
-      if (result.statusCode != null && result.statusCode !== 200 && !foundError) {
+      if (
+        result.statusCode != null &&
+        result.statusCode !== 200 &&
+        !foundError
+      ) {
         statusCode = result.statusCode;
       }
       if (result.headers) {
@@ -4892,29 +5984,43 @@ function processRouteLoaderData(matches, matchesToLoad, results, pendingError, a
     loaderData,
     errors,
     statusCode: statusCode || 200,
-    loaderHeaders
+    loaderHeaders,
   };
 }
-function processLoaderData(state, matches, matchesToLoad, results, pendingError, revalidatingFetchers, fetcherResults, activeDeferreds) {
-  let {
-    loaderData,
-    errors
-  } = processRouteLoaderData(matches, matchesToLoad, results, pendingError, activeDeferreds);
+function processLoaderData(
+  state,
+  matches,
+  matchesToLoad,
+  results,
+  pendingError,
+  revalidatingFetchers,
+  fetcherResults,
+  activeDeferreds,
+) {
+  let { loaderData, errors } = processRouteLoaderData(
+    matches,
+    matchesToLoad,
+    results,
+    pendingError,
+    activeDeferreds,
+  );
   for (let index = 0; index < revalidatingFetchers.length; index++) {
-    let {
-      key,
-      match,
-      controller
-    } = revalidatingFetchers[index];
-    invariant(fetcherResults !== void 0 && fetcherResults[index] !== void 0, "Did not find corresponding fetcher result");
+    let { key, match, controller } = revalidatingFetchers[index];
+    invariant(
+      fetcherResults !== void 0 && fetcherResults[index] !== void 0,
+      "Did not find corresponding fetcher result",
+    );
     let result = fetcherResults[index];
     if (controller && controller.signal.aborted) {
       continue;
     } else if (isErrorResult(result)) {
-      let boundaryMatch = findNearestBoundary(state.matches, match == null ? void 0 : match.route.id);
+      let boundaryMatch = findNearestBoundary(
+        state.matches,
+        match == null ? void 0 : match.route.id,
+      );
       if (!(errors && errors[boundaryMatch.route.id])) {
         errors = _extends({}, errors, {
-          [boundaryMatch.route.id]: result.error
+          [boundaryMatch.route.id]: result.error,
         });
       }
       state.fetchers.delete(key);
@@ -4929,7 +6035,7 @@ function processLoaderData(state, matches, matchesToLoad, results, pendingError,
   }
   return {
     loaderData,
-    errors
+    errors,
   };
 }
 function mergeLoaderData(loaderData, newLoaderData, matches, errors) {
@@ -4950,36 +6056,48 @@ function mergeLoaderData(loaderData, newLoaderData, matches, errors) {
   return mergedLoaderData;
 }
 function findNearestBoundary(matches, routeId) {
-  let eligibleMatches = routeId ? matches.slice(0, matches.findIndex((m) => m.route.id === routeId) + 1) : [...matches];
-  return eligibleMatches.reverse().find((m) => m.route.hasErrorBoundary === true) || matches[0];
+  let eligibleMatches = routeId
+    ? matches.slice(0, matches.findIndex((m) => m.route.id === routeId) + 1)
+    : [...matches];
+  return (
+    eligibleMatches.reverse().find((m) => m.route.hasErrorBoundary === true) ||
+    matches[0]
+  );
 }
 function getShortCircuitMatches(routes2) {
-  let route = routes2.length === 1 ? routes2[0] : routes2.find((r) => r.index || !r.path || r.path === "/") || {
-    id: "__shim-error-route__"
-  };
+  let route =
+    routes2.length === 1
+      ? routes2[0]
+      : routes2.find((r) => r.index || !r.path || r.path === "/") || {
+          id: "__shim-error-route__",
+        };
   return {
-    matches: [{
-      params: {},
-      pathname: "",
-      pathnameBase: "",
-      route
-    }],
-    route
+    matches: [
+      {
+        params: {},
+        pathname: "",
+        pathnameBase: "",
+        route,
+      },
+    ],
+    route,
   };
 }
 function getInternalRouterError(status, _temp5) {
-  let {
-    pathname,
-    routeId,
-    method,
-    type
-  } = _temp5 === void 0 ? {} : _temp5;
+  let { pathname, routeId, method, type } = _temp5 === void 0 ? {} : _temp5;
   let statusText = "Unknown Server Error";
   let errorMessage = "Unknown @remix-run/router error";
   if (status === 400) {
     statusText = "Bad Request";
     if (method && pathname && routeId) {
-      errorMessage = "You made a " + method + ' request to "' + pathname + '" but ' + ('did not provide a `loader` for route "' + routeId + '", ') + "so there is no way to handle the request.";
+      errorMessage =
+        "You made a " +
+        method +
+        ' request to "' +
+        pathname +
+        '" but ' +
+        ('did not provide a `loader` for route "' + routeId + '", ') +
+        "so there is no way to handle the request.";
     } else if (type === "defer-action") {
       errorMessage = "defer() is not supported in actions";
     } else if (type === "invalid-body") {
@@ -4987,19 +6105,32 @@ function getInternalRouterError(status, _temp5) {
     }
   } else if (status === 403) {
     statusText = "Forbidden";
-    errorMessage = 'Route "' + routeId + '" does not match URL "' + pathname + '"';
+    errorMessage =
+      'Route "' + routeId + '" does not match URL "' + pathname + '"';
   } else if (status === 404) {
     statusText = "Not Found";
     errorMessage = 'No route matches URL "' + pathname + '"';
   } else if (status === 405) {
     statusText = "Method Not Allowed";
     if (method && pathname && routeId) {
-      errorMessage = "You made a " + method.toUpperCase() + ' request to "' + pathname + '" but ' + ('did not provide an `action` for route "' + routeId + '", ') + "so there is no way to handle the request.";
+      errorMessage =
+        "You made a " +
+        method.toUpperCase() +
+        ' request to "' +
+        pathname +
+        '" but ' +
+        ('did not provide an `action` for route "' + routeId + '", ') +
+        "so there is no way to handle the request.";
     } else if (method) {
       errorMessage = 'Invalid request method "' + method.toUpperCase() + '"';
     }
   }
-  return new ErrorResponseImpl(status || 500, statusText, new Error(errorMessage), true);
+  return new ErrorResponseImpl(
+    status || 500,
+    statusText,
+    new Error(errorMessage),
+    true,
+  );
 }
 function findRedirect(results) {
   for (let i = results.length - 1; i >= 0; i--) {
@@ -5007,16 +6138,18 @@ function findRedirect(results) {
     if (isRedirectResult(result)) {
       return {
         result,
-        idx: i
+        idx: i,
       };
     }
   }
 }
 function stripHashFromPath(path) {
   let parsedPath = typeof path === "string" ? parsePath(path) : path;
-  return createPath(_extends({}, parsedPath, {
-    hash: ""
-  }));
+  return createPath(
+    _extends({}, parsedPath, {
+      hash: "",
+    }),
+  );
 }
 function isHashChangeOnly(a, b2) {
   if (a.pathname !== b2.pathname || a.search !== b2.search) {
@@ -5042,10 +6175,23 @@ function isRedirectResult(result) {
 }
 function isDeferredData(value) {
   let deferred = value;
-  return deferred && typeof deferred === "object" && typeof deferred.data === "object" && typeof deferred.subscribe === "function" && typeof deferred.cancel === "function" && typeof deferred.resolveData === "function";
+  return (
+    deferred &&
+    typeof deferred === "object" &&
+    typeof deferred.data === "object" &&
+    typeof deferred.subscribe === "function" &&
+    typeof deferred.cancel === "function" &&
+    typeof deferred.resolveData === "function"
+  );
 }
 function isResponse(value) {
-  return value != null && typeof value.status === "number" && typeof value.statusText === "string" && typeof value.headers === "object" && typeof value.body !== "undefined";
+  return (
+    value != null &&
+    typeof value.status === "number" &&
+    typeof value.statusText === "string" &&
+    typeof value.headers === "object" &&
+    typeof value.body !== "undefined"
+  );
 }
 function isRedirectResponse(result) {
   if (!isResponse(result)) {
@@ -5056,7 +6202,11 @@ function isRedirectResponse(result) {
   return status >= 300 && status <= 399 && location != null;
 }
 function isQueryRouteResponse(obj) {
-  return obj && isResponse(obj.response) && (obj.type === ResultType.data || obj.type === ResultType.error);
+  return (
+    obj &&
+    isResponse(obj.response) &&
+    (obj.type === ResultType.data || obj.type === ResultType.error)
+  );
 }
 function isValidMethod(method) {
   return validRequestMethods.has(method.toLowerCase());
@@ -5064,18 +6214,33 @@ function isValidMethod(method) {
 function isMutationMethod(method) {
   return validMutationMethods.has(method.toLowerCase());
 }
-async function resolveDeferredResults(currentMatches, matchesToLoad, results, signals, isFetcher, currentLoaderData) {
+async function resolveDeferredResults(
+  currentMatches,
+  matchesToLoad,
+  results,
+  signals,
+  isFetcher,
+  currentLoaderData,
+) {
   for (let index = 0; index < results.length; index++) {
     let result = results[index];
     let match = matchesToLoad[index];
     if (!match) {
       continue;
     }
-    let currentMatch = currentMatches.find((m) => m.route.id === match.route.id);
-    let isRevalidatingLoader = currentMatch != null && !isNewRouteInstance(currentMatch, match) && (currentLoaderData && currentLoaderData[match.route.id]) !== void 0;
+    let currentMatch = currentMatches.find(
+      (m) => m.route.id === match.route.id,
+    );
+    let isRevalidatingLoader =
+      currentMatch != null &&
+      !isNewRouteInstance(currentMatch, match) &&
+      (currentLoaderData && currentLoaderData[match.route.id]) !== void 0;
     if (isDeferredResult(result) && (isFetcher || isRevalidatingLoader)) {
       let signal = signals[index];
-      invariant(signal, "Expected an AbortSignal for revalidating fetcher deferred result");
+      invariant(
+        signal,
+        "Expected an AbortSignal for revalidating fetcher deferred result",
+      );
       await resolveDeferredData(result, signal, isFetcher).then((result2) => {
         if (result2) {
           results[index] = result2 || results[index];
@@ -5096,26 +6261,30 @@ async function resolveDeferredData(result, signal, unwrap) {
     try {
       return {
         type: ResultType.data,
-        data: result.deferredData.unwrappedData
+        data: result.deferredData.unwrappedData,
       };
     } catch (e) {
       return {
         type: ResultType.error,
-        error: e
+        error: e,
       };
     }
   }
   return {
     type: ResultType.data,
-    data: result.deferredData.data
+    data: result.deferredData.data,
   };
 }
 function hasNakedIndexQuery(search) {
   return new URLSearchParams(search).getAll("index").some((v) => v === "");
 }
 function getTargetMatch(matches, location) {
-  let search = typeof location === "string" ? parsePath(location).search : location.search;
-  if (matches[matches.length - 1].route.index && hasNakedIndexQuery(search || "")) {
+  let search =
+    typeof location === "string" ? parsePath(location).search : location.search;
+  if (
+    matches[matches.length - 1].route.index &&
+    hasNakedIndexQuery(search || "")
+  ) {
     return matches[matches.length - 1];
   }
   let pathMatches = getPathContributingMatches(matches);
@@ -5128,7 +6297,7 @@ function getSubmissionFromNavigation(navigation) {
     formEncType,
     text,
     formData,
-    json: json5
+    json: json5,
   } = navigation;
   if (!formMethod || !formAction || !formEncType) {
     return;
@@ -5140,7 +6309,7 @@ function getSubmissionFromNavigation(navigation) {
       formEncType,
       formData: void 0,
       json: void 0,
-      text
+      text,
     };
   } else if (formData != null) {
     return {
@@ -5149,7 +6318,7 @@ function getSubmissionFromNavigation(navigation) {
       formEncType,
       formData,
       json: void 0,
-      text: void 0
+      text: void 0,
     };
   } else if (json5 !== void 0) {
     return {
@@ -5158,7 +6327,7 @@ function getSubmissionFromNavigation(navigation) {
       formEncType,
       formData: void 0,
       json: json5,
-      text: void 0
+      text: void 0,
     };
   }
 }
@@ -5172,7 +6341,7 @@ function getLoadingNavigation(location, submission) {
       formEncType: submission.formEncType,
       formData: submission.formData,
       json: submission.json,
-      text: submission.text
+      text: submission.text,
     };
     return navigation;
   } else {
@@ -5184,7 +6353,7 @@ function getLoadingNavigation(location, submission) {
       formEncType: void 0,
       formData: void 0,
       json: void 0,
-      text: void 0
+      text: void 0,
     };
     return navigation;
   }
@@ -5198,7 +6367,7 @@ function getSubmittingNavigation(location, submission) {
     formEncType: submission.formEncType,
     formData: submission.formData,
     json: submission.json,
-    text: submission.text
+    text: submission.text,
   };
   return navigation;
 }
@@ -5212,7 +6381,7 @@ function getLoadingFetcher(submission, data) {
       formData: submission.formData,
       json: submission.json,
       text: submission.text,
-      data
+      data,
     };
     return fetcher;
   } else {
@@ -5224,7 +6393,7 @@ function getLoadingFetcher(submission, data) {
       formData: void 0,
       json: void 0,
       text: void 0,
-      data
+      data,
     };
     return fetcher;
   }
@@ -5238,7 +6407,7 @@ function getSubmittingFetcher(submission, existingFetcher) {
     formData: submission.formData,
     json: submission.json,
     text: submission.text,
-    data: existingFetcher ? existingFetcher.data : void 0
+    data: existingFetcher ? existingFetcher.data : void 0,
   };
   return fetcher;
 }
@@ -5251,13 +6420,15 @@ function getDoneFetcher(data) {
     formData: void 0,
     json: void 0,
     text: void 0,
-    data
+    data,
   };
   return fetcher;
 }
 function restoreAppliedTransitions(_window, transitions) {
   try {
-    let sessionPositions = _window.sessionStorage.getItem(TRANSITIONS_STORAGE_KEY);
+    let sessionPositions = _window.sessionStorage.getItem(
+      TRANSITIONS_STORAGE_KEY,
+    );
     if (sessionPositions) {
       let json5 = JSON.parse(sessionPositions);
       for (let [k2, v] of Object.entries(json5 || {})) {
@@ -5266,8 +6437,7 @@ function restoreAppliedTransitions(_window, transitions) {
         }
       }
     }
-  } catch (e) {
-  }
+  } catch (e) {}
 }
 function persistAppliedTransitions(_window, transitions) {
   if (transitions.size > 0) {
@@ -5276,28 +6446,77 @@ function persistAppliedTransitions(_window, transitions) {
       json5[k2] = [...v];
     }
     try {
-      _window.sessionStorage.setItem(TRANSITIONS_STORAGE_KEY, JSON.stringify(json5));
+      _window.sessionStorage.setItem(
+        TRANSITIONS_STORAGE_KEY,
+        JSON.stringify(json5),
+      );
     } catch (error) {
-      warning(false, "Failed to save applied view transitions in sessionStorage (" + error + ").");
+      warning(
+        false,
+        "Failed to save applied view transitions in sessionStorage (" +
+          error +
+          ").",
+      );
     }
   }
 }
-var Action, PopStateEventType, ResultType, immutableRouteKeys, paramRe, dynamicSegmentValue, indexRouteValue, emptySegmentValue, staticSegmentValue, splatPenalty, isSplat, joinPaths, normalizePathname, normalizeSearch, normalizeHash, json, AbortedDeferredError, DeferredData, defer, redirect, redirectDocument, ErrorResponseImpl, validMutationMethodsArr, validMutationMethods, validRequestMethodsArr, validRequestMethods, redirectStatusCodes, redirectPreserveMethodStatusCodes, IDLE_NAVIGATION, IDLE_FETCHER, IDLE_BLOCKER, ABSOLUTE_URL_REGEX, defaultMapRouteProperties, TRANSITIONS_STORAGE_KEY, UNSAFE_DEFERRED_SYMBOL;
+var Action,
+  PopStateEventType,
+  ResultType,
+  immutableRouteKeys,
+  paramRe,
+  dynamicSegmentValue,
+  indexRouteValue,
+  emptySegmentValue,
+  staticSegmentValue,
+  splatPenalty,
+  isSplat,
+  joinPaths,
+  normalizePathname,
+  normalizeSearch,
+  normalizeHash,
+  json,
+  AbortedDeferredError,
+  DeferredData,
+  defer,
+  redirect,
+  redirectDocument,
+  ErrorResponseImpl,
+  validMutationMethodsArr,
+  validMutationMethods,
+  validRequestMethodsArr,
+  validRequestMethods,
+  redirectStatusCodes,
+  redirectPreserveMethodStatusCodes,
+  IDLE_NAVIGATION,
+  IDLE_FETCHER,
+  IDLE_BLOCKER,
+  ABSOLUTE_URL_REGEX,
+  defaultMapRouteProperties,
+  TRANSITIONS_STORAGE_KEY,
+  UNSAFE_DEFERRED_SYMBOL;
 var init_router = __esm({
   "node_modules/@remix-run/router/dist/router.js"() {
-    (function(Action2) {
+    (function (Action2) {
       Action2["Pop"] = "POP";
       Action2["Push"] = "PUSH";
       Action2["Replace"] = "REPLACE";
     })(Action || (Action = {}));
     PopStateEventType = "popstate";
-    (function(ResultType2) {
+    (function (ResultType2) {
       ResultType2["data"] = "data";
       ResultType2["deferred"] = "deferred";
       ResultType2["redirect"] = "redirect";
       ResultType2["error"] = "error";
     })(ResultType || (ResultType = {}));
-    immutableRouteKeys = /* @__PURE__ */ new Set(["lazy", "caseSensitive", "path", "id", "index", "children"]);
+    immutableRouteKeys = /* @__PURE__ */ new Set([
+      "lazy",
+      "caseSensitive",
+      "path",
+      "id",
+      "index",
+      "children",
+    ]);
     paramRe = /^:\w+$/;
     dynamicSegmentValue = 3;
     indexRouteValue = 2;
@@ -5306,42 +6525,59 @@ var init_router = __esm({
     splatPenalty = -2;
     isSplat = (s) => s === "*";
     joinPaths = (paths) => paths.join("/").replace(/\/\/+/g, "/");
-    normalizePathname = (pathname) => pathname.replace(/\/+$/, "").replace(/^\/*/, "/");
-    normalizeSearch = (search) => !search || search === "?" ? "" : search.startsWith("?") ? search : "?" + search;
-    normalizeHash = (hash) => !hash || hash === "#" ? "" : hash.startsWith("#") ? hash : "#" + hash;
+    normalizePathname = (pathname) =>
+      pathname.replace(/\/+$/, "").replace(/^\/*/, "/");
+    normalizeSearch = (search) =>
+      !search || search === "?"
+        ? ""
+        : search.startsWith("?")
+          ? search
+          : "?" + search;
+    normalizeHash = (hash) =>
+      !hash || hash === "#" ? "" : hash.startsWith("#") ? hash : "#" + hash;
     json = function json2(data, init) {
       if (init === void 0) {
         init = {};
       }
-      let responseInit = typeof init === "number" ? {
-        status: init
-      } : init;
+      let responseInit =
+        typeof init === "number"
+          ? {
+              status: init,
+            }
+          : init;
       let headers = new Headers(responseInit.headers);
       if (!headers.has("Content-Type")) {
         headers.set("Content-Type", "application/json; charset=utf-8");
       }
-      return new Response(JSON.stringify(data), _extends({}, responseInit, {
-        headers
-      }));
+      return new Response(
+        JSON.stringify(data),
+        _extends({}, responseInit, {
+          headers,
+        }),
+      );
     };
-    AbortedDeferredError = class extends Error {
-    };
+    AbortedDeferredError = class extends Error {};
     DeferredData = class {
       constructor(data, responseInit) {
         this.pendingKeysSet = /* @__PURE__ */ new Set();
         this.subscribers = /* @__PURE__ */ new Set();
         this.deferredKeys = [];
-        invariant(data && typeof data === "object" && !Array.isArray(data), "defer() only accepts plain objects");
+        invariant(
+          data && typeof data === "object" && !Array.isArray(data),
+          "defer() only accepts plain objects",
+        );
         let reject;
-        this.abortPromise = new Promise((_, r) => reject = r);
+        this.abortPromise = new Promise((_, r) => (reject = r));
         this.controller = new AbortController();
-        let onAbort = () => reject(new AbortedDeferredError("Deferred data aborted"));
-        this.unlistenAbortSignal = () => this.controller.signal.removeEventListener("abort", onAbort);
+        let onAbort = () =>
+          reject(new AbortedDeferredError("Deferred data aborted"));
+        this.unlistenAbortSignal = () =>
+          this.controller.signal.removeEventListener("abort", onAbort);
         this.controller.signal.addEventListener("abort", onAbort);
         this.data = Object.entries(data).reduce((acc, _ref2) => {
           let [key, value] = _ref2;
           return Object.assign(acc, {
-            [key]: this.trackPromise(key, value)
+            [key]: this.trackPromise(key, value),
           });
         }, {});
         if (this.done) {
@@ -5355,19 +6591,24 @@ var init_router = __esm({
         }
         this.deferredKeys.push(key);
         this.pendingKeysSet.add(key);
-        let promise = Promise.race([value, this.abortPromise]).then((data) => this.onSettle(promise, key, void 0, data), (error) => this.onSettle(promise, key, error));
-        promise.catch(() => {
-        });
+        let promise = Promise.race([value, this.abortPromise]).then(
+          (data) => this.onSettle(promise, key, void 0, data),
+          (error) => this.onSettle(promise, key, error),
+        );
+        promise.catch(() => {});
         Object.defineProperty(promise, "_tracked", {
-          get: () => true
+          get: () => true,
         });
         return promise;
       }
       onSettle(promise, key, error, data) {
-        if (this.controller.signal.aborted && error instanceof AbortedDeferredError) {
+        if (
+          this.controller.signal.aborted &&
+          error instanceof AbortedDeferredError
+        ) {
           this.unlistenAbortSignal();
           Object.defineProperty(promise, "_error", {
-            get: () => error
+            get: () => error,
           });
           return Promise.reject(error);
         }
@@ -5376,28 +6617,34 @@ var init_router = __esm({
           this.unlistenAbortSignal();
         }
         if (error === void 0 && data === void 0) {
-          let undefinedError = new Error('Deferred data for key "' + key + '" resolved/rejected with `undefined`, you must resolve/reject with a value or `null`.');
+          let undefinedError = new Error(
+            'Deferred data for key "' +
+              key +
+              '" resolved/rejected with `undefined`, you must resolve/reject with a value or `null`.',
+          );
           Object.defineProperty(promise, "_error", {
-            get: () => undefinedError
+            get: () => undefinedError,
           });
           this.emit(false, key);
           return Promise.reject(undefinedError);
         }
         if (data === void 0) {
           Object.defineProperty(promise, "_error", {
-            get: () => error
+            get: () => error,
           });
           this.emit(false, key);
           return Promise.reject(error);
         }
         Object.defineProperty(promise, "_data", {
-          get: () => data
+          get: () => data,
         });
         this.emit(false, key);
         return data;
       }
       emit(aborted, settledKey) {
-        this.subscribers.forEach((subscriber) => subscriber(aborted, settledKey));
+        this.subscribers.forEach((subscriber) =>
+          subscriber(aborted, settledKey),
+        );
       }
       subscribe(fn) {
         this.subscribers.add(fn);
@@ -5428,11 +6675,14 @@ var init_router = __esm({
         return this.pendingKeysSet.size === 0;
       }
       get unwrappedData() {
-        invariant(this.data !== null && this.done, "Can only unwrap data on initialized and settled deferreds");
+        invariant(
+          this.data !== null && this.done,
+          "Can only unwrap data on initialized and settled deferreds",
+        );
         return Object.entries(this.data).reduce((acc, _ref3) => {
           let [key, value] = _ref3;
           return Object.assign(acc, {
-            [key]: unwrapTrackedPromise(value)
+            [key]: unwrapTrackedPromise(value),
           });
         }, {});
       }
@@ -5444,9 +6694,12 @@ var init_router = __esm({
       if (init === void 0) {
         init = {};
       }
-      let responseInit = typeof init === "number" ? {
-        status: init
-      } : init;
+      let responseInit =
+        typeof init === "number"
+          ? {
+              status: init,
+            }
+          : init;
       return new DeferredData(data, responseInit);
     };
     redirect = function redirect2(url, init) {
@@ -5456,16 +6709,19 @@ var init_router = __esm({
       let responseInit = init;
       if (typeof responseInit === "number") {
         responseInit = {
-          status: responseInit
+          status: responseInit,
         };
       } else if (typeof responseInit.status === "undefined") {
         responseInit.status = 302;
       }
       let headers = new Headers(responseInit.headers);
       headers.set("Location", url);
-      return new Response(null, _extends({}, responseInit, {
-        headers
-      }));
+      return new Response(
+        null,
+        _extends({}, responseInit, {
+          headers,
+        }),
+      );
     };
     redirectDocument = (url, init) => {
       let response = redirect(url, init);
@@ -5502,7 +6758,7 @@ var init_router = __esm({
       formEncType: void 0,
       formData: void 0,
       json: void 0,
-      text: void 0
+      text: void 0,
     };
     IDLE_FETCHER = {
       state: "idle",
@@ -5512,21 +6768,21 @@ var init_router = __esm({
       formEncType: void 0,
       formData: void 0,
       json: void 0,
-      text: void 0
+      text: void 0,
     };
     IDLE_BLOCKER = {
       state: "unblocked",
       proceed: void 0,
       reset: void 0,
-      location: void 0
+      location: void 0,
     };
     ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
     defaultMapRouteProperties = (route) => ({
-      hasErrorBoundary: Boolean(route.hasErrorBoundary)
+      hasErrorBoundary: Boolean(route.hasErrorBoundary),
     });
     TRANSITIONS_STORAGE_KEY = "remix-router-transitions";
     UNSAFE_DEFERRED_SYMBOL = Symbol("deferred");
-  }
+  },
 });
 
 // node_modules/@remix-run/server-runtime/dist/mode.js
@@ -5534,18 +6790,22 @@ var require_mode = __commonJS({
   "node_modules/@remix-run/server-runtime/dist/mode.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ServerMode2 = /* @__PURE__ */ function(ServerMode3) {
+    var ServerMode2 = /* @__PURE__ */ (function (ServerMode3) {
       ServerMode3["Development"] = "development";
       ServerMode3["Production"] = "production";
       ServerMode3["Test"] = "test";
       return ServerMode3;
-    }({});
+    })({});
     function isServerMode(value) {
-      return value === ServerMode2.Development || value === ServerMode2.Production || value === ServerMode2.Test;
+      return (
+        value === ServerMode2.Development ||
+        value === ServerMode2.Production ||
+        value === ServerMode2.Test
+      );
     }
     exports.ServerMode = ServerMode2;
     exports.isServerMode = isServerMode;
-  }
+  },
 });
 
 // node_modules/@remix-run/server-runtime/dist/errors.js
@@ -5556,7 +6816,10 @@ var require_errors = __commonJS({
     var router = (init_router(), __toCommonJS(router_exports));
     var mode = require_mode();
     function sanitizeError(error, serverMode) {
-      if (error instanceof Error && serverMode !== mode.ServerMode.Development) {
+      if (
+        error instanceof Error &&
+        serverMode !== mode.ServerMode.Development
+      ) {
         let sanitized = new Error("Unexpected Server Error");
         sanitized.stack = void 0;
         return sanitized;
@@ -5566,7 +6829,7 @@ var require_errors = __commonJS({
     function sanitizeErrors(errors, serverMode) {
       return Object.entries(errors).reduce((acc, [routeId, error]) => {
         return Object.assign(acc, {
-          [routeId]: sanitizeError(error, serverMode)
+          [routeId]: sanitizeError(error, serverMode),
         });
       }, {});
     }
@@ -5574,19 +6837,18 @@ var require_errors = __commonJS({
       let sanitized = sanitizeError(error, serverMode);
       return {
         message: sanitized.message,
-        stack: sanitized.stack
+        stack: sanitized.stack,
       };
     }
     function serializeErrors(errors, serverMode) {
-      if (!errors)
-        return null;
+      if (!errors) return null;
       let entries = Object.entries(errors);
       let serialized = {};
       for (let [key, val] of entries) {
         if (router.isRouteErrorResponse(val)) {
           serialized[key] = {
             ...val,
-            __type: "RouteErrorResponse"
+            __type: "RouteErrorResponse",
           };
         } else if (val instanceof Error) {
           let sanitized = sanitizeError(val, serverMode);
@@ -5598,9 +6860,11 @@ var require_errors = __commonJS({
             // can re-create the same type during hydration.  This will only apply
             // in dev mode since all production errors are sanitized to normal
             // Error instances
-            ...sanitized.name !== "Error" ? {
-              __subType: sanitized.name
-            } : {}
+            ...(sanitized.name !== "Error"
+              ? {
+                  __subType: sanitized.name,
+                }
+              : {}),
           };
         } else {
           serialized[key] = val;
@@ -5612,7 +6876,7 @@ var require_errors = __commonJS({
     exports.sanitizeErrors = sanitizeErrors;
     exports.serializeError = serializeError;
     exports.serializeErrors = serializeErrors;
-  }
+  },
 });
 
 // node_modules/@remix-run/server-runtime/dist/responses.js
@@ -5636,12 +6900,27 @@ var require_responses = __commonJS({
     };
     function isDeferredData3(value) {
       let deferred = value;
-      return deferred && typeof deferred === "object" && typeof deferred.data === "object" && typeof deferred.subscribe === "function" && typeof deferred.cancel === "function" && typeof deferred.resolveData === "function";
+      return (
+        deferred &&
+        typeof deferred === "object" &&
+        typeof deferred.data === "object" &&
+        typeof deferred.subscribe === "function" &&
+        typeof deferred.cancel === "function" &&
+        typeof deferred.resolveData === "function"
+      );
     }
     function isResponse3(value) {
-      return value != null && typeof value.status === "number" && typeof value.statusText === "string" && typeof value.headers === "object" && typeof value.body !== "undefined";
+      return (
+        value != null &&
+        typeof value.status === "number" &&
+        typeof value.statusText === "string" &&
+        typeof value.headers === "object" &&
+        typeof value.body !== "undefined"
+      );
     }
-    var redirectStatusCodes2 = /* @__PURE__ */ new Set([301, 302, 303, 307, 308]);
+    var redirectStatusCodes2 = /* @__PURE__ */ new Set([
+      301, 302, 303, 307, 308,
+    ]);
     function isRedirectStatusCode2(statusCode) {
       return redirectStatusCodes2.has(statusCode);
     }
@@ -5649,7 +6928,11 @@ var require_responses = __commonJS({
       return isRedirectStatusCode2(response.status);
     }
     function isTrackedPromise2(value) {
-      return value != null && typeof value.then === "function" && value._tracked === true;
+      return (
+        value != null &&
+        typeof value.then === "function" &&
+        value._tracked === true
+      );
     }
     var DEFERRED_VALUE_PLACEHOLDER_PREFIX = "__deferred_promise:";
     function createDeferredReadableStream2(deferredData, signal, serverMode) {
@@ -5661,38 +6944,76 @@ var require_responses = __commonJS({
           for (let [key, value] of Object.entries(deferredData.data)) {
             if (isTrackedPromise2(value)) {
               criticalData[key] = `${DEFERRED_VALUE_PLACEHOLDER_PREFIX}${key}`;
-              if (typeof value._data !== "undefined" || typeof value._error !== "undefined") {
+              if (
+                typeof value._data !== "undefined" ||
+                typeof value._error !== "undefined"
+              ) {
                 preresolvedKeys.push(key);
               }
             } else {
               criticalData[key] = value;
             }
           }
-          controller.enqueue(encoder.encode(JSON.stringify(criticalData) + "\n\n"));
+          controller.enqueue(
+            encoder.encode(JSON.stringify(criticalData) + "\n\n"),
+          );
           for (let preresolvedKey of preresolvedKeys) {
-            enqueueTrackedPromise(controller, encoder, preresolvedKey, deferredData.data[preresolvedKey], serverMode);
+            enqueueTrackedPromise(
+              controller,
+              encoder,
+              preresolvedKey,
+              deferredData.data[preresolvedKey],
+              serverMode,
+            );
           }
           let unsubscribe = deferredData.subscribe((aborted, settledKey) => {
             if (settledKey) {
-              enqueueTrackedPromise(controller, encoder, settledKey, deferredData.data[settledKey], serverMode);
+              enqueueTrackedPromise(
+                controller,
+                encoder,
+                settledKey,
+                deferredData.data[settledKey],
+                serverMode,
+              );
             }
           });
           await deferredData.resolveData(signal);
           unsubscribe();
           controller.close();
-        }
+        },
       });
       return stream;
     }
-    function enqueueTrackedPromise(controller, encoder, settledKey, promise, serverMode) {
+    function enqueueTrackedPromise(
+      controller,
+      encoder,
+      settledKey,
+      promise,
+      serverMode,
+    ) {
       if ("_error" in promise) {
-        controller.enqueue(encoder.encode("error:" + JSON.stringify({
-          [settledKey]: promise._error instanceof Error ? errors.serializeError(promise._error, serverMode) : promise._error
-        }) + "\n\n"));
+        controller.enqueue(
+          encoder.encode(
+            "error:" +
+              JSON.stringify({
+                [settledKey]:
+                  promise._error instanceof Error
+                    ? errors.serializeError(promise._error, serverMode)
+                    : promise._error,
+              }) +
+              "\n\n",
+          ),
+        );
       } else {
-        controller.enqueue(encoder.encode("data:" + JSON.stringify({
-          [settledKey]: promise._data ?? null
-        }) + "\n\n"));
+        controller.enqueue(
+          encoder.encode(
+            "data:" +
+              JSON.stringify({
+                [settledKey]: promise._data ?? null,
+              }) +
+              "\n\n",
+          ),
+        );
       }
     }
     exports.createDeferredReadableStream = createDeferredReadableStream2;
@@ -5704,13 +7025,13 @@ var require_responses = __commonJS({
     exports.json = json5;
     exports.redirect = redirect4;
     exports.redirectDocument = redirectDocument2;
-  }
+  },
 });
 
 // app/entry.worker.ts
 var entry_worker_exports = {};
 __export(entry_worker_exports, {
-  defaultFetchHandler: () => defaultFetchHandler
+  defaultFetchHandler: () => defaultFetchHandler,
 });
 
 // node_modules/cachified/dist/index.mjs
@@ -5725,8 +7046,7 @@ var B = __toESM(require_buffer(), 1);
 function mergeHeaders(...headers) {
   const merged = new Headers();
   for (const header of headers) {
-    if (!header)
-      continue;
+    if (!header) continue;
     for (const [key, value] of new Headers(header).entries()) {
       merged.set(key, value);
     }
@@ -5740,7 +7060,7 @@ function omit(key, obj) {
 
 // node_modules/@remix-pwa/cache/dist/src/cache.js
 var Strategy;
-(function(Strategy2) {
+(function (Strategy2) {
   Strategy2["CacheFirst"] = "cache-first";
   Strategy2["NetworkFirst"] = "network-first";
   Strategy2["CacheOnly"] = "cache-only";
@@ -5784,7 +7104,7 @@ var RemixCache = class {
     return false;
   }
   async _lruCleanup() {
-    const isOverflowing = await this.length() >= this._maxItems;
+    const isOverflowing = (await this.length()) >= this._maxItems;
     if (isOverflowing) {
       const cache = await this._openCache();
       const keys = await cache.keys();
@@ -5794,14 +7114,17 @@ var RemixCache = class {
         const { metadata } = await val.val.clone().json();
         return {
           metadata,
-          url: val.key.url
+          url: val.key.url,
         };
       });
       const comparableArray = await Promise.all(comparableArrayPromise);
       const sortedArr = comparableArray.sort((a, b2) => {
         return Number(a.metadata.accessedAt) - Number(b2.metadata.accessedAt);
       });
-      const toBeDeletdItems = sortedArr.slice(0, sortedArr.length - this._maxItems + 1);
+      const toBeDeletdItems = sortedArr.slice(
+        0,
+        sortedArr.length - this._maxItems + 1,
+      );
       for (const deleted of toBeDeletdItems) {
         await this.delete(deleted.url);
       }
@@ -5820,14 +7143,17 @@ var RemixCache = class {
     const newHeader = new Headers(headers);
     newHeader.set("X-Remix-PWA-TTL", metadata.expiresAt.toString());
     newHeader.set("X-Remix-PWA-AccessTime", Date.now().toString());
-    newHeader.set("Content-Type", headers.get("X-Remix-PWA-Original-Content-Type") || "application/json");
+    newHeader.set(
+      "Content-Type",
+      headers.get("X-Remix-PWA-Original-Content-Type") || "application/json",
+    );
     const contentType = headers.get("X-Remix-PWA-Original-Content-Type") ?? "";
     newHeader.delete("X-Remix-PWA-Original-Content-Type");
     const responseOptions = {
       status: response.status,
       statusText: response.statusText,
       headers: newHeader,
-      body: "null"
+      body: "null",
     };
     if (contentType.includes("application/json")) {
       responseOptions.body = JSON.stringify(value);
@@ -5838,7 +7164,10 @@ var RemixCache = class {
       responseOptions.body = new Uint8Array(buffer);
     }
     if (!deleted) {
-      const res = new Response(responseOptions.body, omit("body", responseOptions));
+      const res = new Response(
+        responseOptions.body,
+        omit("body", responseOptions),
+      );
       await this.put(request, res.clone(), void 0);
       return res;
     }
@@ -5925,9 +7254,12 @@ var RemixCache = class {
     if (request instanceof URL || typeof request === "string") {
       request = new Request(request);
     }
-    if (this._ttl <= 0 || ttl && ttl <= 0)
-      return;
-    if (response === null || response.status === 204 || response.statusText.toLowerCase() === "no content") {
+    if (this._ttl <= 0 || (ttl && ttl <= 0)) return;
+    if (
+      response === null ||
+      response.status === 204 ||
+      response.statusText.toLowerCase() === "no content"
+    ) {
       await this.delete(request);
       return;
     }
@@ -5957,38 +7289,47 @@ var RemixCache = class {
       }
     }
     const resHeaders = response.headers;
-    const expiresAt = resHeaders.get("X-Remix-PWA-TTL") || Date.now() + (ttl ?? this._ttl);
-    const accessedAt = resHeaders.get("X-Remix-PWA-AccessTime") || Date.now().toString();
+    const expiresAt =
+      resHeaders.get("X-Remix-PWA-TTL") || Date.now() + (ttl ?? this._ttl);
+    const accessedAt =
+      resHeaders.get("X-Remix-PWA-AccessTime") || Date.now().toString();
     const newHeaders = new Headers();
     newHeaders.set("Content-Type", "application/json");
     newHeaders.set("X-Remix-PWA-AccessTime", accessedAt);
-    newHeaders.set("X-Remix-PWA-Original-Content-Type", contentType || "text/plain");
+    newHeaders.set(
+      "X-Remix-PWA-Original-Content-Type",
+      contentType || "text/plain",
+    );
     newHeaders.set("X-Remix-PWA-TTL", expiresAt.toString());
-    const toBeCachedRes = new Response(JSON.stringify({
-      metadata: {
-        accessedAt,
-        // JSON can't store `Infinity`, so we store it as a string
-        expiresAt: expiresAt.toString(),
-        cacheTtl: this._ttl.toString(),
-        cacheMaxItems: this._maxItems,
-        cacheStrategy: this._strategy
+    const toBeCachedRes = new Response(
+      JSON.stringify({
+        metadata: {
+          accessedAt,
+          // JSON can't store `Infinity`, so we store it as a string
+          expiresAt: expiresAt.toString(),
+          cacheTtl: this._ttl.toString(),
+          cacheMaxItems: this._maxItems,
+          cacheStrategy: this._strategy,
+        },
+        value: data,
+      }),
+      {
+        status: response.status,
+        statusText: response.statusText,
+        headers: mergeHeaders(resHeaders, newHeaders),
       },
-      value: data
-    }), {
-      status: response.status,
-      statusText: response.statusText,
-      headers: mergeHeaders(resHeaders, newHeaders)
-    });
+    );
     Object.defineProperty(toBeCachedRes, "url", { value: response.url });
     Object.defineProperty(toBeCachedRes, "type", { value: response.type });
     Object.defineProperty(toBeCachedRes, "ok", { value: response.ok });
-    Object.defineProperty(toBeCachedRes, "redirected", { value: response.redirected });
+    Object.defineProperty(toBeCachedRes, "redirected", {
+      value: response.redirected,
+    });
     try {
       await this._lruCleanup();
       return await cache.put(request, toBeCachedRes.clone());
     } catch (error) {
-      if (true)
-        console.error("Failed to put to cache:", error);
+      if (true) console.error("Failed to put to cache:", error);
     }
   }
   async add(request) {
@@ -6013,8 +7354,7 @@ var RemixCache = class {
 // node_modules/@remix-pwa/cache/dist/src/storage.js
 var RemixCacheStorage = class {
   // eslint-disable-next-line no-useless-constructor
-  constructor() {
-  }
+  constructor() {}
   /**
    * Initialize the Remix PWA Cache Storage. This will create a special cache for each
    * existing cache in the browser or create a new map if none exist.
@@ -6072,13 +7412,16 @@ var RemixCacheStorage = class {
   }
   static async _get(name) {
     const cache = this._instances.get(name);
-    if (!cache && await caches.has(`rp-${name}`)) {
+    if (!cache && (await caches.has(`rp-${name}`))) {
       this._instances.set(name, new RemixCache({ name }));
-      await this._instances.get(name)?.keys().then((keys) => {
-        if (keys.length > 0) {
-          caches.match(keys[0]);
-        }
-      });
+      await this._instances
+        .get(name)
+        ?.keys()
+        .then((keys) => {
+          if (keys.length > 0) {
+            caches.match(keys[0]);
+          }
+        });
     }
     return this._instances.get(name);
   }
@@ -6136,7 +7479,13 @@ var RemixCacheStorage = class {
    * Delete all caches.
    */
   static clear() {
-    caches.keys().then((keys) => keys.forEach((key) => key.startsWith("rp-") ? caches.delete(key) : null));
+    caches
+      .keys()
+      .then((keys) =>
+        keys.forEach((key) =>
+          key.startsWith("rp-") ? caches.delete(key) : null,
+        ),
+      );
     this._instances = /* @__PURE__ */ new Map();
   }
   /**
@@ -6180,7 +7529,12 @@ var isHttpRequest = (request) => {
 };
 
 // node_modules/@remix-pwa/strategy/dist/src/cacheFirst.js
-var cacheFirst = ({ cache: cacheName, cacheOptions, cacheQueryOptions, fetchDidFail = void 0 }) => {
+var cacheFirst = ({
+  cache: cacheName,
+  cacheOptions,
+  cacheQueryOptions,
+  fetchDidFail = void 0,
+}) => {
   return async (request) => {
     if (!isHttpRequest(request)) {
       return new Response("Not a HTTP request", { status: 403 });
@@ -6209,7 +7563,14 @@ var cacheFirst = ({ cache: cacheName, cacheOptions, cacheQueryOptions, fetchDidF
 };
 
 // node_modules/@remix-pwa/strategy/dist/src/networkFirst.js
-var networkFirst = ({ cache: cacheName, cacheOptions, cacheQueryOptions, fetchDidFail = void 0, fetchDidSucceed = void 0, networkTimeoutSeconds = 10 }) => {
+var networkFirst = ({
+  cache: cacheName,
+  cacheOptions,
+  cacheQueryOptions,
+  fetchDidFail = void 0,
+  fetchDidSucceed = void 0,
+  networkTimeoutSeconds = 10,
+}) => {
   return async (request) => {
     if (!isHttpRequest(request)) {
       return new Response("Not a HTTP request", { status: 403 });
@@ -6221,12 +7582,21 @@ var networkFirst = ({ cache: cacheName, cacheOptions, cacheQueryOptions, fetchDi
       remixCache = cacheName;
     }
     try {
-      const timeoutPromise = networkTimeoutSeconds !== Infinity ? new Promise((_resolve, reject) => {
-        setTimeout(() => {
-          reject(new Error(`Network timed out after ${networkTimeoutSeconds} seconds`));
-        }, networkTimeoutSeconds * 1e3);
-      }) : null;
-      const response = timeoutPromise ? await Promise.race([fetch(request), timeoutPromise]) : await fetch(request);
+      const timeoutPromise =
+        networkTimeoutSeconds !== Infinity
+          ? new Promise((_resolve, reject) => {
+              setTimeout(() => {
+                reject(
+                  new Error(
+                    `Network timed out after ${networkTimeoutSeconds} seconds`,
+                  ),
+                );
+              }, networkTimeoutSeconds * 1e3);
+            })
+          : null;
+      const response = timeoutPromise
+        ? await Promise.race([fetch(request), timeoutPromise])
+        : await fetch(request);
       if (response) {
         if (fetchDidSucceed) {
           await Promise.all(fetchDidSucceed.map((cb) => cb()));
@@ -6243,7 +7613,7 @@ var networkFirst = ({ cache: cacheName, cacheOptions, cacheQueryOptions, fetchDi
         return cachedResponse.clone();
       }
       return new Response(JSON.stringify({ message: "Network Error" }), {
-        status: 500
+        status: 500,
       });
     }
     throw new Error("Failed to fetch. Network timed out.");
@@ -6258,75 +7628,79 @@ var methodToColorMap = {
   warn: `#f39c12`,
   error: `#c0392b`,
   groupCollapsed: `#3498db`,
-  groupEnd: null
+  groupEnd: null,
   // No colored prefix on groupEnd
 };
-var logger = false ? (() => {
-  const api = {};
-  const loggerMethods = Object.keys(methodToColorMap);
-  for (const key of loggerMethods) {
-    const method = key;
-    api[method] = () => {
-    };
-  }
-  return api;
-})() : (() => {
-  let inGroup = false;
-  const print = function(method, args) {
-    if (self.__DISABLE_PWA_DEV_LOGS) {
-      return;
-    }
-    if (method === "debug" && self.__DISABLE_PWA_DEBUG_LOGS) {
-      return;
-    }
-    if (method === "info" && self.__DISABLE_PWA_INFO_LOGS) {
-      return;
-    }
-    if (method === "warn" && self.__DISABLE_PWA_WARN_LOGS) {
-      return;
-    }
-    if (method === "error" && self.__DISABLE_PWA_ERROR_LOGS) {
-      return;
-    }
-    if (method === "groupCollapsed") {
-      if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
-        console[method](...args);
-        return;
+var logger = false
+  ? (() => {
+      const api = {};
+      const loggerMethods = Object.keys(methodToColorMap);
+      for (const key of loggerMethods) {
+        const method = key;
+        api[method] = () => {};
       }
-    }
-    const styles = [
-      `background: ${methodToColorMap[method]}`,
-      `border-radius: 0.5em`,
-      `color: white`,
-      `font-weight: bold`,
-      `padding: 2px 0.5em`
-    ];
-    const logPrefix = inGroup ? [] : ["%cremix-pwa", styles.join(";")];
-    console[method](...logPrefix, ...args);
-    if (method === "groupCollapsed") {
-      inGroup = true;
-    }
-    if (method === "groupEnd") {
-      inGroup = false;
-    }
-  };
-  const api = {};
-  const loggerMethods = Object.keys(methodToColorMap);
-  for (const key of loggerMethods) {
-    const method = key;
-    api[method] = (...args) => {
-      print(method, args);
-    };
-  }
-  return api;
-})();
+      return api;
+    })()
+  : (() => {
+      let inGroup = false;
+      const print = function (method, args) {
+        if (self.__DISABLE_PWA_DEV_LOGS) {
+          return;
+        }
+        if (method === "debug" && self.__DISABLE_PWA_DEBUG_LOGS) {
+          return;
+        }
+        if (method === "info" && self.__DISABLE_PWA_INFO_LOGS) {
+          return;
+        }
+        if (method === "warn" && self.__DISABLE_PWA_WARN_LOGS) {
+          return;
+        }
+        if (method === "error" && self.__DISABLE_PWA_ERROR_LOGS) {
+          return;
+        }
+        if (method === "groupCollapsed") {
+          if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+            console[method](...args);
+            return;
+          }
+        }
+        const styles = [
+          `background: ${methodToColorMap[method]}`,
+          `border-radius: 0.5em`,
+          `color: white`,
+          `font-weight: bold`,
+          `padding: 2px 0.5em`,
+        ];
+        const logPrefix = inGroup ? [] : ["%cremix-pwa", styles.join(";")];
+        console[method](...logPrefix, ...args);
+        if (method === "groupCollapsed") {
+          inGroup = true;
+        }
+        if (method === "groupEnd") {
+          inGroup = false;
+        }
+      };
+      const api = {};
+      const loggerMethods = Object.keys(methodToColorMap);
+      for (const key of loggerMethods) {
+        const method = key;
+        api[method] = (...args) => {
+          print(method, args);
+        };
+      }
+      return api;
+    })();
 
 // node_modules/@remix-pwa/sw/dist/src/utils/worker.js
 function isMethod(request, methods) {
   return methods.includes(request.method.toLowerCase());
 }
 function isAssetRequest(request, assetUrls = ["/build/", "/icons"]) {
-  return isMethod(request, ["get"]) && assetUrls.some((publicPath) => request.url.includes(publicPath));
+  return (
+    isMethod(request, ["get"]) &&
+    assetUrls.some((publicPath) => request.url.includes(publicPath))
+  );
 }
 function isLoaderRequest(request) {
   const url = new URL(request.url);
@@ -6386,7 +7760,13 @@ var PrecacheHandler = class extends MessageHandler {
   _ignoredFiles = null;
   // private _whiteListRoutes: PrecacheHandlerState['whiteListRoutes'] = null;
   // private _staticAssets: PrecacheHandlerState['staticAssets'] = [];
-  constructor({ assetCache: assetCache2, dataCache: dataCache2, documentCache: documentCache2, plugins, state }) {
+  constructor({
+    assetCache: assetCache2,
+    dataCache: dataCache2,
+    documentCache: documentCache2,
+    plugins,
+    state,
+  }) {
     super({ plugins, state: {} });
     this.dataCacheName = dataCache2;
     this.documentCacheName = documentCache2;
@@ -6399,10 +7779,9 @@ var PrecacheHandler = class extends MessageHandler {
     let dataCache2, documentCache2, assetCache2;
     dataCache2 = this.dataCacheName;
     documentCache2 = this.documentCacheName;
-    if (data.type !== "REMIX_NAVIGATION" || !data.isMount)
-      return;
+    if (data.type !== "REMIX_NAVIGATION" || !data.isMount) return;
     this.runPlugins("messageDidReceive", {
-      event
+      event,
     });
     const cachePromises = /* @__PURE__ */ new Map();
     if (typeof dataCache2 === "string") {
@@ -6418,8 +7797,7 @@ var PrecacheHandler = class extends MessageHandler {
     const routes2 = Object.values(manifest?.routes || {});
     for (const route of routes2) {
       if (route.id.includes("$")) {
-        if (true)
-          logger.info("Skipping parametrized route:", route.id);
+        if (true) logger.info("Skipping parametrized route:", route.id);
         continue;
       }
       if (Array.isArray(this._ignoredFiles)) {
@@ -6429,15 +7807,17 @@ var PrecacheHandler = class extends MessageHandler {
           }
           const map = this._ignoredFiles.map((ignoredRoute) => {
             ignoredRoute = ignoredRoute;
-            ignoredRoute = ignoredRoute.charAt(0) === "/" ? ignoredRoute : ignoredRoute = "/" + ignoredRoute;
+            ignoredRoute =
+              ignoredRoute.charAt(0) === "/"
+                ? ignoredRoute
+                : (ignoredRoute = "/" + ignoredRoute);
             if (getPathname(route) === ignoredRoute) {
               return true;
             } else {
               return false;
             }
           });
-          if (map.includes(true))
-            continue;
+          if (map.includes(true)) continue;
         } else if (typeof this._ignoredFiles[0] === "function") {
           const map = this._ignoredFiles.map((ignoredRoute) => {
             ignoredRoute = ignoredRoute;
@@ -6447,8 +7827,7 @@ var PrecacheHandler = class extends MessageHandler {
               return false;
             }
           });
-          if (map.includes(true))
-            continue;
+          if (map.includes(true)) continue;
         } else if (this._ignoredFiles[0] instanceof RegExp) {
           const map = this._ignoredFiles.map((ignoredRoute) => {
             ignoredRoute = ignoredRoute;
@@ -6458,8 +7837,7 @@ var PrecacheHandler = class extends MessageHandler {
               return false;
             }
           });
-          if (map.includes(true))
-            continue;
+          if (map.includes(true)) continue;
         } else {
           if (true)
             logger.error("Invalid ignoredRoutes type:", this._ignoredFiles);
@@ -6496,8 +7874,7 @@ var PrecacheHandler = class extends MessageHandler {
           cachePromises.set(assetUrl, cacheAsset(assetUrl));
         }
       }
-      if (true)
-        logger.info("Caching document:", pathname);
+      if (true) logger.info("Caching document:", pathname);
       const response = await fetch(pathname);
       cachePromises.set(
         pathname,
@@ -6505,15 +7882,21 @@ var PrecacheHandler = class extends MessageHandler {
         documentCache2.put(pathname, response).catch((error) => {
           if (error instanceof TypeError) {
             if (true)
-              logger.error(`TypeError when caching document ${pathname}:`, error.message);
+              logger.error(
+                `TypeError when caching document ${pathname}:`,
+                error.message,
+              );
           } else if (error instanceof DOMException) {
             if (true)
-              logger.error(`DOMException when caching document ${pathname}:`, error.message);
+              logger.error(
+                `DOMException when caching document ${pathname}:`,
+                error.message,
+              );
           } else {
             if (true)
               logger.error(`Failed to cache document ${pathname}:`, error);
           }
-        })
+        }),
       );
     }
     async function cacheLoaderData(route) {
@@ -6529,42 +7912,54 @@ var PrecacheHandler = class extends MessageHandler {
           dataCache2.put(url, data2).catch((error) => {
             if (error instanceof TypeError) {
               if (true)
-                logger.error(`TypeError when caching data ${pathname}:`, error.message);
+                logger.error(
+                  `TypeError when caching data ${pathname}:`,
+                  error.message,
+                );
             } else if (error instanceof DOMException) {
               if (true)
-                logger.error(`DOMException when caching data ${pathname}:`, error.message);
+                logger.error(
+                  `DOMException when caching data ${pathname}:`,
+                  error.message,
+                );
             } else {
               if (true)
                 logger.error(`Failed to cache data ${pathname}:`, error);
             }
-          })
+          }),
         );
       }
     }
     async function cacheAsset(assetUrl) {
-      if (await assetCache2.match(assetUrl, {
-        ignoreSearch: true,
-        ignoreVary: true
-      })) {
+      if (
+        await assetCache2.match(assetUrl, {
+          ignoreSearch: true,
+          ignoreVary: true,
+        })
+      ) {
         return;
       }
       const response = await fetch(assetUrl);
       return assetCache2.put(assetUrl, response).catch((error) => {
         if (error instanceof TypeError) {
           if (true)
-            logger.error(`TypeError when caching asset ${assetUrl}:`, error.message);
+            logger.error(
+              `TypeError when caching asset ${assetUrl}:`,
+              error.message,
+            );
         } else if (error instanceof DOMException) {
           if (true)
-            logger.error(`DOMException when caching asset ${assetUrl}:`, error.message);
+            logger.error(
+              `DOMException when caching asset ${assetUrl}:`,
+              error.message,
+            );
         } else {
-          if (true)
-            logger.error(`Failed to cache asset ${assetUrl}:`, error);
+          if (true) logger.error(`Failed to cache asset ${assetUrl}:`, error);
         }
       });
     }
     function getPathname(route) {
-      if (route.index && route.parentId === "root")
-        return "/";
+      if (route.index && route.parentId === "root") return "/";
       let pathname = "";
       if (route.path && route.path.length > 0) {
         pathname = "/" + route.path;
@@ -6585,7 +7980,7 @@ var PAGES = "page-cache";
 var DATA = "data-cache";
 var ASSETS = "assets-cache";
 var dataCache = Storage.open(DATA, {
-  ttl: 60 * 60 * 24 * 7 * 1e3
+  ttl: 60 * 60 * 24 * 7 * 1e3,
   // 7 days
 });
 var documentCache = Storage.open(PAGES);
@@ -6599,19 +7994,16 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(self.clients.claim());
 });
 var dataHandler = networkFirst({
-  cache: dataCache
+  cache: dataCache,
 });
 var assetsHandler = cacheFirst({
   cache: assetCache,
   cacheQueryOptions: {
     ignoreSearch: true,
-    ignoreVary: true
-  }
+    ignoreVary: true,
+  },
 });
-var defaultFetchHandler = ({
-  context,
-  request
-}) => {
+var defaultFetchHandler = ({ context, request }) => {
   const type = matchRequest(request);
   if (type === "asset") {
     return assetsHandler(context.event.request);
@@ -6630,8 +8022,8 @@ var handler = new PrecacheHandler({
     // Make sure to edit this list to match your app's routes.
     // Alternatively, use ['*'] to ignore all routes.
     // Or delete this option to precache all routes.
-    ignoredRoutes: (route) => route.id.includes("dashboard")
-  }
+    ignoredRoutes: (route) => route.id.includes("dashboard"),
+  },
 });
 self.addEventListener("message", (event) => {
   event.waitUntil(handler.handle(event));
@@ -6655,17 +8047,58 @@ var route13 = __toESM(require_quiz());
 var route14 = __toESM(require_app());
 
 // assets-module:@remix-pwa/dev?assets
-var assets = ["/build/root-3HDNI5M6.js", "/build/manifest-EFACAA6E.js", "/build/entry.client-LN4K2DJU.js", "/build/__remix_entry_dev-FIOZUGGH.js", "/build/_assets/tailwind-VHZKFQ35.css", "/build/_shared/runtime-GC7QIU56.js", "/build/_shared/remix_hmr-6MBP7STH.js", "/build/_shared/react-dom-BEFB7ICU.js", "/build/_shared/react-3OYUNTOK.js", "/build/_shared/jsx-runtime-7NXSP56X.js", "/build/_shared/jsx-dev-runtime-RDH4Y5YT.js", "/build/_shared/esm-WE7QIGDO.js", "/build/_shared/client-DFZR44C7.js", "/build/_shared/chunk-ZWGWGGVF.js", "/build/_shared/chunk-XU7DNSPJ.js", "/build/_shared/chunk-XCXTTUMG.js", "/build/_shared/chunk-WXCBL6BE.js", "/build/_shared/chunk-WQPGVTUQ.js", "/build/_shared/chunk-UWV35TSL.js", "/build/_shared/chunk-QQHLOKQ2.js", "/build/_shared/chunk-PNG5AS42.js", "/build/_shared/chunk-GIAAE3CH.js", "/build/_shared/chunk-G7CHZRZX.js", "/build/_shared/chunk-G3ACJGOK.js", "/build/_shared/chunk-CT6P2CZL.js", "/build/_shared/chunk-BOXFZXVX.js", "/build/routes/study-IGIBEO2X.js", "/build/routes/search-C6355UDK.js", "/build/routes/register-4AW4TUM7.js", "/build/routes/quiz-4EOPFVXT.js", "/build/routes/manifest[.]webmanifest-J3KYYY3Q.js", "/build/routes/logout-GGSXPJWV.js", "/build/routes/login-CDC4VFJ4.js", "/build/routes/app-PP4UMF3Z.js", "/build/routes/api.setting.set-DTF7TK4J.js", "/build/routes/api.kanji.remove-PWPNVNBF.js", "/build/routes/api.kanji.record-GLA2QCMY.js", "/build/routes/api.kanji.add-ERCTBUP2.js", "/build/routes/about-3PHEPXZG.js", "/build/routes/_index-UBUQGJ6U.js"];
+var assets = [
+  "/build/root-3HDNI5M6.js",
+  "/build/manifest-EFACAA6E.js",
+  "/build/entry.client-LN4K2DJU.js",
+  "/build/__remix_entry_dev-FIOZUGGH.js",
+  "/build/_assets/tailwind-VHZKFQ35.css",
+  "/build/_shared/runtime-GC7QIU56.js",
+  "/build/_shared/remix_hmr-6MBP7STH.js",
+  "/build/_shared/react-dom-BEFB7ICU.js",
+  "/build/_shared/react-3OYUNTOK.js",
+  "/build/_shared/jsx-runtime-7NXSP56X.js",
+  "/build/_shared/jsx-dev-runtime-RDH4Y5YT.js",
+  "/build/_shared/esm-WE7QIGDO.js",
+  "/build/_shared/client-DFZR44C7.js",
+  "/build/_shared/chunk-ZWGWGGVF.js",
+  "/build/_shared/chunk-XU7DNSPJ.js",
+  "/build/_shared/chunk-XCXTTUMG.js",
+  "/build/_shared/chunk-WXCBL6BE.js",
+  "/build/_shared/chunk-WQPGVTUQ.js",
+  "/build/_shared/chunk-UWV35TSL.js",
+  "/build/_shared/chunk-QQHLOKQ2.js",
+  "/build/_shared/chunk-PNG5AS42.js",
+  "/build/_shared/chunk-GIAAE3CH.js",
+  "/build/_shared/chunk-G7CHZRZX.js",
+  "/build/_shared/chunk-G3ACJGOK.js",
+  "/build/_shared/chunk-CT6P2CZL.js",
+  "/build/_shared/chunk-BOXFZXVX.js",
+  "/build/routes/study-IGIBEO2X.js",
+  "/build/routes/search-C6355UDK.js",
+  "/build/routes/register-4AW4TUM7.js",
+  "/build/routes/quiz-4EOPFVXT.js",
+  "/build/routes/manifest[.]webmanifest-J3KYYY3Q.js",
+  "/build/routes/logout-GGSXPJWV.js",
+  "/build/routes/login-CDC4VFJ4.js",
+  "/build/routes/app-PP4UMF3Z.js",
+  "/build/routes/api.setting.set-DTF7TK4J.js",
+  "/build/routes/api.kanji.remove-PWPNVNBF.js",
+  "/build/routes/api.kanji.record-GLA2QCMY.js",
+  "/build/routes/api.kanji.add-ERCTBUP2.js",
+  "/build/routes/about-3PHEPXZG.js",
+  "/build/routes/_index-UBUQGJ6U.js",
+];
 
 // entry-module:@remix-pwa/build/magic
 var routes = {
-  "root": {
+  root: {
     id: "root",
     parentId: void 0,
     path: "",
     index: void 0,
     caseSensitive: void 0,
-    module: route0
+    module: route0,
   },
   "routes/manifest[.]webmanifest": {
     id: "routes/manifest[.]webmanifest",
@@ -6673,7 +8106,7 @@ var routes = {
     path: "manifest.webmanifest",
     index: void 0,
     caseSensitive: void 0,
-    module: route1
+    module: route1,
   },
   "routes/api.kanji.record": {
     id: "routes/api.kanji.record",
@@ -6681,7 +8114,7 @@ var routes = {
     path: "api/kanji/record",
     index: void 0,
     caseSensitive: void 0,
-    module: route2
+    module: route2,
   },
   "routes/api.kanji.remove": {
     id: "routes/api.kanji.remove",
@@ -6689,7 +8122,7 @@ var routes = {
     path: "api/kanji/remove",
     index: void 0,
     caseSensitive: void 0,
-    module: route3
+    module: route3,
   },
   "routes/api.setting.set": {
     id: "routes/api.setting.set",
@@ -6697,7 +8130,7 @@ var routes = {
     path: "api/setting/set",
     index: void 0,
     caseSensitive: void 0,
-    module: route4
+    module: route4,
   },
   "routes/api.kanji.add": {
     id: "routes/api.kanji.add",
@@ -6705,7 +8138,7 @@ var routes = {
     path: "api/kanji/add",
     index: void 0,
     caseSensitive: void 0,
-    module: route5
+    module: route5,
   },
   "routes/register": {
     id: "routes/register",
@@ -6713,7 +8146,7 @@ var routes = {
     path: "register",
     index: void 0,
     caseSensitive: void 0,
-    module: route6
+    module: route6,
   },
   "routes/_index": {
     id: "routes/_index",
@@ -6721,7 +8154,7 @@ var routes = {
     path: void 0,
     index: true,
     caseSensitive: void 0,
-    module: route7
+    module: route7,
   },
   "routes/logout": {
     id: "routes/logout",
@@ -6729,7 +8162,7 @@ var routes = {
     path: "logout",
     index: void 0,
     caseSensitive: void 0,
-    module: route8
+    module: route8,
   },
   "routes/search": {
     id: "routes/search",
@@ -6737,7 +8170,7 @@ var routes = {
     path: "search",
     index: void 0,
     caseSensitive: void 0,
-    module: route9
+    module: route9,
   },
   "routes/about": {
     id: "routes/about",
@@ -6745,7 +8178,7 @@ var routes = {
     path: "about",
     index: void 0,
     caseSensitive: void 0,
-    module: route10
+    module: route10,
   },
   "routes/login": {
     id: "routes/login",
@@ -6753,7 +8186,7 @@ var routes = {
     path: "login",
     index: void 0,
     caseSensitive: void 0,
-    module: route11
+    module: route11,
   },
   "routes/study": {
     id: "routes/study",
@@ -6761,7 +8194,7 @@ var routes = {
     path: "study",
     index: void 0,
     caseSensitive: void 0,
-    module: route12
+    module: route12,
   },
   "routes/quiz": {
     id: "routes/quiz",
@@ -6769,7 +8202,7 @@ var routes = {
     path: "quiz",
     index: void 0,
     caseSensitive: void 0,
-    module: route13
+    module: route13,
   },
   "routes/app": {
     id: "routes/app",
@@ -6777,8 +8210,8 @@ var routes = {
     path: "app",
     index: void 0,
     caseSensitive: void 0,
-    module: route14
-  }
+    module: route14,
+  },
 };
 var entry = { module: entry_worker_exports };
 
@@ -6801,7 +8234,7 @@ function getURLParameters(request, path = "") {
   const match = matchPath(path, url.pathname);
   return {
     ...Object.fromEntries(new URL(request.url).searchParams.entries()),
-    ...match?.params
+    ...match?.params,
   };
 }
 function stripIndexParameter(request) {
@@ -6825,12 +8258,14 @@ function stripDataParameter(request) {
   return new Request(url.href, { ...clone(request), duplex: "half" });
 }
 function createArgumentsFrom({ event, loadContext, path }) {
-  const request = stripDataParameter(stripIndexParameter(event.request.clone()));
+  const request = stripDataParameter(
+    stripIndexParameter(event.request.clone()),
+  );
   const parameters = getURLParameters(request, path);
   return {
     request,
     params: parameters,
-    context: loadContext
+    context: loadContext,
   };
 }
 function isMethod2(request, methods) {
@@ -6838,7 +8273,10 @@ function isMethod2(request, methods) {
 }
 function isActionRequest(request) {
   const url = new URL(request.url);
-  return isMethod2(request, ["post", "delete", "put", "patch"]) && url.searchParams.get("_data");
+  return (
+    isMethod2(request, ["post", "delete", "put", "patch"]) &&
+    url.searchParams.get("_data")
+  );
 }
 function isLoaderRequest2(request) {
   const url = new URL(request.url);
@@ -6848,27 +8286,38 @@ function isLoaderRequest2(request) {
 // node_modules/@remix-pwa/worker-runtime/dist/src/utils/response.js
 var import_responses = __toESM(require_responses(), 1);
 function errorResponseToJson(errorResponse) {
-  return (0, import_responses.json)(errorResponse.error || { message: "Unexpected Server Error" }, {
-    status: errorResponse.status,
-    statusText: errorResponse.statusText,
-    headers: {
-      "X-Remix-Error": "yes"
-    }
-  });
+  return (0, import_responses.json)(
+    errorResponse.error || { message: "Unexpected Server Error" },
+    {
+      status: errorResponse.status,
+      statusText: errorResponse.statusText,
+      headers: {
+        "X-Remix-Error": "yes",
+      },
+    },
+  );
 }
 function isRemixResponse(response) {
-  return Array.from(response.headers.keys()).some((key) => key.toLowerCase().startsWith("x-remix-"));
+  return Array.from(response.headers.keys()).some((key) =>
+    key.toLowerCase().startsWith("x-remix-"),
+  );
 }
 
 // node_modules/@remix-pwa/worker-runtime/dist/src/utils/handle-request.js
-async function handleRequest({ defaultHandler: defaultHandler2, errorHandler, event, loadContext, routes: routes2 }) {
+async function handleRequest({
+  defaultHandler: defaultHandler2,
+  errorHandler,
+  event,
+  loadContext,
+  routes: routes2,
+}) {
   const url = new URL(event.request.url);
   const routeId = url.searchParams.get("_data");
   const route = routeId ? routes2[routeId] : void 0;
   const _arguments = {
     request: event.request,
     params: getURLParameters(event.request, route?.path),
-    context: loadContext
+    context: loadContext,
   };
   try {
     if (isLoaderRequest2(event.request) && route?.module.workerLoader) {
@@ -6877,7 +8326,7 @@ async function handleRequest({ defaultHandler: defaultHandler2, errorHandler, ev
         loader: route.module.workerLoader,
         routeId: route.id,
         routePath: route.path,
-        loadContext
+        loadContext,
       }).then(responseHandler);
     }
     if (isActionRequest(event.request) && route?.module?.workerAction) {
@@ -6886,7 +8335,7 @@ async function handleRequest({ defaultHandler: defaultHandler2, errorHandler, ev
         action: route.module.workerAction,
         routeId: route.id,
         routePath: route.path,
-        loadContext
+        loadContext,
       }).then(responseHandler);
     }
   } catch (error) {
@@ -6895,32 +8344,70 @@ async function handleRequest({ defaultHandler: defaultHandler2, errorHandler, ev
   }
   return defaultHandler2(_arguments);
 }
-async function handleLoader({ event, loadContext, loader, routeId, routePath }) {
-  const _arguments = createArgumentsFrom({ event, loadContext, path: routePath });
+async function handleLoader({
+  event,
+  loadContext,
+  loader,
+  routeId,
+  routePath,
+}) {
+  const _arguments = createArgumentsFrom({
+    event,
+    loadContext,
+    path: routePath,
+  });
   const result = await loader(_arguments);
   if (result === void 0) {
-    throw new Error(`You defined a loader for route "${routeId}" but didn't return anything from your \`worker loader\` function. Please return a value or \`null\`.`);
+    throw new Error(
+      `You defined a loader for route "${routeId}" but didn't return anything from your \`worker loader\` function. Please return a value or \`null\`.`,
+    );
   }
   if ((0, import_responses2.isDeferredData)(result)) {
-    if (result.init && (0, import_responses2.isRedirectStatusCode)(result.init.status || 200)) {
-      return (0, import_responses2.redirect)(new Headers(result.init.headers).get("Location"), result.init);
+    if (
+      result.init &&
+      (0, import_responses2.isRedirectStatusCode)(result.init.status || 200)
+    ) {
+      return (0, import_responses2.redirect)(
+        new Headers(result.init.headers).get("Location"),
+        result.init,
+      );
     }
-    const body = (0, import_responses2.createDeferredReadableStream)(result, event.request.signal, import_mode.ServerMode.Production);
+    const body = (0, import_responses2.createDeferredReadableStream)(
+      result,
+      event.request.signal,
+      import_mode.ServerMode.Production,
+    );
     const init = result.init || {};
     const headers = new Headers(init.headers);
     headers.set("Content-Type", "text/remix-deferred");
     init.headers = headers;
     return new Response(body, init);
   }
-  return (0, import_responses2.isResponse)(result) ? result : (0, import_responses2.json)(result);
+  return (0, import_responses2.isResponse)(result)
+    ? result
+    : (0, import_responses2.json)(result);
 }
-async function handleAction({ action, event, loadContext, routeId, routePath }) {
-  const _arguments = createArgumentsFrom({ event, loadContext, path: routePath });
+async function handleAction({
+  action,
+  event,
+  loadContext,
+  routeId,
+  routePath,
+}) {
+  const _arguments = createArgumentsFrom({
+    event,
+    loadContext,
+    path: routePath,
+  });
   const result = await action(_arguments);
   if (result === void 0) {
-    throw new Error(`You defined an action for route "${routeId}" but didn't return anything from your \`worker action\` function. Please return a value or \`null\`.`);
+    throw new Error(
+      `You defined an action for route "${routeId}" but didn't return anything from your \`worker action\` function. Please return a value or \`null\`.`,
+    );
   }
-  return (0, import_responses2.isResponse)(result) ? result : (0, import_responses2.json)(result);
+  return (0, import_responses2.isResponse)(result)
+    ? result
+    : (0, import_responses2.json)(result);
 }
 function _errorHandler({ error, handler: handleError }) {
   if ((0, import_responses2.isResponse)(error)) {
@@ -6931,14 +8418,18 @@ function _errorHandler({ error, handler: handleError }) {
     error.error && handleError(error.error);
     return errorResponseToJson(error);
   }
-  const errorInstance = error instanceof Error ? error : new Error("Unexpected Server Error");
+  const errorInstance =
+    error instanceof Error ? error : new Error("Unexpected Server Error");
   handleError(errorInstance);
-  return (0, import_responses2.json)({ message: errorInstance.message }, {
-    status: 500,
-    headers: {
-      "X-Remix-Error": "yes"
-    }
-  });
+  return (0, import_responses2.json)(
+    { message: errorInstance.message },
+    {
+      status: 500,
+      headers: {
+        "X-Remix-Error": "yes",
+      },
+    },
+  );
 }
 function responseHandler(response) {
   if ((0, import_responses2.isRedirectResponse)(response)) {
@@ -6951,7 +8442,7 @@ function responseHandler(response) {
     }
     return new Response(null, {
       status: 204,
-      headers
+      headers,
     });
   }
   !isRemixResponse(response) && response.headers.set("X-Remix-Response", "yes");
@@ -6966,18 +8457,21 @@ function createContext(event) {
     event,
     fetchFromServer: () => fetch(event.request.clone()),
     // NOTE: we want the user to override the above properties if needed.
-    ...context
+    ...context,
   };
 }
-var defaultHandler = entry.module.defaultFetchHandler || ((event) => fetch(event.request.clone()));
-var defaultErrorHandler = entry.module.errorHandler || ((error, { request }) => {
-  if (!request.signal.aborted) {
-    console.error(error);
-  }
-});
+var defaultHandler =
+  entry.module.defaultFetchHandler || ((event) => fetch(event.request.clone()));
+var defaultErrorHandler =
+  entry.module.errorHandler ||
+  ((error, { request }) => {
+    if (!request.signal.aborted) {
+      console.error(error);
+    }
+  });
 _self.__workerManifest = {
   assets,
-  routes
+  routes,
 };
 _self.addEventListener(
   "fetch",
@@ -6990,10 +8484,10 @@ _self.addEventListener(
       routes,
       defaultHandler,
       errorHandler: defaultErrorHandler,
-      loadContext: createContext(event)
+      loadContext: createContext(event),
     });
     return event.respondWith(response);
-  }
+  },
 );
 /*! Bundled license information:
 
