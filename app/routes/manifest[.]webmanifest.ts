@@ -3,7 +3,7 @@ import { json } from "@remix-run/node";
 export const loader = async () => {
   return json(
     {
-      short_name: "OMK",
+      short_name: "Oh My Kanji",
       name: "Oh My Kanji",
       start_url: "/",
       display: "standalone",
