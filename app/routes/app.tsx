@@ -101,22 +101,11 @@ export default function Index() {
               )}
             </CardContent>
           </Card>
-          <div className="flex flex-col">
-            {/*<h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-              This Week's Kanji
-            </h2>
-            <small className="text-sm">
-              {startDay} - {endDay}
-            </small>*/}
-          </div>
-          {/*<Link to="/search">
-            <Button variant="outline">Set</Button>
-          </Link>*/}
         </div>
       </div>
       <div className="mb-6">
         <div className="flex gap-4 mb-12">
-          <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
+          <h3 className="scroll-m-20 text-md font-semibold tracking-tight">
             Kanj Drawn This Week: {kanjiDrawn}
           </h3>
         </div>
